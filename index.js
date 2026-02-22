@@ -1,98 +1,202 @@
 const express = require('express');
 const axios = require('axios');
 const path = require('path');
-const bodyParser = require('body-parser');
 const app = express();
+
 app.use(express.json());
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-const total = new Map();
+
+const sessions = new Map();
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
 app.get('/total', (req, res) => {
-  const data = Array.from(total.values()).map((link, index) => ({
+  const data = Array.from(sessions.values()).map((s, index) => ({
     session: index + 1,
-    url: link.url,
-    count: link.count,
-    id: link.id,
-    target: link.target,
-    error: link.error || null,
+    url: s.url,
+    count: s.count,
+    id: s.id,
+    target: s.target,
+    interval: s.interval,
+    error: s.error || null,
+    logs: s.logs || [],
   }));
-  res.json(data || []);
+  res.json(data);
 });
+
 app.post('/api/submit', async (req, res) => {
   const { cookie, url, amount, interval } = req.body;
+
   if (!cookie || !url || !amount || !interval) {
-    return res.status(400).json({ error: 'Missing cookie, url, amount, or interval' });
+    return res.status(400).json({ error: 'Missing required fields: cookie, url, amount, interval' });
   }
+
+  const parsedAmount = parseInt(amount);
+  const parsedInterval = parseInt(interval);
+
+  if (isNaN(parsedAmount) || parsedAmount < 1) {
+    return res.status(400).json({ error: 'Amount must be a valid number greater than 0' });
+  }
+
+  if (isNaN(parsedInterval) || parsedInterval < 1) {
+    return res.status(400).json({ error: 'Interval must be a valid number greater than 0' });
+  }
+
   try {
     const cookies = await convertCookie(cookie);
     if (!cookies) {
-      return res.status(400).json({ status: 500, error: 'Invalid cookies' });
+      return res.status(400).json({ error: 'Invalid cookies format' });
     }
-    await share(cookies, url, amount, interval);
-    res.status(200).json({ status: 200 });
+
+    const postId = await getPostID(url);
+    if (!postId) {
+      return res.status(400).json({ error: 'Unable to get post ID. Check if URL is valid and post is public.' });
+    }
+
+    const accessToken = await getAccessToken(cookies);
+    if (!accessToken) {
+      return res.status(400).json({ error: 'Unable to retrieve access token. Check your cookies.' });
+    }
+
+    res.status(200).json({ status: 200, message: 'Boost session started successfully' });
+
+    startSharing(cookies, url, postId, accessToken, parsedAmount, parsedInterval);
+
   } catch (err) {
-    return res.status(500).json({ status: 500, error: err.message || err });
+    console.error('Submit error:', err.message);
+    return res.status(500).json({ error: err.message || 'Internal server error' });
   }
 });
-async function share(cookies, url, amount, interval) {
-  const id = await getPostID(url);
-  const accessToken = await getAccessToken(cookies);
-  if (!id) {
-    throw new Error("Unable to get link id: invalid URL, or post is private or friends-only.");
-  }
-  const postId = Date.now().toString();
-  total.set(postId, { url, id, count: 0, target: amount, error: null, logs: [] });
+
+function startSharing(cookies, url, postId, accessToken, amount, interval) {
+  const sessionId = Date.now().toString();
+
+  sessions.set(sessionId, {
+    url,
+    id: postId,
+    count: 0,
+    target: amount,
+    interval,
+    error: null,
+    logs: [],
+    startTime: Date.now(),
+  });
+
   const headers = {
     'accept': '*/*',
     'accept-encoding': 'gzip, deflate',
     'connection': 'keep-alive',
     'cookie': cookies,
-    'host': 'graph.facebook.com'
+    'host': 'graph.facebook.com',
   };
+
   let sharedCount = 0;
-  let timer;
+  let timer = null;
+  let stopped = false;
+
+  function stopSession(errorMsg = null) {
+    if (stopped) return;
+    stopped = true;
+    if (timer) clearInterval(timer);
+
+    const current = sessions.get(sessionId);
+    if (current) {
+      sessions.set(sessionId, {
+        ...current,
+        error: errorMsg || current.error,
+      });
+    }
+
+    const cleanupDelay = 5 * 60 * 1000;
+    setTimeout(() => {
+      sessions.delete(sessionId);
+    }, cleanupDelay);
+  }
+
   async function sharePost() {
+    if (stopped) return;
+
     try {
       const response = await axios.post(
-        `https://graph.facebook.com/me/feed?link=https://m.facebook.com/${id}&published=0&access_token=${accessToken}`,
+        `https://graph.facebook.com/me/feed`,
         {},
-        { headers }
+        {
+          params: {
+            link: `https://m.facebook.com/${postId}`,
+            published: 0,
+            access_token: accessToken,
+          },
+          headers,
+          timeout: 15000,
+        }
       );
+
       if (response.status === 200) {
-        const currentSession = total.get(postId);
-        const logEntry = `[${new Date().toLocaleTimeString()}] Successfully shared.`;
-        total.set(postId, {
-          ...currentSession,
-          count: currentSession.count + 1,
-          error: null,
-          logs: [...(currentSession.logs || []), logEntry].slice(-10)
-        });
         sharedCount++;
-      }
-      if (sharedCount >= amount) {
-        clearInterval(timer);
+        const current = sessions.get(sessionId);
+        if (!current) return;
+
+        const logEntry = `[${new Date().toLocaleTimeString()}] Share #${sharedCount} successful.`;
+        sessions.set(sessionId, {
+          ...current,
+          count: sharedCount,
+          error: null,
+          logs: [...(current.logs || []), logEntry].slice(-20),
+        });
+
+        if (sharedCount >= amount) {
+          const logDone = `[${new Date().toLocaleTimeString()}] Target reached. Session complete.`;
+          const updated = sessions.get(sessionId);
+          if (updated) {
+            sessions.set(sessionId, {
+              ...updated,
+              logs: [...(updated.logs || []), logDone].slice(-20),
+            });
+          }
+          stopSession();
+        }
       }
     } catch (error) {
-      const errorMsg = error.response?.data?.error?.message || error.message || "Unknown error";
-      const currentSession = total.get(postId);
+      const fbError = error.response?.data?.error?.message;
+      const errorMsg = fbError || error.message || 'Unknown error occurred';
+
+      console.error(`[Session ${sessionId}] Share error:`, errorMsg);
+
+      const current = sessions.get(sessionId);
+      if (!current) return;
+
       const logEntry = `[${new Date().toLocaleTimeString()}] Error: ${errorMsg}`;
-      total.set(postId, {
-        ...currentSession,
+      sessions.set(sessionId, {
+        ...current,
         error: errorMsg,
-        logs: [...(currentSession.logs || []), logEntry].slice(-10)
+        logs: [...(current.logs || []), logEntry].slice(-20),
       });
-      clearInterval(timer);
+
+      if (
+        errorMsg.includes('Invalid OAuth') ||
+        errorMsg.includes('access token') ||
+        errorMsg.includes('session') ||
+        error.response?.status === 401 ||
+        error.response?.status === 403
+      ) {
+        stopSession(errorMsg);
+      }
     }
   }
+
   timer = setInterval(sharePost, interval * 1000);
+
+  const maxRunTime = (amount * interval + 60) * 1000;
   setTimeout(() => {
-    clearInterval(timer);
-    total.delete(postId);
-  }, amount * interval * 1000);
+    if (!stopped) {
+      stopSession('Session timed out.');
+    }
+  }, maxRunTime);
 }
+
 async function getPostID(url) {
   try {
     const response = await axios.post(
@@ -100,52 +204,118 @@ async function getPostID(url) {
       `link=${encodeURIComponent(url)}`,
       {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        timeout: 10000,
       }
     );
-    return response.data.id;
+
+    if (response.data && response.data.id) {
+      return response.data.id;
+    }
+    return null;
   } catch (error) {
+    console.error('getPostID error:', error.message);
     return null;
   }
 }
+
 async function getAccessToken(cookie) {
   try {
     const headers = {
       'authority': 'business.facebook.com',
       'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+      'accept-language': 'en-US,en;q=0.9',
+      'cache-control': 'max-age=0',
       'cookie': cookie,
       'referer': 'https://www.facebook.com/',
+      'sec-fetch-dest': 'document',
+      'sec-fetch-mode': 'navigate',
+      'sec-fetch-site': 'same-origin',
+      'upgrade-insecure-requests': '1',
+      'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     };
-    const response = await axios.get('https://business.facebook.com/content_management', { headers });
-    const token = response.data.match(/"accessToken":\s*"([^"]+)"/);
-    return token ? token[1] : null;
+
+    const response = await axios.get('https://business.facebook.com/content_management', {
+      headers,
+      timeout: 15000,
+    });
+
+    const tokenMatch = response.data.match(/"accessToken":\s*"([^"]+)"/);
+    if (tokenMatch && tokenMatch[1]) {
+      return tokenMatch[1];
+    }
+
+    const altMatch = response.data.match(/access_token=([^&"]+)/);
+    if (altMatch && altMatch[1]) {
+      return altMatch[1];
+    }
+
+    return null;
   } catch (error) {
+    console.error('getAccessToken error:', error.message);
     return null;
   }
 }
+
 async function convertCookie(cookie) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     try {
-      const cookies = JSON.parse(cookie);
-      const sbCookie = cookies.find((c) => c.key === 'sb');
-      const datrCookie = cookies.find((c) => c.key === 'datr');
-      if (!sbCookie) {
-        return reject('Invalid appstate: missing sb cookie.');
+      const trimmed = cookie.trim();
+
+      if (trimmed.startsWith('[') || trimmed.startsWith('{')) {
+        const cookies = JSON.parse(trimmed);
+        const cookieArray = Array.isArray(cookies) ? cookies : [cookies];
+
+        const sbCookie = cookieArray.find((c) => c.key === 'sb' || c.name === 'sb');
+        if (!sbCookie) {
+          return resolve(null);
+        }
+
+        const datrCookie = cookieArray.find((c) => c.key === 'datr' || c.name === 'datr');
+
+        let formatted = `sb=${sbCookie.value}; `;
+        if (datrCookie) {
+          formatted += `datr=${datrCookie.value}; `;
+        }
+
+        formatted += cookieArray
+          .filter((c) => {
+            const k = c.key || c.name;
+            return k !== 'sb' && k !== 'datr';
+          })
+          .map((c) => `${c.key || c.name}=${c.value}`)
+          .join('; ');
+
+        return resolve(formatted.trim());
       }
-      let formattedCookies = `sb=${sbCookie.value}; `;
-      if (datrCookie) {
-        formattedCookies += `datr=${datrCookie.value}; `;
+
+      if (trimmed.includes('c_user=') || trimmed.includes('sb=') || trimmed.includes('xs=')) {
+        return resolve(trimmed);
       }
-      formattedCookies += cookies
-        .filter((c) => c.key !== 'sb' && c.key !== 'datr')
-        .map((c) => `${c.key}=${c.value}`)
-        .join('; ');
-      resolve(formattedCookies);
+
+      return resolve(null);
     } catch (error) {
-      resolve(cookie);
+      if (
+        cookie.includes('c_user=') ||
+        cookie.includes('sb=') ||
+        cookie.includes('xs=')
+      ) {
+        return resolve(cookie.trim());
+      }
+      console.error('convertCookie error:', error.message);
+      return resolve(null);
     }
   });
 }
-const PORT = 5000;
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err.message);
+});
+
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled Rejection:', reason);
+});
+
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on http://0.0.0.0:${PORT}`);
 });
