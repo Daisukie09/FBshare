@@ -9,20 +9,45 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         *{box-sizing:border-box;margin:0;padding:0}
-        :root{--p:#ff2d95;--c:#00f7ff;--v:#b44dff;--g:#39ff14;--y:#ffe600;--o:#ff6a00;--b:#4d79ff;--bg:#04040d}
+        :root{
+            --p:#ff2d95;--c:#00f7ff;--v:#b44dff;--g:#39ff14;
+            --y:#ffe600;--o:#ff6a00;--b:#4d79ff;--bg:#04040d;
+        }
         html{font-size:14px}
         body{font-family:'Rajdhani',sans-serif;-webkit-tap-highlight-color:transparent;overflow:hidden;background:var(--bg);color:#e0e0ff;width:100%;max-width:100vw}
-        .ultra-bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 10% 20%,rgba(180,77,255,.2) 0%,transparent 45%),radial-gradient(ellipse at 90% 10%,rgba(0,247,255,.18) 0%,transparent 40%),radial-gradient(ellipse at 50% 95%,rgba(255,45,149,.18) 0%,transparent 50%),radial-gradient(ellipse at 80% 60%,rgba(57,255,20,.1) 0%,transparent 40%),linear-gradient(135deg,#04040d,#080416 40%,#04080f 70%,#080412);animation:bgAnim 10s ease-in-out infinite}
+        .ultra-bg{position:fixed;inset:0;z-index:0;
+            background:radial-gradient(ellipse at 10% 20%,rgba(180,77,255,.2) 0%,transparent 45%),
+            radial-gradient(ellipse at 90% 10%,rgba(0,247,255,.18) 0%,transparent 40%),
+            radial-gradient(ellipse at 50% 95%,rgba(255,45,149,.18) 0%,transparent 50%),
+            radial-gradient(ellipse at 80% 60%,rgba(57,255,20,.1) 0%,transparent 40%),
+            linear-gradient(135deg,#04040d,#080416 40%,#04080f 70%,#080412);
+            animation:bgAnim 10s ease-in-out infinite}
         @keyframes bgAnim{0%,100%{filter:hue-rotate(0deg) brightness(1)}50%{filter:hue-rotate(25deg) brightness(1.08)}}
-        .grid-bg{position:fixed;inset:0;z-index:1;pointer-events:none;background-image:linear-gradient(rgba(0,247,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,247,255,.04) 1px,transparent 1px);background-size:40px 40px;animation:gridMove 20s linear infinite}
+        .grid-bg{position:fixed;inset:0;z-index:1;pointer-events:none;
+            background-image:linear-gradient(rgba(0,247,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,247,255,.04) 1px,transparent 1px);
+            background-size:40px 40px;animation:gridMove 20s linear infinite}
         @keyframes gridMove{0%{background-position:0 0}100%{background-position:0 40px}}
-        .scan{position:fixed;top:0;left:0;right:0;height:2px;z-index:3;pointer-events:none;background:linear-gradient(90deg,transparent,var(--c),transparent);opacity:.4;animation:scanDown 5s linear infinite}
+        .scan{position:fixed;top:0;left:0;right:0;height:2px;z-index:3;pointer-events:none;
+            background:linear-gradient(90deg,transparent,var(--c),transparent);
+            opacity:.4;animation:scanDown 5s linear infinite}
         @keyframes scanDown{0%{top:-2px}100%{top:100vh}}
-        .vignette{position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.7) 100%)}
+        .vignette{position:fixed;inset:0;z-index:2;pointer-events:none;
+            background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.7) 100%)}
         .particles{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden}
         .pt{position:absolute;border-radius:50%;animation:ptFloat linear infinite;opacity:0}
         @keyframes ptFloat{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-10vh) scale(1);opacity:0}}
-        .wrap{height:100vh;height:100dvh;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;position:relative;z-index:10;padding-bottom:70px;width:100%;max-width:100vw}
+        .wrap{
+            height:100vh;
+            height:100dvh;
+            overflow-y:auto;
+            scrollbar-width:none;
+            -ms-overflow-style:none;
+            position:relative;
+            z-index:10;
+            padding-bottom:70px;
+            width:100%;
+            max-width:100vw;
+        }
         .wrap::-webkit-scrollbar{display:none}
         .glass{background:linear-gradient(135deg,rgba(10,10,30,.85),rgba(20,10,40,.7));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(180,77,255,.25);border-radius:.875rem;position:relative;overflow:hidden}
         .glass::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--c),var(--v),var(--p),transparent);opacity:.7}
@@ -32,24 +57,49 @@
         .nt-g{color:var(--g);text-shadow:0 0 7px var(--g),0 0 14px var(--g),0 0 28px var(--g)}
         .nt-y{color:var(--y);text-shadow:0 0 7px var(--y),0 0 14px var(--y)}
         .gt{background:linear-gradient(135deg,var(--p),var(--v),var(--c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 12px rgba(180,77,255,.6))}
-        .hdr{background:linear-gradient(180deg,rgba(4,4,13,.98),rgba(4,4,13,.85));backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-bottom:1px solid rgba(180,77,255,.3);position:sticky;top:0;z-index:30;width:100%}
+        .gt2{background:linear-gradient(135deg,var(--c),var(--g),var(--y));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 12px rgba(0,247,255,.6))}
+        .hdr{
+            background:linear-gradient(180deg,rgba(4,4,13,.98),rgba(4,4,13,.85));
+            backdrop-filter:blur(30px);
+            -webkit-backdrop-filter:blur(30px);
+            border-bottom:1px solid rgba(180,77,255,.3);
+            position:sticky;
+            top:0;
+            z-index:30;
+            width:100%;
+        }
         .hdr::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--p),var(--v),var(--c),var(--g),var(--y),var(--p));background-size:300% 100%;animation:hdrGlow 3s linear infinite}
         @keyframes hdrGlow{0%{background-position:0% 50%}100%{background-position:300% 50%}}
-        .logo-glitch{font-family:'Orbitron',sans-serif;font-size:clamp(1.1rem,5vw,1.6rem);font-weight:900;letter-spacing:clamp(1px,2vw,4px);position:relative;animation:logoFlicker 6s ease-in-out infinite}
+        .logo-wrap{position:relative;display:inline-block}
+        .logo-glitch{
+            font-family:'Orbitron',sans-serif;
+            font-size:clamp(1.1rem,5vw,1.6rem);
+            font-weight:900;
+            letter-spacing:clamp(1px,2vw,4px);
+            position:relative;
+            animation:logoFlicker 6s ease-in-out infinite;
+        }
         @keyframes logoFlicker{0%,89%,91%,93%,100%{opacity:1;filter:none}90%{opacity:.6;filter:blur(1px);transform:skewX(-5deg)}92%{opacity:.8;transform:skewX(3deg)}94%{opacity:.5;transform:translateX(-2px)}}
         .logo-glitch::before,.logo-glitch::after{content:attr(data-text);position:absolute;top:0;left:0;right:0}
         .logo-glitch::before{color:var(--c);animation:glitchA 4s infinite;clip-path:polygon(0 0,100% 0,100% 35%,0 35%)}
         .logo-glitch::after{color:var(--p);animation:glitchB 4s infinite;clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%)}
         @keyframes glitchA{0%,85%,100%{transform:translate(0)}87%{transform:translate(-3px,1px)}89%{transform:translate(3px,-1px)}91%{transform:translate(0)}}
         @keyframes glitchB{0%,85%,100%{transform:translate(0)}87%{transform:translate(3px,1px)}89%{transform:translate(-3px,-1px)}91%{transform:translate(0)}}
-        .badge{background:linear-gradient(135deg,rgba(255,45,149,.2),rgba(180,77,255,.2));border:1px solid rgba(255,45,149,.5);color:var(--p);font-family:'Orbitron',sans-serif;font-size:7px;letter-spacing:1px;padding:3px 8px;border-radius:999px;animation:bdgPulse 2s ease-in-out infinite;white-space:nowrap}
+        .badge{
+            background:linear-gradient(135deg,rgba(255,45,149,.2),rgba(180,77,255,.2));
+            border:1px solid rgba(255,45,149,.5);
+            color:var(--p);
+            font-family:'Orbitron',sans-serif;
+            font-size:7px;
+            letter-spacing:1px;
+            padding:3px 8px;
+            border-radius:999px;
+            animation:bdgPulse 2s ease-in-out infinite;
+            white-space:nowrap;
+        }
         @keyframes bdgPulse{0%,100%{box-shadow:0 0 5px rgba(255,45,149,.3)}50%{box-shadow:0 0 20px rgba(255,45,149,.7),0 0 40px rgba(255,45,149,.3)}}
         .pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--g);box-shadow:0 0 10px var(--g),0 0 20px var(--g);animation:pdot 1.5s ease-in-out infinite}
         @keyframes pdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.6)}}
-        .conn-dot{width:8px;height:8px;border-radius:50%;animation:pdot 1.5s ease-in-out infinite}
-        .conn-dot.ok{background:var(--g);box-shadow:0 0 10px var(--g)}
-        .conn-dot.warn{background:var(--y);box-shadow:0 0 10px var(--y)}
-        .conn-dot.err{background:var(--p);box-shadow:0 0 10px var(--p)}
         .stat-card{position:relative;overflow:hidden;border-radius:.875rem;padding:1rem;cursor:default;transition:transform .3s ease}
         .stat-card:active{transform:scale(.97)}
         .stat-card::after{content:'';position:absolute;inset:-50%;background:conic-gradient(from 0deg,transparent,rgba(255,255,255,.04),transparent 30%);animation:rotBg 5s linear infinite}
@@ -65,13 +115,48 @@
         .corner.tr{top:4px;right:4px;border-top:2px solid;border-right:2px solid}
         .corner.bl{bottom:4px;left:4px;border-bottom:2px solid;border-left:2px solid}
         .lbl{font-family:'Orbitron',sans-serif;font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--c);display:flex;align-items:center;gap:5px;margin-bottom:5px}
-        .inp{width:100%;padding:11px 14px;background:rgba(4,4,20,.9);border:1px solid rgba(180,77,255,.3);border-radius:10px;color:#e0e0ff;font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:500;transition:all .3s ease;outline:none;-webkit-appearance:none}
+        .inp{
+            width:100%;
+            padding:11px 14px;
+            background:rgba(4,4,20,.9);
+            border:1px solid rgba(180,77,255,.3);
+            border-radius:10px;
+            color:#e0e0ff;
+            font-family:'Rajdhani',sans-serif;
+            font-size:1rem;
+            font-weight:500;
+            transition:all .3s ease;
+            outline:none;
+            -webkit-appearance:none;
+        }
         .inp::placeholder{color:rgba(180,160,255,.25)}
         .inp:focus{border-color:var(--c);box-shadow:0 0 20px rgba(0,247,255,.25),0 0 40px rgba(0,247,255,.1),inset 0 0 20px rgba(0,247,255,.05)}
         textarea.inp{resize:none;min-height:80px}
         .btn-wrap{position:relative;padding:2px;border-radius:12px;background:linear-gradient(135deg,var(--p),var(--v),var(--c),var(--g),var(--p));background-size:400% 400%;animation:btnBorder 4s linear infinite;box-shadow:0 0 30px rgba(180,77,255,.4),0 0 60px rgba(0,247,255,.2)}
         @keyframes btnBorder{0%{background-position:0% 50%}100%{background-position:400% 50%}}
-        .btn{width:100%;padding:13px;border:none;border-radius:10px;font-family:'Orbitron',sans-serif;font-size:.78rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;cursor:pointer;color:#fff;background:linear-gradient(135deg,rgba(4,4,20,.9),rgba(10,5,30,.9));position:relative;overflow:hidden;transition:all .3s ease;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;touch-action:manipulation}
+        .btn{
+            width:100%;
+            padding:13px;
+            border:none;
+            border-radius:10px;
+            font-family:'Orbitron',sans-serif;
+            font-size:.78rem;
+            font-weight:800;
+            letter-spacing:3px;
+            text-transform:uppercase;
+            cursor:pointer;
+            color:#fff;
+            background:linear-gradient(135deg,rgba(4,4,20,.9),rgba(10,5,30,.9));
+            position:relative;
+            overflow:hidden;
+            transition:all .3s ease;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+            min-height:48px;
+            touch-action:manipulation;
+        }
         .btn:active{transform:scale(.98)}
         .btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--p),var(--v),var(--c));opacity:0;transition:opacity .3s ease;border-radius:10px}
         .btn:active::before{opacity:.15}
@@ -84,10 +169,35 @@
         .ses-card{transition:all .3s ease;position:relative}
         .orb{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(255,45,149,.2),rgba(180,77,255,.2));border:1px solid rgba(180,77,255,.5);box-shadow:0 0 15px rgba(180,77,255,.4);animation:orbAnim 2s ease-in-out infinite;flex-shrink:0}
         @keyframes orbAnim{0%,100%{box-shadow:0 0 15px rgba(180,77,255,.4)}50%{box-shadow:0 0 25px rgba(180,77,255,.7),0 0 40px rgba(0,247,255,.4)}}
-        .neon-nav{background:linear-gradient(180deg,rgba(4,4,13,.95),rgba(4,4,13,.99));backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-top:1px solid rgba(180,77,255,.2);position:fixed;bottom:0;left:0;right:0;z-index:30;padding-bottom:env(safe-area-inset-bottom)}
+        .neon-nav{
+            background:linear-gradient(180deg,rgba(4,4,13,.95),rgba(4,4,13,.99));
+            backdrop-filter:blur(30px);
+            -webkit-backdrop-filter:blur(30px);
+            border-top:1px solid rgba(180,77,255,.2);
+            position:fixed;
+            bottom:0;
+            left:0;
+            right:0;
+            z-index:30;
+            padding-bottom:env(safe-area-inset-bottom);
+        }
         .neon-nav::before{content:'';position:absolute;top:-1px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--c),var(--v),var(--p),var(--g),var(--c));background-size:300% 100%;animation:navLine 3s linear infinite}
         @keyframes navLine{0%{background-position:0% 50%}100%{background-position:300% 50%}}
-        .nv{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 12px;transition:all .3s ease;color:rgba(180,160,255,.35);text-decoration:none;position:relative;flex:1;min-height:52px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+        .nv{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            padding:8px 12px;
+            transition:all .3s ease;
+            color:rgba(180,160,255,.35);
+            text-decoration:none;
+            position:relative;
+            flex:1;
+            min-height:52px;
+            touch-action:manipulation;
+            -webkit-tap-highlight-color:transparent;
+        }
         .nv.act{color:var(--c);filter:drop-shadow(0 0 10px rgba(0,247,255,.8))}
         .nv span{font-family:'Orbitron',sans-serif;font-size:.48rem;letter-spacing:1.5px;margin-top:3px}
         .nv.act::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:28px;height:3px;background:linear-gradient(90deg,var(--c),var(--v));border-radius:999px 999px 0 0;box-shadow:0 -3px 10px var(--c)}
@@ -97,11 +207,41 @@
         .step-c{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.6rem;font-weight:700;flex-shrink:0;background:linear-gradient(135deg,var(--p),var(--v));color:#fff;box-shadow:0 0 15px rgba(180,77,255,.5)}
         .warn-box{background:linear-gradient(135deg,rgba(255,230,0,.08),rgba(255,106,0,.05));border:1px solid rgba(255,230,0,.35);border-radius:.875rem;padding:.875rem;box-shadow:0 0 20px rgba(255,230,0,.1),inset 0 0 20px rgba(255,230,0,.03)}
         #modal-container{display:none;position:fixed;inset:0;z-index:100;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.8);backdrop-filter:blur(12px)}
-        #modal-content{background:linear-gradient(135deg,rgba(4,4,20,.97),rgba(15,5,35,.95));backdrop-filter:blur(30px);width:100%;max-width:320px;border-radius:1.25rem;padding:1.5rem 1.25rem;text-align:center;border:1px solid rgba(180,77,255,.35);box-shadow:0 0 50px rgba(180,77,255,.25),0 0 100px rgba(0,247,255,.1),0 25px 50px rgba(0,0,0,.6);transform:scale(.9);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden}
+        #modal-content{
+            background:linear-gradient(135deg,rgba(4,4,20,.97),rgba(15,5,35,.95));
+            backdrop-filter:blur(30px);
+            width:100%;
+            max-width:320px;
+            border-radius:1.25rem;
+            padding:1.5rem 1.25rem;
+            text-align:center;
+            border:1px solid rgba(180,77,255,.35);
+            box-shadow:0 0 50px rgba(180,77,255,.25),0 0 100px rgba(0,247,255,.1),0 25px 50px rgba(0,0,0,.6);
+            transform:scale(.9);
+            opacity:0;
+            transition:all .3s cubic-bezier(.34,1.56,.64,1);
+            position:relative;
+            overflow:hidden;
+        }
         #modal-content::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--p),var(--v),var(--c),var(--g),var(--p));background-size:300% 100%;animation:hdrGlow 2s linear infinite}
         #modal-container.act{display:flex}
         #modal-container.act #modal-content{transform:scale(1);opacity:1}
-        .mdm-btn{width:100%;padding:12px;border:1px solid rgba(180,77,255,.4);background:linear-gradient(135deg,rgba(180,77,255,.15),rgba(255,45,149,.15));color:#fff;border-radius:10px;font-family:'Orbitron',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all .3s ease;min-height:44px;touch-action:manipulation}
+        .mdm-btn{
+            width:100%;
+            padding:12px;
+            border:1px solid rgba(180,77,255,.4);
+            background:linear-gradient(135deg,rgba(180,77,255,.15),rgba(255,45,149,.15));
+            color:#fff;
+            border-radius:10px;
+            font-family:'Orbitron',sans-serif;
+            font-size:.68rem;
+            font-weight:700;
+            letter-spacing:2px;
+            cursor:pointer;
+            transition:all .3s ease;
+            min-height:44px;
+            touch-action:manipulation;
+        }
         .mdm-btn:active{box-shadow:0 0 25px rgba(180,77,255,.5);transform:scale(.98)}
         .ticker{width:100%;overflow:hidden;background:linear-gradient(90deg,rgba(0,247,255,.05),rgba(180,77,255,.05),rgba(0,247,255,.05));border-top:1px solid rgba(0,247,255,.15);border-bottom:1px solid rgba(0,247,255,.15);padding:5px 0}
         .ticker-inner{display:flex;gap:50px;animation:tickerMove 20s linear infinite;white-space:nowrap}
@@ -123,6 +263,7 @@
         @keyframes holoShine{0%{transform:translateX(-100%)}50%{transform:translateX(100%)}100%{transform:translateX(100%)}}
         .glow-ring{position:absolute;border-radius:50%;border:2px solid;animation:ringPulse 3s ease-in-out infinite;pointer-events:none}
         @keyframes ringPulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.2);opacity:0}}
+        .neon-select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2300f7ff' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
         .ft-bar{background:linear-gradient(90deg,rgba(0,247,255,.05),rgba(180,77,255,.05),rgba(0,247,255,.05));border-top:1px solid rgba(180,77,255,.15);padding:8px 16px;text-align:center}
         .rainbow-text{background:linear-gradient(90deg,var(--p),var(--v),var(--c),var(--g),var(--y),var(--p));background-size:300% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbowShift 3s linear infinite}
         @keyframes rainbowShift{0%{background-position:0% 50%}100%{background-position:300% 50%}}
@@ -133,26 +274,49 @@
         ::-webkit-scrollbar{width:3px}
         ::-webkit-scrollbar-track{background:transparent}
         ::-webkit-scrollbar-thumb{background:var(--v);border-radius:999px}
-        .hdr-inner{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;gap:8px}
+
+        /* ── MOBILE SPECIFIC ── */
+        .hdr-inner{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:.75rem 1rem;
+            gap:8px;
+        }
         .hdr-left{min-width:0;flex:1}
         .hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
-        .sub-title{font-family:'Orbitron',sans-serif;font-size:clamp(6px,2.2vw,8px);letter-spacing:clamp(1px,1.5vw,3px)}
+        .sub-title{
+            font-family:'Orbitron',sans-serif;
+            font-size:clamp(6px,2.2vw,8px);
+            letter-spacing:clamp(1px,1.5vw,3px);
+        }
         .stats-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem}
         .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
         .content-pad{padding:.875rem}
-        .space-y-mobile>*+*{margin-top:.75rem}
+        .space-y-mobile > * + *{margin-top:.75rem}
         .mb-mobile{margin-bottom:.875rem}
-        .dev-avatar{width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid var(--v);box-shadow:0 0 25px rgba(180,77,255,.5),0 0 50px rgba(0,247,255,.2);display:block}
+        .dev-avatar{
+            width:72px;height:72px;
+            border-radius:50%;
+            object-fit:cover;
+            border:2px solid var(--v);
+            box-shadow:0 0 25px rgba(180,77,255,.5),0 0 50px rgba(0,247,255,.2);
+            display:block;
+        }
         .steps-list{display:flex;flex-direction:column;gap:.875rem}
         .step-row{display:flex;gap:.75rem;align-items:flex-start}
         .step-text-title{font-weight:600;display:block;font-size:.85rem}
         .step-text-desc{color:rgba(200,200,255,.45);font-size:.78rem;line-height:1.5}
         .modal-icon-wrap{margin:0 auto;width:60px;height:60px;display:flex;align-items:center;justify-content:center;margin-bottom:.875rem}
         .nav-row{display:flex;justify-content:space-around;align-items:center;padding:4px 0}
-        .retry-banner{display:none;background:linear-gradient(135deg,rgba(255,230,0,.12),rgba(255,106,0,.08));border-bottom:1px solid rgba(255,230,0,.3);padding:5px 12px;text-align:center;font-family:'Orbitron',sans-serif;font-size:8px;letter-spacing:2px;color:var(--y);animation:bannerPulse 1.5s ease-in-out infinite}
-        @keyframes bannerPulse{0%,100%{opacity:.8}50%{opacity:1}}
-        .retry-banner.show{display:block}
-        @media(max-width:360px){.logo-glitch{font-size:1rem;letter-spacing:1px}.stat-n{font-size:1.5rem}.badge{font-size:6px;padding:2px 6px}.btn{font-size:.7rem;letter-spacing:2px}.content-pad{padding:.75rem}}
+
+        @media(max-width:360px){
+            .logo-glitch{font-size:1rem;letter-spacing:1px}
+            .stat-n{font-size:1.5rem}
+            .badge{font-size:6px;padding:2px 6px}
+            .btn{font-size:.7rem;letter-spacing:2px}
+            .content-pad{padding:.75rem}
+        }
     </style>
 </head>
 <body>
@@ -166,28 +330,30 @@
 <div class="data-strm2" id="ds2"></div>
 
 <div class="wrap">
+    <!-- HEADER -->
     <header class="hdr">
         <div class="hdr-inner">
             <div class="hdr-left">
                 <div class="logo-wrap">
-                    <div class="logo-glitch gt" data-text="SHAREBOOST"><span class="gt">SHARE</span><span class="nt-c">BOOST</span></div>
+                    <div class="logo-glitch gt" data-text="SHAREBOOST">
+                        <span class="gt">SHARE</span><span class="nt-c">BOOST</span>
+                    </div>
                 </div>
                 <div class="sub-title nt-p mt-1">⚡ FBSHARE SYSTEM V3 ⚡</div>
             </div>
             <div class="hdr-right">
                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
-                    <div class="conn-dot ok" id="connDot"></div>
-                    <span id="connLabel" style="font-family:'Orbitron';font-size:7px;letter-spacing:1.5px;color:var(--g)">ONLINE</span>
+                    <div class="pulse-dot"></div>
+                    <span style="font-family:'Orbitron';font-size:7px;letter-spacing:1.5px;color:var(--g)">ONLINE</span>
                 </div>
                 <span class="badge">V3.0</span>
             </div>
         </div>
     </header>
 
-    <div class="retry-banner" id="retryBanner">⚠ CONNECTION LOST — RECONNECTING...</div>
-
+    <!-- TICKER -->
     <div class="ticker">
-        <div class="ticker-inner">
+        <div class="ticker-inner" id="tkr">
             <span class="ticker-item">⚡ SHARE BOOST ACTIVE</span>
             <span class="ticker-item">🔥 FBSHAREBOOSTER</span>
             <span class="ticker-item">💎 MAX PERFORMANCE</span>
@@ -199,8 +365,11 @@
         </div>
     </div>
 
+    <!-- HOME SECTION -->
     <section id="home-sec" class="sec act">
         <div class="content-pad space-y-mobile">
+
+            <!-- STATS -->
             <div class="stats-row">
                 <div class="stat-card sc-p holo-card">
                     <div class="stat-l nt-p">SESSIONS</div>
@@ -222,19 +391,23 @@
                 </div>
             </div>
 
+            <!-- FORM -->
             <form id="shareForm" class="glass holo-card space-y-mobile mb-mobile" style="padding:1rem">
                 <div class="text-center">
                     <div style="font-family:'Orbitron';font-size:8px;letter-spacing:3px;" class="nt-v">━━ MISSION CONFIG ━━</div>
                 </div>
                 <div class="neon-divider"></div>
+
                 <div>
                     <div class="lbl"><i data-lucide="cookie" class="w-3 h-3"></i> FACEBOOK COOKIES</div>
                     <textarea name="cookie" class="inp" rows="3" placeholder="Paste your fb_dtsg / c_user cookies here..."></textarea>
                 </div>
+
                 <div>
                     <div class="lbl"><i data-lucide="link-2" class="w-3 h-3"></i> TARGET POST URL</div>
                     <input type="url" name="url" class="inp" placeholder="https://www.facebook.com/...">
                 </div>
+
                 <div class="form-grid">
                     <div>
                         <div class="lbl"><i data-lucide="zap" class="w-3 h-3"></i> SHARE COUNT</div>
@@ -245,6 +418,7 @@
                         <input type="number" name="interval" class="inp" placeholder="e.g. 5" inputmode="numeric">
                     </div>
                 </div>
+
                 <div class="neon-divider"></div>
                 <div class="btn-wrap">
                     <button type="submit" class="btn" id="submitBtn">
@@ -256,6 +430,7 @@
                 </div>
             </form>
 
+            <!-- RECENT SESSIONS -->
             <div class="section-hdr">
                 <div style="width:3px;height:16px;background:linear-gradient(180deg,var(--p),var(--v));border-radius:999px;flex-shrink:0"></div>
                 <span style="font-family:'Orbitron';font-size:8px;letter-spacing:2px;" class="nt-v">RECENT SESSIONS</span>
@@ -265,6 +440,7 @@
         </div>
     </section>
 
+    <!-- SESSIONS SECTION -->
     <section id="sessions-sec" class="sec">
         <div class="content-pad">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem">
@@ -283,14 +459,18 @@
         </div>
     </section>
 
+    <!-- ABOUT SECTION -->
     <section id="about-sec" class="sec">
         <div class="content-pad space-y-mobile">
+
             <div class="glass holo-card" style="padding:1rem">
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:.75rem">
                     <i data-lucide="cpu" class="w-4 h-4 nt-c"></i>
                     <span style="font-family:'Orbitron';font-size:10px;letter-spacing:2px;" class="gt font-bold">SYSTEM INFO</span>
                 </div>
-                <p style="color:rgba(200,200,255,.65);font-size:.85rem;line-height:1.7"><span class="nt-c">SHARE BOOST V3</span> is an ultra-powerful SHAREBOOSTER automation engine built to amplify your Facebook post reach through precision-controlled, session-based sharing with real-time neon telemetry.</p>
+                <p style="color:rgba(200,200,255,.65);font-size:.85rem;line-height:1.7">
+                    <span class="nt-c">SHARE BOOST V3</span> is an ultra-powerful SHAREBOOSTER automation engine built to amplify your Facebook post reach through precision-controlled, session-based sharing with real-time neon telemetry.
+                </p>
             </div>
 
             <div class="glass holo-card" style="padding:1rem">
@@ -299,10 +479,34 @@
                     <span style="font-family:'Orbitron';font-size:10px;letter-spacing:2px;" class="gt font-bold">OPERATION GUIDE</span>
                 </div>
                 <div class="steps-list">
-                    <div class="step-row"><div class="step-c">01</div><div><span class="step-text-title nt-c">Extract Cookies</span><span class="step-text-desc">Use a browser extension to export your Facebook session cookies.</span></div></div>
-                    <div class="step-row"><div class="step-c">02</div><div><span class="step-text-title nt-c">Target URL</span><span class="step-text-desc">Paste the full Facebook post link you want to amplify.</span></div></div>
-                    <div class="step-row"><div class="step-c">03</div><div><span class="step-text-title nt-c">Configure Power</span><span class="step-text-desc">Set share count (recommended: 50-200) and interval (min: 5s).</span></div></div>
-                    <div class="step-row"><div class="step-c">04</div><div><span class="step-text-title nt-c">IGNITE</span><span class="step-text-desc">Hit the button and watch the neon progress in Sessions.</span></div></div>
+                    <div class="step-row">
+                        <div class="step-c">01</div>
+                        <div>
+                            <span class="step-text-title nt-c">Extract Cookies</span>
+                            <span class="step-text-desc">Use a browser extension to export your Facebook session cookies.</span>
+                        </div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-c">02</div>
+                        <div>
+                            <span class="step-text-title nt-c">Target URL</span>
+                            <span class="step-text-desc">Paste the full Facebook post link you want to amplify.</span>
+                        </div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-c">03</div>
+                        <div>
+                            <span class="step-text-title nt-c">Configure Power</span>
+                            <span class="step-text-desc">Set share count (recommended: 50-200) and interval (min: 5s).</span>
+                        </div>
+                    </div>
+                    <div class="step-row">
+                        <div class="step-c">04</div>
+                        <div>
+                            <span class="step-text-title nt-c">IGNITE</span>
+                            <span class="step-text-desc">Hit the button and watch the neon progress in Sessions.</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -315,7 +519,9 @@
             </div>
 
             <div class="glass" style="padding:1rem">
-                <div class="text-center mb-mobile"><div style="font-family:'Orbitron';font-size:8px;letter-spacing:3px;" class="nt-v">━━ DEVELOPER ━━</div></div>
+                <div class="text-center mb-mobile">
+                    <div style="font-family:'Orbitron';font-size:8px;letter-spacing:3px;" class="nt-v">━━ DEVELOPER ━━</div>
+                </div>
                 <div style="display:flex;justify-content:center;margin-bottom:.75rem">
                     <div style="position:relative;display:inline-block">
                         <img src="https://i.imgur.com/GRNsJbf.gif" class="dev-avatar">
@@ -327,9 +533,15 @@
                     <div style="font-size:.72rem;color:rgba(200,200,255,.4);margin-top:4px">VincentSensei ⚡</div>
                 </div>
                 <div style="display:flex;justify-content:center;gap:1rem">
-                    <a href="https://www.facebook.com/vincent.09123455" target="_blank" class="soc-btn"><i data-lucide="facebook" class="w-5 h-5 nt-c"></i></a>
-                    <a href="https://github.com/" target="_blank" class="soc-btn"><i data-lucide="github" class="w-5 h-5 nt-v"></i></a>
-                    <a href="https://my-portfolio-v-ten.vercel.app/" class="soc-btn"><i data-lucide="globe" class="w-5 h-5 nt-p"></i></a>
+                    <a href="https://www.facebook.com/vincent.09123455" target="_blank" class="soc-btn">
+                        <i data-lucide="facebook" class="w-5 h-5 nt-c"></i>
+                    </a>
+                    <a href="https://github.com/" target="_blank" class="soc-btn">
+                        <i data-lucide="github" class="w-5 h-5 nt-v"></i>
+                    </a>
+                    <a href="https://my-portfolio-v-ten.vercel.app/" class="soc-btn">
+                        <i data-lucide="globe" class="w-5 h-5 nt-p"></i>
+                    </a>
                 </div>
             </div>
 
@@ -341,15 +553,26 @@
         </div>
     </section>
 
+    <!-- BOTTOM NAV -->
     <nav class="neon-nav">
         <div class="nav-row">
-            <a href="#" data-s="home" class="nv act"><i data-lucide="home" class="w-5 h-5"></i><span>HOME</span></a>
-            <a href="#" data-s="sessions" class="nv"><i data-lucide="layers" class="w-5 h-5"></i><span>SESSIONS</span></a>
-            <a href="#" data-s="about" class="nv"><i data-lucide="shield" class="w-5 h-5"></i><span>ABOUT</span></a>
+            <a href="#" data-s="home" class="nv act">
+                <i data-lucide="home" class="w-5 h-5"></i>
+                <span>HOME</span>
+            </a>
+            <a href="#" data-s="sessions" class="nv">
+                <i data-lucide="layers" class="w-5 h-5"></i>
+                <span>SESSIONS</span>
+            </a>
+            <a href="#" data-s="about" class="nv">
+                <i data-lucide="shield" class="w-5 h-5"></i>
+                <span>ABOUT</span>
+            </a>
         </div>
     </nav>
 </div>
 
+<!-- MODAL -->
 <div id="modal-container">
     <div id="modal-content">
         <div class="modal-icon-wrap" id="modal-icon"></div>
@@ -385,13 +608,16 @@
     mkStream('ds1');mkStream('ds2');
 })();
 
-document.querySelectorAll('.nv').forEach(item=>{
+const navItems=document.querySelectorAll('.nv');
+const sections=document.querySelectorAll('.sec');
+
+navItems.forEach(item=>{
     item.addEventListener('click',e=>{
         e.preventDefault();
         const s=item.dataset.s;
-        document.querySelectorAll('.nv').forEach(n=>n.classList.remove('act'));
+        navItems.forEach(n=>n.classList.remove('act'));
         item.classList.add('act');
-        document.querySelectorAll('.sec').forEach(sec=>{
+        sections.forEach(sec=>{
             sec.classList.remove('act');
             if(sec.id===`${s}-sec`)sec.classList.add('act');
         });
@@ -400,17 +626,29 @@ document.querySelectorAll('.nv').forEach(item=>{
 });
 
 function showModal(type,title,msg){
-    const cfg={success:{color:'var(--g)',icon:'check-circle'},error:{color:'var(--p)',icon:'x-circle'},invalid:{color:'var(--y)',icon:'alert-triangle'},info:{color:'var(--c)',icon:'info'}};
+    const c=document.getElementById('modal-container');
+    const icon=document.getElementById('modal-icon');
+    const t=document.getElementById('modal-title');
+    const m=document.getElementById('modal-msg');
+    const cfg={
+        success:{color:'var(--g)',icon:'check-circle',glow:'rgba(57,255,20,.4)'},
+        error:{color:'var(--p)',icon:'x-circle',glow:'rgba(255,45,149,.4)'},
+        invalid:{color:'var(--y)',icon:'alert-triangle',glow:'rgba(255,230,0,.4)'},
+        info:{color:'var(--c)',icon:'info',glow:'rgba(0,247,255,.4)'}
+    };
     const cf=cfg[type]||cfg.info;
-    document.getElementById('modal-icon').innerHTML=`<i data-lucide="${cf.icon}" style="width:2.75rem;height:2.75rem;color:${cf.color};filter:drop-shadow(0 0 15px ${cf.color})"></i>`;
-    document.getElementById('modal-title').textContent=title;
-    document.getElementById('modal-msg').innerHTML=msg;
+    icon.innerHTML=`<i data-lucide="${cf.icon}" style="width:2.75rem;height:2.75rem;color:${cf.color};filter:drop-shadow(0 0 15px ${cf.color})"></i>`;
+    document.getElementById('modal-content').style.boxShadow=`0 0 50px ${cf.glow},0 0 100px rgba(180,77,255,.15),0 25px 50px rgba(0,0,0,.6)`;
+    t.textContent=title;
+    m.innerHTML=msg;
     lucide.createIcons();
-    document.getElementById('modal-container').classList.add('act');
+    c.classList.add('act');
 }
-function closeModal(){document.getElementById('modal-container').classList.remove('act')}
 
-const mainBtn=document.querySelector('.btn');
+function closeModal(){
+    document.getElementById('modal-container').classList.remove('act');
+}
+
 function addRipple(btn,e){
     const r=document.createElement('span');
     r.className='ripple-fx';
@@ -421,6 +659,8 @@ function addRipple(btn,e){
     btn.appendChild(r);
     setTimeout(()=>r.remove(),700);
 }
+
+const mainBtn=document.querySelector('.btn');
 mainBtn.addEventListener('click',function(e){addRipple(this,e)});
 mainBtn.addEventListener('touchstart',function(e){addRipple(this,e)},{passive:true});
 
@@ -481,7 +721,9 @@ function mkSession(s){
                 <div style="font-family:'Orbitron';font-size:6px;letter-spacing:2px;color:${sc};opacity:.8">${st}</div>
             </div>
         </div>
-        <div class="prog-bar"><div class="prog-val" style="width:${pct}%;${err?'background:linear-gradient(90deg,var(--p),var(--o));box-shadow:0 0 10px var(--p)':''}"></div></div>
+        <div class="prog-bar">
+            <div class="prog-val" style="width:${pct}%;${err?'background:linear-gradient(90deg,var(--p),var(--o));box-shadow:0 0 10px var(--p)':''}"></div>
+        </div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.5rem">
             <div style="font-family:'Orbitron';font-size:6px;letter-spacing:2px;color:rgba(200,200,255,.3)">${pct.toFixed(1)}% COMPLETE</div>
             ${!done&&!err?`<div style="font-family:'Orbitron';font-size:6px;letter-spacing:1px;color:rgba(200,200,255,.3)">ETA: ${Math.ceil((s.target-s.count)*(s.interval||5))}s</div>`:''}
@@ -490,44 +732,10 @@ function mkSession(s){
     </div>`;
 }
 
-const connDot=document.getElementById('connDot');
-const connLabel=document.getElementById('connLabel');
-const retryBanner=document.getElementById('retryBanner');
-let failCount=0;
-let pollTimer=null;
-let wakeLock=null;
-
-function setConnStatus(ok){
-    if(ok){
-        connDot.className='conn-dot ok';
-        connLabel.style.color='var(--g)';
-        connLabel.textContent='ONLINE';
-        retryBanner.classList.remove('show');
-        failCount=0;
-    }else{
-        connDot.className='conn-dot err';
-        connLabel.style.color='var(--p)';
-        connLabel.textContent='OFFLINE';
-        retryBanner.classList.add('show');
-    }
-}
-
-function setConnWarn(){
-    connDot.className='conn-dot warn';
-    connLabel.style.color='var(--y)';
-    connLabel.textContent='RETRY';
-    retryBanner.classList.add('show');
-}
-
 async function updateSessions(){
     try{
-        const ctrl=new AbortController();
-        const tid=setTimeout(()=>ctrl.abort(),8000);
-        const res=await fetch('/total',{signal:ctrl.signal,cache:'no-store',headers:{'Cache-Control':'no-cache'}});
-        clearTimeout(tid);
-        if(!res.ok)throw new Error('bad response');
+        const res=await fetch('/total');
         const sessions=await res.json();
-        setConnStatus(true);
         const active=sessions.filter(s=>s.count<s.target&&!s.error).length;
         const total=sessions.reduce((a,s)=>a+s.count,0);
         const aEl=document.getElementById('activeSessions');
@@ -539,75 +747,13 @@ async function updateSessions(){
         document.getElementById('sessions').innerHTML=sessions.slice(0,3).map(mkSession).join('');
         document.getElementById('allSessions').innerHTML=html;
         const es=document.getElementById('emptyState');
-        if(es){es.style.display=sessions.length===0?'block':'none'}
+        if(sessions.length===0){if(es)es.style.display='block'}else{if(es)es.style.display='none'}
         lucide.createIcons();
-        failCount=0;
-        schedulePoll(2000);
-    }catch(e){
-        failCount++;
-        if(failCount>=2)setConnWarn();
-        if(failCount>=5)setConnStatus(false);
-        const delay=Math.min(2000*Math.pow(1.5,failCount-1),30000);
-        schedulePoll(delay);
-    }
+    }catch(e){console.error(e)}
 }
 
-function schedulePoll(delay){
-    if(pollTimer)clearTimeout(pollTimer);
-    pollTimer=setTimeout(updateSessions,delay);
-}
-
-async function acquireWakeLock(){
-    if('wakeLock' in navigator){
-        try{
-            wakeLock=await navigator.wakeLock.request('screen');
-            wakeLock.addEventListener('release',()=>{wakeLock=null});
-        }catch(e){}
-    }
-}
-
-async function reacquireWakeLock(){
-    if('wakeLock' in navigator&&!wakeLock&&document.visibilityState==='visible'){
-        await acquireWakeLock();
-    }
-}
-
-document.addEventListener('visibilitychange',async()=>{
-    if(document.visibilityState==='visible'){
-        await reacquireWakeLock();
-        if(pollTimer)clearTimeout(pollTimer);
-        failCount=0;
-        updateSessions();
-    }
-});
-
-window.addEventListener('online',()=>{
-    failCount=0;
-    updateSessions();
-});
-
-window.addEventListener('offline',()=>{
-    setConnStatus(false);
-    if(pollTimer)clearTimeout(pollTimer);
-    schedulePoll(5000);
-});
-
-window.addEventListener('focus',()=>{
-    if(pollTimer)clearTimeout(pollTimer);
-    failCount=0;
-    updateSessions();
-});
-
-window.addEventListener('pageshow',e=>{
-    if(e.persisted){
-        failCount=0;
-        updateSessions();
-    }
-});
-
-window.addEventListener('DOMContentLoaded',async()=>{
+window.addEventListener('DOMContentLoaded',()=>{
     lucide.createIcons();
-    await acquireWakeLock();
     if(!localStorage.getItem('sb_v3_seen')){
         setTimeout(()=>{
             showModal('info','⚡ SYSTEM V3 ONLINE',`
@@ -619,9 +765,9 @@ window.addEventListener('DOMContentLoaded',async()=>{
                     <ul style="display:flex;flex-direction:column;gap:.5rem;font-size:.78rem;color:rgba(200,200,255,.6)">
                         <li><span class="nt-g">⚡</span> Ultra neon cyberpunk UI overhaul</li>
                         <li><span class="nt-p">⚡</span> Glitch logo animation system</li>
-                        <li><span class="nt-c">⚡</span> Auto-reconnect with retry backoff</li>
-                        <li><span style="color:var(--y)">⚡</span> Wake Lock — screen stays active</li>
-                        <li><span class="nt-v">⚡</span> Visibility & focus resume polling</li>
+                        <li><span class="nt-c">⚡</span> Real-time holographic session cards</li>
+                        <li><span style="color:var(--y)">⚡</span> Particle & data stream effects</li>
+                        <li><span class="nt-v">⚡</span> Enhanced cookie & URL validation</li>
                         <li><span class="nt-g">⚡</span> ETA calculator per session</li>
                     </ul>
                 </div>
@@ -629,6 +775,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
             localStorage.setItem('sb_v3_seen','1');
         },800);
     }
+    setInterval(updateSessions,2000);
     updateSessions();
 });
 </script>
