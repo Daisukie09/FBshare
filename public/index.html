@@ -21,7 +21,6 @@
     </script>
     <style>
         * { box-sizing: border-box; }
-
         :root {
             --neon-pink: #ff2d95;
             --neon-cyan: #00f7ff;
@@ -33,7 +32,6 @@
             --dark-bg: #0a0a0f;
             --card-bg: rgba(15, 15, 30, 0.7);
         }
-
         body {
             font-family: 'Rajdhani', sans-serif;
             -webkit-tap-highlight-color: transparent;
@@ -41,8 +39,6 @@
             background: var(--dark-bg);
             color: #e0e0ff;
         }
-
-        /* ===== ANIMATED BACKGROUND ===== */
         .cyber-bg {
             position: fixed;
             inset: 0;
@@ -50,7 +46,6 @@
             overflow: hidden;
             background: linear-gradient(135deg, #0a0a1a 0%, #0d0015 25%, #000a1a 50%, #0a0014 75%, #0a0a1a 100%);
         }
-
         .cyber-bg::before {
             content: '';
             position: absolute;
@@ -61,22 +56,17 @@
                 radial-gradient(ellipse at 50% 80%, rgba(180, 77, 255, 0.08) 0%, transparent 50%);
             animation: bgPulse 8s ease-in-out infinite;
         }
-
         .cyber-bg::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: 
-                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 247, 255, 0.015) 2px, rgba(0, 247, 255, 0.015) 4px);
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 247, 255, 0.015) 2px, rgba(0, 247, 255, 0.015) 4px);
             pointer-events: none;
         }
-
         @keyframes bgPulse {
             0%, 100% { transform: scale(1) rotate(0deg); }
             50% { transform: scale(1.1) rotate(3deg); }
         }
-
-        /* ===== FLOATING PARTICLES ===== */
         .particles {
             position: fixed;
             inset: 0;
@@ -84,22 +74,18 @@
             pointer-events: none;
             overflow: hidden;
         }
-
         .particle {
             position: absolute;
             border-radius: 50%;
             animation: floatParticle linear infinite;
             opacity: 0;
         }
-
         @keyframes floatParticle {
             0% { transform: translateY(100vh) scale(0); opacity: 0; }
             10% { opacity: 1; }
             90% { opacity: 1; }
             100% { transform: translateY(-10vh) scale(1); opacity: 0; }
         }
-
-        /* ===== GRID LINES ===== */
         .grid-overlay {
             position: fixed;
             inset: 0;
@@ -111,13 +97,10 @@
             background-size: 50px 50px;
             animation: gridMove 20s linear infinite;
         }
-
         @keyframes gridMove {
             0% { transform: perspective(500px) rotateX(0deg); }
             100% { transform: perspective(500px) rotateX(0deg) translateY(50px); }
         }
-
-        /* ===== MAIN CONTAINER ===== */
         .max-md-container {
             height: 100vh;
             overflow-y: auto;
@@ -127,8 +110,6 @@
             z-index: 10;
         }
         .max-md-container::-webkit-scrollbar { display: none; }
-
-        /* ===== GLASSMORPHISM CARD ===== */
         .glass-card {
             background: linear-gradient(135deg, rgba(15, 15, 35, 0.8), rgba(25, 15, 45, 0.6));
             backdrop-filter: blur(20px);
@@ -138,7 +119,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .glass-card::before {
             content: '';
             position: absolute;
@@ -149,28 +129,22 @@
             background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-purple), var(--neon-pink), transparent);
             opacity: 0.6;
         }
-
-        /* ===== NEON GLOW TEXT ===== */
         .neon-text-pink {
             color: var(--neon-pink);
             text-shadow: 0 0 7px var(--neon-pink), 0 0 10px var(--neon-pink), 0 0 21px var(--neon-pink), 0 0 42px var(--neon-pink);
         }
-
         .neon-text-cyan {
             color: var(--neon-cyan);
             text-shadow: 0 0 7px var(--neon-cyan), 0 0 10px var(--neon-cyan), 0 0 21px var(--neon-cyan), 0 0 42px var(--neon-cyan);
         }
-
         .neon-text-purple {
             color: var(--neon-purple);
             text-shadow: 0 0 7px var(--neon-purple), 0 0 10px var(--neon-purple), 0 0 21px var(--neon-purple);
         }
-
         .neon-text-green {
             color: var(--neon-green);
             text-shadow: 0 0 7px var(--neon-green), 0 0 10px var(--neon-green), 0 0 21px var(--neon-green);
         }
-
         .gradient-text {
             background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple), var(--neon-cyan));
             -webkit-background-clip: text;
@@ -178,16 +152,6 @@
             background-clip: text;
             filter: drop-shadow(0 0 10px rgba(180, 77, 255, 0.5));
         }
-
-        .gradient-text-alt {
-            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green), var(--neon-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 0 10px rgba(0, 247, 255, 0.5));
-        }
-
-        /* ===== HEADER ===== */
         .neon-header {
             background: linear-gradient(180deg, rgba(10, 10, 20, 0.95), rgba(10, 10, 20, 0.8));
             backdrop-filter: blur(30px);
@@ -195,7 +159,6 @@
             border-bottom: 1px solid rgba(180, 77, 255, 0.3);
             position: relative;
         }
-
         .neon-header::after {
             content: '';
             position: absolute;
@@ -207,13 +170,10 @@
             background-size: 200% 100%;
             animation: headerGlow 3s linear infinite;
         }
-
         @keyframes headerGlow {
             0% { background-position: 0% 50%; }
             100% { background-position: 200% 50%; }
         }
-
-        /* ===== VERSION BADGE ===== */
         .version-badge {
             background: linear-gradient(135deg, rgba(255, 45, 149, 0.2), rgba(180, 77, 255, 0.2));
             border: 1px solid rgba(255, 45, 149, 0.4);
@@ -225,32 +185,26 @@
             border-radius: 999px;
             animation: badgePulse 2s ease-in-out infinite;
         }
-
         @keyframes badgePulse {
             0%, 100% { box-shadow: 0 0 5px rgba(255, 45, 149, 0.3); }
             50% { box-shadow: 0 0 15px rgba(255, 45, 149, 0.6); }
         }
-
-        /* ===== STAT CARDS ===== */
         .stat-card {
             position: relative;
             overflow: hidden;
             border-radius: 1rem;
             padding: 1.25rem;
         }
-
         .stat-card-pink {
             background: linear-gradient(135deg, rgba(255, 45, 149, 0.1), rgba(180, 77, 255, 0.05));
             border: 1px solid rgba(255, 45, 149, 0.3);
             box-shadow: 0 0 20px rgba(255, 45, 149, 0.1), inset 0 0 20px rgba(255, 45, 149, 0.05);
         }
-
         .stat-card-cyan {
             background: linear-gradient(135deg, rgba(0, 247, 255, 0.1), rgba(57, 255, 20, 0.05));
             border: 1px solid rgba(0, 247, 255, 0.3);
             box-shadow: 0 0 20px rgba(0, 247, 255, 0.1), inset 0 0 20px rgba(0, 247, 255, 0.05);
         }
-
         .stat-card::after {
             content: '';
             position: absolute;
@@ -261,11 +215,7 @@
             background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.03), transparent 30%);
             animation: rotateBg 6s linear infinite;
         }
-
-        @keyframes rotateBg {
-            100% { transform: rotate(360deg); }
-        }
-
+        @keyframes rotateBg { 100% { transform: rotate(360deg); } }
         .stat-number {
             font-family: 'Orbitron', sans-serif;
             font-size: 2rem;
@@ -273,7 +223,6 @@
             position: relative;
             z-index: 2;
         }
-
         .stat-label {
             font-family: 'Orbitron', sans-serif;
             font-size: 0.6rem;
@@ -283,12 +232,6 @@
             position: relative;
             z-index: 2;
         }
-
-        /* ===== NEON INPUT FIELDS ===== */
-        .neon-input-group {
-            position: relative;
-        }
-
         .neon-input-group label {
             font-family: 'Orbitron', sans-serif;
             font-size: 0.65rem;
@@ -300,7 +243,6 @@
             gap: 8px;
             margin-bottom: 6px;
         }
-
         .neon-input {
             width: 100%;
             padding: 12px 16px;
@@ -314,21 +256,12 @@
             transition: all 0.3s ease;
             outline: none;
         }
-
-        .neon-input::placeholder {
-            color: rgba(180, 160, 255, 0.3);
-        }
-
+        .neon-input::placeholder { color: rgba(180, 160, 255, 0.3); }
         .neon-input:focus {
             border-color: var(--neon-cyan);
             box-shadow: 0 0 15px rgba(0, 247, 255, 0.2), 0 0 30px rgba(0, 247, 255, 0.1), inset 0 0 15px rgba(0, 247, 255, 0.05);
         }
-
-        textarea.neon-input {
-            resize: none;
-        }
-
-        /* ===== NEON BUTTON ===== */
+        textarea.neon-input { resize: none; }
         .neon-button {
             position: relative;
             width: 100%;
@@ -349,23 +282,15 @@
             transition: all 0.3s ease;
             box-shadow: 0 0 20px rgba(180, 77, 255, 0.4), 0 0 40px rgba(180, 77, 255, 0.2);
         }
-
         .neon-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 0 30px rgba(180, 77, 255, 0.6), 0 0 60px rgba(180, 77, 255, 0.3), 0 0 90px rgba(255, 45, 149, 0.2);
         }
-
-        .neon-button:active {
-            transform: translateY(0);
-        }
-
+        .neon-button:active { transform: translateY(0); }
         .neon-button::before {
             content: '';
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
             background: linear-gradient(135deg, var(--neon-pink), var(--neon-cyan), var(--neon-purple), var(--neon-green), var(--neon-pink));
             background-size: 400% 400%;
             border-radius: 14px;
@@ -374,30 +299,21 @@
             filter: blur(8px);
             opacity: 0.7;
         }
-
         @keyframes btnGradient {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
         }
-
         @keyframes btnBorderGlow {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
         }
-
-        /* ===== RIPPLE EFFECT ===== */
-        .ripple {
-            position: relative;
-            overflow: hidden;
-        }
+        .ripple { position: relative; overflow: hidden; }
         .ripple::after {
             content: "";
             display: block;
             position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
+            width: 100%; height: 100%;
+            top: 0; left: 0;
             pointer-events: none;
             background-image: radial-gradient(circle, rgba(0, 247, 255, 0.4) 10%, transparent 10.01%);
             background-repeat: no-repeat;
@@ -411,17 +327,13 @@
             opacity: .6;
             transition: 0s;
         }
-
-        /* ===== PROGRESS BAR ===== */
         .progress-bar {
             width: 100%;
             height: 4px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 999px;
             overflow: hidden;
-            position: relative;
         }
-
         .progress-value {
             height: 100%;
             border-radius: 999px;
@@ -431,46 +343,28 @@
             box-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-purple);
             transition: width 0.3s ease;
         }
-
         @keyframes progressGlow {
             0% { background-position: 0% 50%; }
             100% { background-position: 200% 50%; }
         }
-
-        /* ===== SESSION CARDS ===== */
-        .session-card {
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
+        .session-card { transition: all 0.3s ease; position: relative; }
         .session-card:hover {
             transform: translateY(-3px) scale(1.01);
             box-shadow: 0 0 30px rgba(180, 77, 255, 0.2), 0 0 60px rgba(0, 247, 255, 0.1);
         }
-
-        .session-card:hover::before {
-            opacity: 1 !important;
-        }
-
         .session-icon-orb {
-            width: 36px;
-            height: 36px;
+            width: 36px; height: 36px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             background: linear-gradient(135deg, rgba(255, 45, 149, 0.2), rgba(180, 77, 255, 0.2));
             border: 1px solid rgba(180, 77, 255, 0.4);
             box-shadow: 0 0 10px rgba(180, 77, 255, 0.3);
             animation: orbPulse 2s ease-in-out infinite;
         }
-
         @keyframes orbPulse {
             0%, 100% { box-shadow: 0 0 10px rgba(180, 77, 255, 0.3); }
             50% { box-shadow: 0 0 20px rgba(180, 77, 255, 0.6), 0 0 30px rgba(0, 247, 255, 0.3); }
         }
-
-        /* ===== NAVIGATION ===== */
         .neon-nav {
             background: linear-gradient(180deg, rgba(10, 10, 20, 0.85), rgba(10, 10, 20, 0.98));
             backdrop-filter: blur(30px);
@@ -478,46 +372,35 @@
             border-top: 1px solid rgba(180, 77, 255, 0.2);
             position: relative;
         }
-
         .neon-nav::before {
             content: '';
             position: absolute;
-            top: -1px;
-            left: 0;
-            right: 0;
+            top: -1px; left: 0; right: 0;
             height: 2px;
             background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink), var(--neon-purple), var(--neon-cyan));
             background-size: 200% 100%;
             animation: navBorder 3s linear infinite;
         }
-
         @keyframes navBorder {
             0% { background-position: 0% 50%; }
             100% { background-position: 200% 50%; }
         }
-
         .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: flex; flex-direction: column; align-items: center;
             padding: 8px 16px;
             transition: all 0.3s ease;
-            position: relative;
             color: rgba(180, 160, 255, 0.4);
         }
-
         .nav-item.active-nav {
             color: var(--neon-cyan);
             filter: drop-shadow(0 0 8px rgba(0, 247, 255, 0.6));
         }
-
         .nav-item span {
             font-family: 'Orbitron', sans-serif;
             font-size: 0.55rem;
             letter-spacing: 2px;
             margin-top: 4px;
         }
-
         .nav-indicator {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
@@ -525,37 +408,26 @@
             height: 3px;
             border-radius: 999px;
         }
-
-        /* ===== CONTENT SECTIONS ===== */
         .content-section {
             display: none;
             animation: fadeIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .content-section.active { display: block; }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px) scale(0.98); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
-
-        /* ===== STEP CIRCLES ===== */
         .step-circle {
-            width: 28px;
-            height: 28px;
+            width: 28px; height: 28px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.65rem;
-            font-weight: 700;
+            font-size: 0.65rem; font-weight: 700;
             flex-shrink: 0;
             background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
             color: white;
             box-shadow: 0 0 10px rgba(180, 77, 255, 0.4);
         }
-
-        /* ===== WARNING BOX ===== */
         .neon-warning {
             background: linear-gradient(135deg, rgba(255, 230, 0, 0.08), rgba(255, 106, 0, 0.05));
             border: 1px solid rgba(255, 230, 0, 0.3);
@@ -563,49 +435,36 @@
             padding: 1rem;
             box-shadow: 0 0 15px rgba(255, 230, 0, 0.1), inset 0 0 15px rgba(255, 230, 0, 0.03);
         }
-
-        /* ===== MODAL ===== */
         #modal-container {
             display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            align-items: center;
-            justify-content: center;
+            position: fixed; inset: 0; z-index: 100;
+            align-items: center; justify-content: center;
             padding: 1rem;
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
         }
-
         #modal-content {
             background: linear-gradient(135deg, rgba(15, 15, 35, 0.95), rgba(25, 15, 50, 0.95));
             backdrop-filter: blur(30px);
-            width: 100%;
-            max-width: 340px;
+            width: 100%; max-width: 340px;
             border-radius: 1.5rem;
             padding: 2rem 1.5rem;
             text-align: center;
             border: 1px solid rgba(180, 77, 255, 0.3);
             box-shadow: 0 0 40px rgba(180, 77, 255, 0.2), 0 0 80px rgba(0, 247, 255, 0.1), 0 25px 50px rgba(0, 0, 0, 0.5);
-            transform: scale(0.9);
-            opacity: 0;
+            transform: scale(0.9); opacity: 0;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
-
         #modal-content::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 2px;
             background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple), var(--neon-cyan), var(--neon-green));
             background-size: 200% 100%;
             animation: headerGlow 2s linear infinite;
         }
-
         #modal-icon {
             background: none !important;
             padding: 0 !important;
@@ -613,64 +472,31 @@
             box-shadow: none !important;
             border: none !important;
         }
-
         #modal-container.active { display: flex; }
-        #modal-container.active #modal-content {
-            transform: scale(1);
-            opacity: 1;
-        }
-
+        #modal-container.active #modal-content { transform: scale(1); opacity: 1; }
         .modal-dismiss-btn {
-            width: 100%;
-            padding: 12px;
+            width: 100%; padding: 12px;
             border: 1px solid rgba(180, 77, 255, 0.4);
             background: linear-gradient(135deg, rgba(180, 77, 255, 0.2), rgba(255, 45, 149, 0.2));
-            color: white;
-            border-radius: 12px;
+            color: white; border-radius: 12px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 3px;
-            cursor: pointer;
+            font-size: 0.75rem; font-weight: 600;
+            letter-spacing: 3px; cursor: pointer;
             transition: all 0.3s ease;
         }
-
         .modal-dismiss-btn:hover {
             box-shadow: 0 0 20px rgba(180, 77, 255, 0.4);
             transform: translateY(-1px);
         }
-
-        /* ===== HEX PATTERN DECORATIONS ===== */
-        .hex-decoration {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            border: 1px solid rgba(0, 247, 255, 0.1);
-            transform: rotate(45deg);
-            border-radius: 8px;
-            pointer-events: none;
-        }
-
-        /* ===== SCANNING LINE ===== */
         .scan-line {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            position: fixed; top: 0; left: 0; right: 0;
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
             z-index: 2;
             animation: scanDown 6s linear infinite;
-            opacity: 0.3;
-            pointer-events: none;
+            opacity: 0.3; pointer-events: none;
         }
-
-        @keyframes scanDown {
-            0% { top: -2px; }
-            100% { top: 100vh; }
-        }
-
-        /* ===== GLITCH EFFECT ===== */
+        @keyframes scanDown { 0% { top: -2px; } 100% { top: 100vh; } }
         @keyframes glitch {
             0%, 90%, 100% { transform: translate(0); }
             92% { transform: translate(-2px, 1px); }
@@ -678,112 +504,63 @@
             96% { transform: translate(-1px, -1px); }
             98% { transform: translate(1px, 1px); }
         }
-
-        .glitch-text:hover {
-            animation: glitch 0.3s ease infinite;
-        }
-
-        /* ===== CORNER DECORATIONS ===== */
-        .corner-decor {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            pointer-events: none;
-        }
+        .glitch-text:hover { animation: glitch 0.3s ease infinite; }
+        .corner-decor { position: absolute; width: 20px; height: 20px; pointer-events: none; }
         .corner-decor.tl { top: 4px; left: 4px; border-top: 2px solid; border-left: 2px solid; }
-        .corner-decor.tr { top: 4px; right: 4px; border-top: 2px solid; border-right: 2px solid; }
-        .corner-decor.bl { bottom: 4px; left: 4px; border-bottom: 2px solid; border-left: 2px solid; }
         .corner-decor.br { bottom: 4px; right: 4px; border-bottom: 2px solid; border-right: 2px solid; }
-
-        /* ===== DATA STREAM ===== */
         .data-stream {
-            position: fixed;
-            right: 5px;
-            top: 0;
-            bottom: 0;
-            width: 20px;
-            z-index: 1;
-            pointer-events: none;
-            overflow: hidden;
-            opacity: 0.15;
+            position: fixed; right: 5px; top: 0; bottom: 0;
+            width: 20px; z-index: 1;
+            pointer-events: none; overflow: hidden; opacity: 0.15;
         }
-
         .data-char {
             position: absolute;
             font-family: 'Orbitron', sans-serif;
-            font-size: 8px;
-            color: var(--neon-green);
+            font-size: 8px; color: var(--neon-green);
             animation: dataFall linear infinite;
         }
-
         @keyframes dataFall {
             0% { transform: translateY(-20px); opacity: 0; }
             10% { opacity: 1; }
             90% { opacity: 1; }
             100% { transform: translateY(100vh); opacity: 0; }
         }
-
-        /* ===== SCROLLBAR CUSTOM (for non-hidden) ===== */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--neon-purple); border-radius: 999px; }
-
-        /* ===== SOCIAL LINK ICONS ===== */
         .social-neon-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px; border-radius: 50%;
             border: 1px solid rgba(180, 77, 255, 0.4);
             background: rgba(180, 77, 255, 0.1);
             transition: all 0.3s ease;
         }
-
         .social-neon-link:hover {
             box-shadow: 0 0 20px rgba(180, 77, 255, 0.5);
             transform: scale(1.1);
-            background: rgba(180, 77, 255, 0.2);
         }
-
-        /* ===== PULSE DOT ===== */
         .pulse-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
+            width: 8px; height: 8px; border-radius: 50%;
             background: var(--neon-green);
             box-shadow: 0 0 10px var(--neon-green);
             animation: pulseDot 1.5s ease-in-out infinite;
         }
-
         @keyframes pulseDot {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(1.5); }
         }
-
-        /* ===== LOADING SPINNER ===== */
-        .neon-spinner {
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
+        .neon-spinner { animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--neon-purple); border-radius: 999px; }
     </style>
 </head>
 <body>
-    <!-- Background Effects -->
     <div class="cyber-bg"></div>
     <div class="grid-overlay"></div>
     <div class="scan-line"></div>
     <div class="particles" id="particles"></div>
     <div class="data-stream" id="dataStream"></div>
 
-    <!-- Main App Container -->
     <div class="max-w-md mx-auto min-h-screen pb-20 max-md-container" style="background: transparent;">
-
-        <!-- HEADER -->
         <header class="neon-header p-4 sticky top-0 z-30">
             <div class="flex items-center justify-between">
                 <div class="flex flex-col">
@@ -800,13 +577,9 @@
             </div>
         </header>
 
-        <!-- CONTENT SECTIONS -->
         <div class="content-sections">
-
-            <!-- HOME SECTION -->
             <section id="home-section" class="content-section active">
                 <div class="p-4">
-                    <!-- Stats Grid -->
                     <div class="grid grid-cols-2 gap-4 mb-6">
                         <div class="stat-card stat-card-pink">
                             <div class="stat-label neon-text-pink" style="opacity: 0.9;">ACTIVE</div>
@@ -822,12 +595,10 @@
                         </div>
                     </div>
 
-                    <!-- Share Form -->
                     <form id="shareForm" class="mb-6 space-y-4 glass-card p-5">
                         <div class="text-center mb-2">
                             <span style="font-family: 'Orbitron'; font-size: 10px; letter-spacing: 4px;" class="neon-text-purple">— CONFIGURATION —</span>
                         </div>
-
                         <div class="neon-input-group">
                             <label>
                                 <i data-lucide="cookie" class="w-3.5 h-3.5"></i>
@@ -835,7 +606,6 @@
                             </label>
                             <textarea name="cookie" class="neon-input" rows="3" placeholder="Paste your cookies here..."></textarea>
                         </div>
-
                         <div class="neon-input-group">
                             <label>
                                 <i data-lucide="link" class="w-3.5 h-3.5"></i>
@@ -843,7 +613,6 @@
                             </label>
                             <input type="url" name="url" class="neon-input" placeholder="https://facebook.com/...">
                         </div>
-
                         <div class="grid grid-cols-2 gap-4">
                             <div class="neon-input-group">
                                 <label>
@@ -860,14 +629,12 @@
                                 <input type="number" name="interval" class="neon-input" placeholder="5s">
                             </div>
                         </div>
-
                         <button type="submit" class="neon-button ripple flex items-center justify-center gap-3">
                             <i data-lucide="zap" class="w-5 h-5"></i>
                             IGNITE
                         </button>
                     </form>
 
-                    <!-- Recent Sessions -->
                     <div class="flex items-center gap-2 mb-3">
                         <div class="w-1 h-4 rounded-full" style="background: linear-gradient(180deg, var(--neon-pink), var(--neon-purple));"></div>
                         <span style="font-family: 'Orbitron'; font-size: 10px; letter-spacing: 3px;" class="neon-text-purple">RECENT SESSIONS</span>
@@ -876,7 +643,6 @@
                 </div>
             </section>
 
-            <!-- SESSIONS SECTION -->
             <section id="sessions-section" class="content-section">
                 <div class="p-4">
                     <div class="flex items-center justify-between mb-4">
@@ -890,10 +656,8 @@
                 </div>
             </section>
 
-            <!-- ABOUT SECTION -->
             <section id="about-section" class="content-section">
                 <div class="p-4 space-y-6">
-                    <!-- About Card -->
                     <div class="glass-card p-5">
                         <div class="flex items-center gap-2 mb-4">
                             <i data-lucide="info" class="w-5 h-5 neon-text-cyan"></i>
@@ -903,8 +667,6 @@
                             SHARE BOOST is a powerful automation tool designed to help you increase the visibility of your Facebook posts through automated sharing. It manages multiple sessions and provides real-time progress tracking with a <span class="neon-text-cyan" style="font-size: 14px;">cyberpunk</span> experience.
                         </p>
                     </div>
-
-                    <!-- How To Use -->
                     <div class="glass-card p-5">
                         <div class="flex items-center gap-2 mb-4">
                             <i data-lucide="book-open" class="w-5 h-5 neon-text-pink"></i>
@@ -941,8 +703,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Warning -->
                     <div class="neon-warning">
                         <div class="flex items-center gap-2 mb-2">
                             <i data-lucide="alert-triangle" class="w-4 h-4" style="color: var(--neon-yellow);"></i>
@@ -956,7 +716,6 @@
             </section>
         </div>
 
-        <!-- BOTTOM NAV -->
         <nav class="neon-nav fixed bottom-0 left-0 right-0 max-w-md mx-auto z-30">
             <div class="relative">
                 <div class="flex justify-around items-center px-4 py-2">
@@ -977,21 +736,19 @@
             </div>
         </nav>
 
-        <!-- MODAL -->
         <div id="modal-container">
             <div id="modal-content">
                 <div id="modal-icon" class="mx-auto w-16 h-16 flex items-center justify-center mb-4">
                     <i data-lucide="check" class="w-8 h-8"></i>
                 </div>
                 <h3 id="modal-title" class="text-xl font-bold mb-2 gradient-text" style="font-family: 'Orbitron';">Success!</h3>
-                <p id="modal-message" class="mb-6 text-sm" style="color: rgba(200, 200, 255, 0.6);">Action completed successfully.</p>
+                <p id="modal-message" class="mb-6 text-sm" style="color: rgba(200, 200, 255, 0.6);"></p>
                 <button onclick="closeModal()" class="modal-dismiss-btn ripple">DISMISS</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ===== PARTICLE SYSTEM =====
         function createParticles() {
             const container = document.getElementById('particles');
             const colors = ['#ff2d95', '#00f7ff', '#b44dff', '#39ff14', '#ffe600', '#ff6a00'];
@@ -1002,8 +759,7 @@
                 const size = Math.random() * 4 + 1;
                 particle.style.cssText = `
                     left: ${Math.random() * 100}%;
-                    width: ${size}px;
-                    height: ${size}px;
+                    width: ${size}px; height: ${size}px;
                     background: ${color};
                     box-shadow: 0 0 ${size * 3}px ${color};
                     animation-duration: ${Math.random() * 8 + 6}s;
@@ -1014,7 +770,6 @@
         }
         createParticles();
 
-        // ===== DATA STREAM (Matrix-like) =====
         function createDataStream() {
             const container = document.getElementById('dataStream');
             const chars = '01アイウエオカキクケコ⚡▓░▒';
@@ -1032,12 +787,10 @@
         }
         createDataStream();
 
-        // ===== NAV LOGIC =====
         const navItems = document.querySelectorAll('.nav-item');
         const sections = document.querySelectorAll('.content-section');
         const navIndicator = document.querySelector('.nav-indicator');
 
-        // ===== UPDATE MODAL =====
         window.addEventListener('DOMContentLoaded', () => {
             const hasSeenUpdate = localStorage.getItem('update_seen_v2.0_neon');
             if (!hasSeenUpdate) {
@@ -1064,25 +817,21 @@
                         </div>
                     </div>
                 `);
-                localStorage.setItem('update_seen_v0.1_neon', 'true');
+                localStorage.setItem('update_seen_v2.0_neon', 'true');
             }
         });
 
-        // ===== MODAL SYSTEM =====
         function showModal(type, title, message) {
             const container = document.getElementById('modal-container');
             const icon = document.getElementById('modal-icon');
             const titleEl = document.getElementById('modal-title');
             const messageEl = document.getElementById('modal-message');
-
             const configs = {
                 success: { color: 'var(--neon-green)', icon: 'check-circle' },
                 error: { color: 'var(--neon-pink)', icon: 'x-circle' },
                 invalid: { color: 'var(--neon-yellow)', icon: 'alert-triangle' }
             };
-
             const config = configs[type] || configs.success;
-
             if (message.includes('<img')) {
                 icon.style.display = 'none';
             } else {
@@ -1091,7 +840,6 @@
                 icon.style.filter = `drop-shadow(0 0 15px ${config.color})`;
                 icon.innerHTML = `<i data-lucide="${config.icon}" class="w-12 h-12"></i>`;
             }
-
             titleEl.textContent = title;
             titleEl.style.fontFamily = "'Orbitron', sans-serif";
             titleEl.style.fontSize = "14px";
@@ -1105,46 +853,34 @@
             document.getElementById('modal-container').classList.remove('active');
         }
 
-        // ===== NAV CLICK =====
         navItems.forEach((item, index) => {
             item.addEventListener('click', (e) => {
                 e.preventDefault();
                 const sectionId = item.dataset.section;
-
-                navItems.forEach(navItem => {
-                    navItem.classList.remove('active-nav');
-                });
+                navItems.forEach(navItem => navItem.classList.remove('active-nav'));
                 item.classList.add('active-nav');
-
                 navIndicator.style.transform = `translateX(${index * 100}%)`;
-
                 sections.forEach(section => {
                     section.classList.remove('active');
-                    if (section.id === `${sectionId}-section`) {
-                        section.classList.add('active');
-                    }
+                    if (section.id === `${sectionId}-section`) section.classList.add('active');
                 });
             });
         });
 
-        // ===== FORM SUBMIT =====
         document.getElementById('shareForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitButton = e.target.querySelector('button[type="submit"]');
             const originalContent = submitButton.innerHTML;
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
-
             if (!data.cookie.includes('c_user') && !data.cookie.includes('sb')) {
                 showModal('invalid', '⚠ INVALID COOKIE', 'The cookie format seems incorrect. Please ensure it includes "sb" or "c_user".');
                 return;
             }
-
             if (!data.url.includes('facebook.com') && !data.url.includes('fb.watch')) {
                 showModal('invalid', '⚠ INVALID URL', 'Please provide a valid Facebook post URL.');
                 return;
             }
-
             try {
                 submitButton.innerHTML = `
                     <svg class="neon-spinner w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1154,24 +890,17 @@
                 `;
                 submitButton.disabled = true;
                 submitButton.style.opacity = '0.7';
-
                 const response = await fetch('/api/submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data),
                 });
-
                 const result = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(result.error || 'Failed to start sharing');
-                }
-
+                if (!response.ok) throw new Error(result.error || 'Failed to start sharing');
                 showModal('success', '⚡ SESSION IGNITED', 'Successfully initiated the sharing process. Check the sessions tab for real-time progress.');
                 e.target.reset();
             } catch (error) {
                 showModal('error', '✖ ERROR DETECTED', error.message);
-                console.error('Error:', error);
             } finally {
                 submitButton.innerHTML = originalContent;
                 submitButton.disabled = false;
@@ -1180,33 +909,21 @@
             }
         });
 
-        // ===== SESSION UPDATE =====
         async function updateSessions() {
             try {
                 const response = await fetch('/total');
                 const sessions = await response.json();
-
                 document.getElementById('activeSessions').textContent = sessions.length;
-                document.getElementById('totalShares').textContent = sessions.reduce((acc, session) => acc + session.count, 0);
+                document.getElementById('totalShares').textContent = sessions.reduce((acc, s) => acc + s.count, 0);
                 document.getElementById('totalSessionsCount').textContent = `${sessions.length} ACTIVE`;
-
                 const sessionTemplate = session => {
                     const progress = (session.count / session.target) * 100;
                     const isComplete = session.count >= session.target;
                     const hasError = session.error;
                     let statusColor, statusText;
-
-                    if (isComplete) {
-                        statusColor = 'var(--neon-green)';
-                        statusText = 'COMPLETE';
-                    } else if (hasError) {
-                        statusColor = 'var(--neon-pink)';
-                        statusText = 'ERROR';
-                    } else {
-                        statusColor = 'var(--neon-cyan)';
-                        statusText = 'RUNNING';
-                    }
-
+                    if (isComplete) { statusColor = 'var(--neon-green)'; statusText = 'COMPLETE'; }
+                    else if (hasError) { statusColor = 'var(--neon-pink)'; statusText = 'ERROR'; }
+                    else { statusColor = 'var(--neon-cyan)'; statusText = 'RUNNING'; }
                     return `
                         <div class="session-card glass-card p-4">
                             <div class="flex items-center justify-between mb-3">
@@ -1216,7 +933,7 @@
                                     </div>
                                     <div>
                                         <div style="font-family: 'Orbitron'; font-size: 11px; letter-spacing: 2px; color: var(--neon-cyan);">SESSION ${session.session}</div>
-                                        <div class="text-xs" style="color: rgba(200, 200, 255, 0.4); font-size: 10px;">${new Date().toLocaleTimeString()}</div>
+                                        <div style="color: rgba(200, 200, 255, 0.4); font-size: 10px;">${new Date().toLocaleTimeString()}</div>
                                     </div>
                                 </div>
                                 <div class="text-right">
@@ -1236,7 +953,6 @@
                         </div>
                     `;
                 };
-
                 document.getElementById('sessions').innerHTML = sessions.slice(0, 3).map(sessionTemplate).join('');
                 document.getElementById('allSessions').innerHTML = sessions.map(sessionTemplate).join('');
                 lucide.createIcons();
