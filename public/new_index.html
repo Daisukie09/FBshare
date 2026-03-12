@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SHARE BOOST V6 PRO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg: #05010d;
+            --surface: rgba(20, 10, 35, 0.6);
+            --surface-hover: rgba(30, 20, 50, 0.8);
+            --border: rgba(255, 255, 255, 0.08);
+            --primary: #d946ef; /* Fuchsia */
+            --secondary: #06b6d4; /* Cyan */
+            --accent: #8b5cf6; /* Violet */
+            --success: #10b981;
+            --error: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            overflow: hidden; /* Prevent scrolling on body, handle in .app-container */
+        }
+
+        /* Ambient Background - GPU Optimized */
+        .ambient-bg {
+            position: fixed; inset: 0; z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(217, 70, 239, 0.15), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.15), transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(139, 92, 246, 0.15), transparent 40%);
+        }
+        
+        .grid-overlay {
+            position: fixed; inset: 0; z-index: -1;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.5;
+        }
+
+        /* Initial Loading Splash Screen */
+        #splash {
+            position: fixed; inset: 0; z-index: 1000;
+            background: var(--bg);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s;
+        }
+        #splash.hidden { opacity: 0; visibility: hidden; }
+        .splash-logo {
+            font-family: 'Orbitron', sans-serif; font-size: 2.5rem; font-weight: 900;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 0 20px rgba(217, 70, 239, 0.4));
+        }
+        .splash-bar {
+            width: 200px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;
+        }
+        .splash-progress {
+            width: 0%; height: 100%; background: linear-gradient(90deg, var(--secondary), var(--primary));
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Layout */
+        .app-container {
+            height: 100dvh; display: flex; flex-direction: column;
+            overflow-y: auto; overflow-x: hidden; scrollbar-width: none;
+            padding-bottom: 80px; /* Space for nav */
+        }
+        .app-container::-webkit-scrollbar { display: none; }
+
+        /* Header */
+        header {
+            padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(5, 1, 13, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50;
+        }
+        .logo-text { font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 1.25rem; letter-spacing: 1px; }
+        .logo-sub { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
+        .status-badge {
+            display: flex; align-items: center; gap: 6px;
+            padding: 4px 10px; border-radius: 20px;
+            background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);
+            font-size: 0.65rem; font-weight: 600; color: var(--success); letter-spacing: 1px;
+        }
+        .status-dot { width: 6px; height: 6px; background: var(--success); border-radius: 50%; box-shadow: 0 0 8px var(--success); }
+
+        /* Typography */
+        h2 { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; letter-spacing: 1px; margin-bottom: 1rem; color: #fff; }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 16px; padding: 1.25rem; margin-bottom: 1rem;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Main Content Padding */
+        .content { padding: 1.25rem; }
+
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+        .stat-box {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+            border-radius: 12px; padding: 1rem; text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .stat-box::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary)); opacity: 0.7;
+        }
+        .stat-value { font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 800; margin: 0.5rem 0; color: #fff; }
+        .stat-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Mini Stats */
+        .mini-stats { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem; scrollbar-width: none; margin-bottom: 1.5rem; }
+        .mini-stats::-webkit-scrollbar { display: none; }
+        .mini-stat-pill {
+            flex: 0 0 auto; display: flex; align-items: center; gap: 8px;
+            padding: 0.5rem 0.8rem; background: rgba(255,255,255,0.03);
+            border-radius: 8px; border: 1px solid var(--border); font-size: 0.75rem;
+        }
+
+        /* Forms */
+        .form-group { margin-bottom: 1.25rem; }
+        .form-label { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .input-wrapper { position: relative; }
+        .input-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
+        
+        .premium-input {
+            width: 100%; background: rgba(0,0,0,0.4); border: 1px solid var(--border);
+            border-radius: 12px; padding: 0.85rem 1rem 0.85rem 2.8rem;
+            color: #fff; font-family: 'Inter', sans-serif; font-size: 0.9rem;
+            transition: all 0.2s ease; outline: none;
+        }
+        textarea.premium-input { padding-left: 1rem; min-height: 80px; resize: none; }
+        .premium-input:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15); }
+        .premium-input::placeholder { color: rgba(255,255,255,0.2); }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        /* Buttons */
+        .btn-primary {
+            width: 100%; border: none; border-radius: 12px; padding: 1rem;
+            background: linear-gradient(135deg, var(--secondary), var(--accent), var(--primary));
+            background-size: 200% auto;
+            color: #fff; font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+            box-shadow: 0 8px 25px rgba(217, 70, 239, 0.25);
+            transition: transform 0.1s, filter 0.2s, background-position 0.5s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-primary:active { transform: scale(0.97); }
+        .btn-primary:hover { background-position: right center; filter: brightness(1.1); }
+        
+        .btn-secondary {
+            width: 100%; border: 1px solid var(--border); border-radius: 12px; padding: 0.8rem;
+            background: transparent; color: var(--text-muted); font-family: 'Inter', sans-serif;
+            font-size: 0.8rem; font-weight: 500; cursor: pointer; margin-top: 1rem;
+            transition: all 0.2s;
+        }
+        .btn-secondary:active { background: rgba(255,255,255,0.05); }
+
+        /* Tabs Navigation */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(5, 1, 13, 0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            display: flex; justify-content: space-around; padding: 0.5rem 0 calc(0.5rem + env(safe-area-inset-bottom));
+            z-index: 50;
+        }
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            color: var(--text-muted); text-decoration: none; padding: 0.5rem 1rem;
+            border-radius: 12px; transition: all 0.2s; font-size: 0.65rem; font-weight: 600;
+        }
+        .nav-item i { transition: transform 0.2s; }
+        .nav-item.active { color: #fff; }
+        .nav-item.active i { color: var(--secondary); filter: drop-shadow(0 0 8px var(--secondary)); transform: translateY(-2px); }
+        
+        /* Section Management */
+        .section { display: none; opacity: 0; transition: opacity 0.3s ease; }
+        .section.active { display: block; opacity: 1; animation: fadeUp 0.4s ease forwards; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Session Cards */
+        .session-card {
+            background: rgba(20, 10, 35, 0.4); border: 1px solid var(--border);
+            border-radius: 12px; padding: 1rem; margin-bottom: 0.75rem;
+            transition: transform 0.2s;
+        }
+        .session-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+        .session-id { font-family: 'Orbitron', sans-serif; font-size: 0.7rem; color: var(--secondary); }
+        .session-status { font-size: 0.65rem; padding: 3px 8px; border-radius: 12px; background: rgba(255,255,255,0.1); }
+        .status-running { background: rgba(6, 182, 212, 0.15); color: var(--secondary); border: 1px solid rgba(6, 182, 212, 0.3); }
+        .status-done { background: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .status-error { background: rgba(239, 68, 68, 0.15); color: var(--error); border: 1px solid rgba(239, 68, 68, 0.3); }
+        
+        .progress-track { height: 6px; background: rgba(0,0,0,0.5); border-radius: 3px; margin: 0.75rem 0; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--secondary), var(--primary)); transition: width 0.3s ease; }
+        .session-meta { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted); }
+
+        /* Toast Notifications */
+        #toast-container { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+        .toast {
+            background: rgba(20, 10, 35, 0.9); backdrop-filter: blur(8px); border: 1px solid var(--border);
+            padding: 10px 20px; border-radius: 30px; font-size: 0.75rem; font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); opacity: 0; transform: translateY(-10px);
+            animation: toastIn 0.3s forwards; display: flex; align-items: center; gap: 8px;
+        }
+        @keyframes toastIn { to { opacity: 1; transform: translateY(0); } }
+        
+        /* About section styles */
+        .dev-badge {
+            display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px;
+            background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px; font-size: 0.75rem; color: var(--accent); margin-bottom: 1rem;
+        }
+        .social-links { display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; }
+        .social-btn {
+            width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: #fff;
+            text-decoration: none; transition: all 0.2s;
+        }
+        .social-btn:active { transform: scale(0.9); background: rgba(255,255,255,0.1); }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient UI Background -->
+    <div class="ambient-bg"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Splash Screen -->
+    <div id="splash">
+        <div class="splash-logo">SHARE BOOST</div>
+        <div class="splash-bar"><div class="splash-progress" id="splash-progress"></div></div>
+    </div>
+
+    <!-- Main App Container -->
+    <div class="app-container">
+        
+        <!-- Header -->
+        <header>
+            <div>
+                <div class="logo-text gradient-text">SHARE BOOST</div>
+                <div class="logo-sub">Engine V6 Pro</div>
+            </div>
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                LIVE
+            </div>
+        </header>
+
+        <!-- Home Section -->
+        <div id="home-sec" class="section active content">
+            
+            <!-- System Overview -->
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-label">Active Sessions</div>
+                    <div class="stat-value" id="stat-active" style="color: var(--secondary)">0</div>
+                </div>
+                <div class="stat-box" style="border-top-color: var(--primary)">
+                    <div class="stat-label">Total Shared</div>
+                    <div class="stat-value" id="stat-total" style="color: var(--primary)">0</div>
+                </div>
+            </div>
+
+            <div class="mini-stats">
+                <div class="mini-stat-pill"><i data-lucide="check-circle-2" size="14" color="var(--success)"></i> <span id="stat-done">0</span> Done</div>
+                <div class="mini-stat-pill"><i data-lucide="alert-circle" size="14" color="var(--error)"></i> <span id="stat-error">0</span> Errors</div>
+                <div class="mini-stat-pill"><i data-lucide="clock" size="14" color="var(--text-muted)"></i> <span id="stat-uptime">00:00:00</span> Uptime</div>
+            </div>
+
+            <!-- Configuration Form -->
+            <div class="glass-card">
+                <h2><span class="gradient-text">Mission Config</span></h2>
+                
+                <form id="shareForm">
+                    <div class="form-group">
+                        <label class="form-label"><i data-lucide="key" size="14"></i> Auth Cookies</label>
+                        <textarea id="cookieInput" class="premium-input" placeholder="Paste your Facebook cookies here..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label"><i data-lucide="link" size="14"></i> Post URL</label>
+                        <div class="input-wrapper">
+                            <i data-lucide="globe" size="16" class="input-icon"></i>
+                            <input type="url" id="urlInput" class="premium-input" placeholder="https://facebook.com/...">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label"><i data-lucide="hash" size="14"></i> Share Count</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="target" size="16" class="input-icon"></i>
+                                <input type="number" id="amountInput" class="premium-input" placeholder="100" min="1">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label"><i data-lucide="timer" size="14"></i> Delay (sec)</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="clock" size="16" class="input-icon"></i>
+                                <input type="number" id="intervalInput" class="premium-input" placeholder="5" min="1">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary" id="submitBtn">
+                        <i data-lucide="rocket" size="18"></i>
+                        Ignite Boost
+                    </button>
+                    <button type="button" class="btn-secondary" onclick="document.getElementById('shareForm').reset(); showToast('Form cleared', 'alert-circle', 'var(--text-muted)');">
+                        Clear Configuration
+                    </button>
+                </form>
+            </div>
+            
+            <div style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                <h2>Recent Activity</h2>
+                <span id="recentCount" style="font-size: 0.75rem; color: var(--text-muted)">0</span>
+            </div>
+            <div id="homeSessions">
+                <div style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;">
+                    No recent activity. Formulate a mission above.
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sessions Section -->
+        <div id="sessions-sec" class="section content">
+            <h2><span class="gradient-text">All Sessions</span></h2>
+            <div id="allSessionsList"></div>
+            <div id="noSessionsMsg" style="text-align: center; padding: 4rem 1rem; color: var(--text-muted);">
+                <i data-lucide="inbox" size="48" style="opacity: 0.5; margin-bottom: 1rem; display: block; margin-inline: auto;"></i>
+                No active or historical sessions found.
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div id="about-sec" class="section content">
+            <div class="glass-card" style="text-align: center; padding: 2rem 1rem;">
+                <div class="dev-badge"><i data-lucide="code-2" size="14"></i> System Information</div>
+                <h1 style="font-family: 'Orbitron', sans-serif; font-size: 1.8rem; margin-bottom: 0.5rem;" class="gradient-text">SHARE BOOST</h1>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Version 6.0 Pro Edition</p>
+                
+                <p style="font-size: 0.9rem; line-height: 1.6; color: #cbd5e1; margin-bottom: 1.5rem;">
+                    An optimized, high-performance automated sharing engine designed for precise Facebook post amplification.
+                </p>
+
+                <div style="text-align: left; background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 12px; border: 1px solid var(--border); font-size: 0.8rem; color: var(--text-muted);">
+                    <div style="color: var(--secondary); margin-bottom: 0.5rem; font-weight: 600;"><i data-lucide="shield-alert" size="14" style="display:inline-block; vertical-align:middle; margin-right:4px;"></i> usage warning</div>
+                    Use delays of 30s+ and moderate counts to prevent automated detection blocks.
+                </div>
+
+                <div class="social-links">
+                    <a href="#" class="social-btn"><i data-lucide="facebook" size="20"></i></a>
+                    <a href="#" class="social-btn"><i data-lucide="github" size="20"></i></a>
+                    <a href="#" class="social-btn"><i data-lucide="globe" size="20"></i></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active" data-target="home-sec">
+            <i data-lucide="home" size="22"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item" data-target="sessions-sec">
+            <i data-lucide="layers" size="22"></i>
+            <span>Sessions</span>
+        </a>
+        <a href="#" class="nav-item" data-target="about-sec">
+            <i data-lucide="info" size="22"></i>
+            <span>About</span>
+        </a>
+    </nav>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container"></div>
+
+    <script>
+        // Init Lucide Icons
+        lucide.createIcons();
+
+        // Loading Screen Logic
+        window.addEventListener('load', () => {
+            const bar = document.getElementById('splash-progress');
+            bar.style.width = '100%';
+            setTimeout(() => {
+                document.getElementById('splash').classList.add('hidden');
+            }, 600);
+        });
+
+        // Uptime Timer
+        const startTime = Date.now();
+        setInterval(() => {
+            const diff = Math.floor((Date.now() - startTime) / 1000);
+            const h = String(Math.floor(diff / 3600)).padStart(2, '0');
+            const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+            const s = String(diff % 60).padStart(2, '0');
+            document.getElementById('stat-uptime').textContent = `${h}:${m}:${s}`;
+        }, 1000);
+
+        // Toast System
+        function showToast(message, iconName = 'bell', color = 'var(--secondary)') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i data-lucide="${iconName}" size="16" color="${color}"></i> <span>${message}</span>`;
+            container.appendChild(toast);
+            lucide.createIcons({ root: toast });
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-10px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Navigation Logic
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.section');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = item.getAttribute('data-target');
+                
+                // Update nav state
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+                
+                // Update section state
+                sections.forEach(sec => sec.classList.remove('active'));
+                document.getElementById(targetId).classList.add('active');
+                
+                // Scroll to top
+                document.querySelector('.app-container').scrollTo(0, 0);
+            });
+        });
+
+        // Backend Integration & Session Polling
+        let allSessions = [];
+        
+        async function fetchSessions() {
+            try {
+                const res = await fetch('/total');
+                if (!res.ok) throw new Error('Network error');
+                allSessions = await res.json();
+                updateUI();
+            } catch (err) {
+                console.error("Failed to fetch sessions:", err);
+            }
+        }
+
+        function createSessionCard(s) {
+            const isDone = s.count >= s.target;
+            const hasError = s.error;
+            let statusClass = 'status-running';
+            let statusText = 'RUNNING';
+            let statusIcon = 'loader-2';
+            let iconColor = 'var(--secondary)';
+            
+            if (hasError) {
+                statusClass = 'status-error'; statusText = 'ERROR'; statusIcon = 'alert-octagon'; iconColor = 'var(--error)';
+            } else if (isDone) {
+                statusClass = 'status-done'; statusText = 'COMPLETED'; statusIcon = 'check-circle'; iconColor = 'var(--success)';
+            }
+
+            const pct = Math.min(100, Math.round((s.count / s.target) * 100)) || 0;
+            const card = document.createElement('div');
+            card.className = 'session-card';
+            card.innerHTML = `
+                <div class="session-header">
+                    <span class="session-id">ID: ${s.id || 'Pending'}</span>
+                    <span class="session-status ${statusClass}"><i data-lucide="${statusIcon}" size="12" style="display:inline;vertical-align:-2px;margin-right:2px;"></i> ${statusText}</span>
+                </div>
+                <div style="font-size: 0.8rem; margin-bottom: 0.5rem; word-break: break-all; color: #fff;">${s.url}</div>
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: ${pct}%; ${hasError ? 'background:var(--error)' : (isDone ? 'background:var(--success)' : '')}"></div>
+                </div>
+                <div class="session-meta">
+                    <span>${s.count} / ${s.target} Shared</span>
+                    <span>Interval: ${s.interval}s</span>
+                </div>
+                ${hasError ? `<div style="margin-top:0.5rem; font-size:0.75rem; color:var(--error); background:rgba(239,68,68,0.1); padding:0.5rem; border-radius:8px;">${s.error}</div>` : ''}
+            `;
+            return card;
+        }
+
+        function updateUI() {
+            let running = 0, done = 0, errs = 0, totalActions = 0;
+            
+            const homeList = document.getElementById('homeSessions');
+            const allList = document.getElementById('allSessionsList');
+            const noMsg = document.getElementById('noSessionsMsg');
+            
+            homeList.innerHTML = '';
+            allList.innerHTML = '';
+
+            if (allSessions.length === 0) {
+                homeList.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;">No recent activity. Formulate a mission above.</div>';
+                noMsg.style.display = 'block';
+            } else {
+                noMsg.style.display = 'none';
+            }
+
+            // Sort newest first based on original Map order (latest is generally end of array, so reverse)
+            const reversedSessions = [...allSessions].reverse();
+
+            reversedSessions.forEach((s, idx) => {
+                totalActions += s.count;
+                if (s.error) errs++;
+                else if (s.count >= s.target) done++;
+                else running++;
+
+                const cardHtml = createSessionCard(s);
+                allList.appendChild(cardHtml);
+                
+                // Show only top 3 on home screen
+                if (idx < 3) {
+                    const clone = createSessionCard(s);
+                    homeList.appendChild(clone);
+                }
+            });
+
+            // Update counters
+            document.getElementById('stat-active').textContent = running;
+            document.getElementById('stat-total').textContent = totalActions;
+            document.getElementById('stat-done').textContent = done;
+            document.getElementById('stat-error').textContent = errs;
+            document.getElementById('recentCount').textContent = `${running} Active`;
+            
+            lucide.createIcons({ root: document.getElementById('sessions-sec') });
+            lucide.createIcons({ root: document.getElementById('home-sec') });
+        }
+
+        // Form Submit
+        document.getElementById('shareForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const originalText = btn.innerHTML;
+            
+            const cookie = document.getElementById('cookieInput').value.trim();
+            const url = document.getElementById('urlInput').value.trim();
+            const amount = document.getElementById('amountInput').value.trim();
+            const interval = document.getElementById('intervalInput').value.trim();
+
+            if (!cookie || !url || !amount || !interval) {
+                showToast('Fields missing', 'alert-circle', 'var(--error)');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = `<i data-lucide="loader-2" size="18" class="spin"></i> Executing...`;
+            lucide.createIcons();
+            btn.style.opacity = '0.7';
+
+            // Add CSS animation for spinner if not exists
+            if (!document.getElementById('spinStyle')) {
+                const style = document.createElement('style');
+                style.id = 'spinStyle';
+                style.innerHTML = `@keyframes spinIcon { from { transform: rotate(0deg); } to { transform: rotate(360deg); } } .spin { animation: spinIcon 1s linear infinite; }`;
+                document.head.appendChild(style);
+            }
+
+            try {
+                const res = await fetch('/api/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ cookie, url, amount, interval })
+                });
+
+                const data = await res.json();
+                
+                if (res.ok) {
+                    showToast('Boost Ignited Successfully', 'rocket', 'var(--success)');
+                    // Reset inputs except cookie to allow quick re-runs
+                    document.getElementById('urlInput').value = '';
+                    fetchSessions(); // Immediate visual update
+                } else {
+                    showToast(data.error || 'Ignition Failed', 'alert-triangle', 'var(--error)');
+                }
+            } catch (err) {
+                showToast('Network error contacting engine', 'wifi-off', 'var(--error)');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+                lucide.createIcons();
+                btn.style.opacity = '1';
+            }
+        });
+
+        // Polling
+        setInterval(fetchSessions, 3000);
+        fetchSessions(); // Init call
+    </script>
+</body>
+</html>

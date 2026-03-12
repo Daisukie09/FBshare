@@ -3,1051 +3,692 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SHARE BOOSTER V6</title>
+    <title>SHARE BOOSTER V6 ULTRA</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        *{box-sizing:border-box;margin:0;padding:0}
-        :root{--r:#ff3cac;--o:#ff8c00;--y:#ffe600;--g:#39ff14;--c:#00f7ff;--b:#4d79ff;--v:#b44dff;--bg:#02020a}
-        html{font-size:14px}
-        body{font-family:'Space Grotesk',sans-serif;-webkit-tap-highlight-color:transparent;overflow:hidden;background:var(--bg);color:#e0e0ff;width:100%;max-width:100vw}
-        .mega-bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse 80% 60% at 20% 10%,rgba(255,60,172,.34) 0%,transparent 60%),radial-gradient(ellipse 70% 50% at 80% 20%,rgba(0,247,255,.26) 0%,transparent 55%),radial-gradient(ellipse 60% 70% at 10% 80%,rgba(57,255,20,.2) 0%,transparent 50%),radial-gradient(ellipse 80% 60% at 90% 80%,rgba(255,140,0,.22) 0%,transparent 55%),radial-gradient(ellipse 50% 50% at 50% 50%,rgba(180,77,255,.18) 0%,transparent 70%),linear-gradient(180deg,#02020a,#05021a 50%,#020508);animation:bgBreath 8s ease-in-out infinite}
-        @keyframes bgBreath{0%,100%{filter:hue-rotate(0deg) brightness(1)}33%{filter:hue-rotate(20deg) brightness(1.12)}66%{filter:hue-rotate(-15deg) brightness(1.16)}}
-        .aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-        .aurora-band{position:absolute;left:-20%;right:-20%;border-radius:999px;filter:blur(14px);animation:auroraDrift linear infinite}
-        .ab1{top:12%;height:7px;background:linear-gradient(90deg,transparent,var(--r),var(--o),var(--y),transparent);animation-duration:14s;opacity:.5}
-        .ab2{top:42%;height:6px;background:linear-gradient(90deg,transparent,var(--c),var(--g),var(--b),transparent);animation-duration:17s;animation-delay:-6s;opacity:.42}
-        .ab3{top:72%;height:5px;background:linear-gradient(90deg,transparent,var(--v),var(--r),var(--c),transparent);animation-duration:20s;animation-delay:-10s;opacity:.38}
-        .ab4{top:88%;height:4px;background:linear-gradient(90deg,transparent,var(--y),var(--g),var(--o),transparent);animation-duration:25s;animation-delay:-15s;opacity:.25}
-        @keyframes auroraDrift{0%{transform:translateX(-10%) scaleY(1)}25%{transform:translateX(6%) scaleY(5)}50%{transform:translateX(10%) scaleY(1)}75%{transform:translateX(-4%) scaleY(4)}100%{transform:translateX(-10%) scaleY(1)}}
-        .grid-bg{position:fixed;inset:0;z-index:1;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:44px 44px;animation:gridShift 28s linear infinite}
-        @keyframes gridShift{0%{background-position:0 0}100%{background-position:44px 44px}}
-        .hex-grid{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='104'%3E%3Cpolygon points='30,2 58,17 58,47 30,62 2,47 2,17' fill='none' stroke='%2300f7ff' stroke-width='0.5'/%3E%3Cpolygon points='30,52 58,67 58,97 30,112 2,97 2,67' fill='none' stroke='%23ff3cac' stroke-width='0.5'/%3E%3C/svg%3E");background-size:60px 104px}
-        .vignette{position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at center,transparent 32%,rgba(2,2,10,.96) 100%)}
-        .scanline{position:fixed;top:0;left:0;right:0;height:3px;z-index:3;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,60,172,.95) 30%,rgba(0,247,255,.95) 60%,transparent);filter:blur(1px);animation:scanDown 8s linear infinite}
-        .scanline2{position:fixed;top:0;left:0;right:0;height:2px;z-index:3;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(57,255,20,.75) 40%,rgba(180,77,255,.75) 70%,transparent);filter:blur(1px);animation:scanDown 13s linear infinite;animation-delay:-5s;opacity:.6}
-        @keyframes scanDown{0%{top:-3px;opacity:0}5%{opacity:1}95%{opacity:1}100%{top:100vh;opacity:0}}
-        .particles{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden}
-        .pt{position:absolute;border-radius:50%;animation:ptRise linear infinite;opacity:0}
-        @keyframes ptRise{0%{transform:translateY(105vh) rotate(0deg);opacity:0}8%{opacity:.9}92%{opacity:.9}100%{transform:translateY(-5vh) rotate(720deg);opacity:0}}
-        .floating-orbs{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
-        .fo{position:absolute;border-radius:50%;filter:blur(65px);animation:foFloat ease-in-out infinite;opacity:.08}
-        @keyframes foFloat{0%,100%{transform:translateY(0) translateX(0) scale(1)}33%{transform:translateY(-45px) translateX(22px) scale(1.12)}66%{transform:translateY(22px) translateX(-18px) scale(.9)}}
-        .corner-deco{position:fixed;z-index:4;pointer-events:none;transition:opacity .3s}
-        .corner-deco.tl{top:0;left:0;width:95px;height:95px;border-top:2px solid var(--r);border-left:2px solid var(--r);border-radius:0 0 75px 0;box-shadow:inset -5px -5px 28px rgba(255,60,172,.22),0 0 26px rgba(255,60,172,.14)}
-        .corner-deco.tr{top:0;right:0;width:95px;height:95px;border-top:2px solid var(--c);border-right:2px solid var(--c);border-radius:0 0 0 75px;box-shadow:inset 5px -5px 28px rgba(0,247,255,.22),0 0 26px rgba(0,247,255,.14)}
-        .corner-deco.bl{bottom:75px;left:0;width:68px;height:68px;border-bottom:2px solid var(--v);border-left:2px solid var(--v);border-radius:0 48px 0 0;box-shadow:inset -4px 4px 20px rgba(180,77,255,.22)}
-        .corner-deco.br{bottom:75px;right:0;width:68px;height:68px;border-bottom:2px solid var(--g);border-right:2px solid var(--g);border-radius:48px 0 0 0;box-shadow:inset 4px 4px 20px rgba(57,255,20,.22)}
-        .data-side{position:fixed;top:0;bottom:0;width:16px;z-index:2;pointer-events:none;overflow:hidden;opacity:.09}
-        .dc{position:absolute;font-family:'Orbitron',sans-serif;font-size:7px;animation:dcFall linear infinite}
-        @keyframes dcFall{0%{transform:translateY(-20px);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(100vh);opacity:0}}
-        .wrap{height:100vh;height:100dvh;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;position:relative;z-index:10;padding-bottom:80px;width:100%;max-width:100vw}
-        .wrap::-webkit-scrollbar{display:none}
-        .glass{background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.035));backdrop-filter:blur(36px);-webkit-backdrop-filter:blur(36px);border:1px solid rgba(255,255,255,.14);border-radius:1.6rem;position:relative;overflow:hidden}
-        .glass::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,60,172,.95),rgba(0,247,255,.95),rgba(57,255,20,.75),transparent);opacity:1}
-        .nt-r{color:var(--r);text-shadow:0 0 10px var(--r),0 0 24px var(--r),0 0 50px rgba(255,60,172,.58)}
-        .nt-c{color:var(--c);text-shadow:0 0 10px var(--c),0 0 24px var(--c),0 0 50px rgba(0,247,255,.58)}
-        .nt-g{color:var(--g);text-shadow:0 0 10px var(--g),0 0 24px var(--g),0 0 50px rgba(57,255,20,.58)}
-        .nt-v{color:var(--v);text-shadow:0 0 10px var(--v),0 0 24px var(--v),0 0 50px rgba(180,77,255,.58)}
-        .nt-y{color:var(--y);text-shadow:0 0 10px var(--y),0 0 26px var(--y)}
-        .nt-o{color:var(--o);text-shadow:0 0 10px var(--o),0 0 26px var(--o)}
-        .gt-fire{background:linear-gradient(135deg,var(--r),var(--o),var(--y));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 18px rgba(255,140,0,.7))}
-        .gt-ocean{background:linear-gradient(135deg,var(--c),var(--g),var(--b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 18px rgba(0,247,255,.7))}
-        .gt-cosmic{background:linear-gradient(135deg,var(--v),var(--r),var(--c));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 18px rgba(180,77,255,.7))}
-        .gt-rainbow{background:linear-gradient(90deg,var(--r),var(--o),var(--y),var(--g),var(--c),var(--b),var(--v),var(--r));background-size:400% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbowShift 3.5s linear infinite}
-        @keyframes rainbowShift{0%{background-position:0% 50%}100%{background-position:400% 50%}}
-        .hdr{background:linear-gradient(180deg,rgba(2,2,10,1),rgba(2,2,10,.94));backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border-bottom:1px solid rgba(255,255,255,.07);position:sticky;top:0;z-index:30;width:100%}
-        .hdr-rainbow{position:absolute;bottom:-1px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--r),var(--o),var(--y),var(--g),var(--c),var(--b),var(--v),var(--r));background-size:400% 100%;animation:rainbowShift 3s linear infinite}
-        .hdr-glow{position:absolute;bottom:-11px;left:0;right:0;height:20px;background:linear-gradient(90deg,var(--r),var(--o),var(--y),var(--g),var(--c),var(--b),var(--v),var(--r));background-size:400% 100%;animation:rainbowShift 3s linear infinite;filter:blur(10px);opacity:.4}
-        .hdr-inner{display:flex;align-items:center;justify-content:space-between;padding:.88rem 1rem;gap:8px}
-        .hdr-left{min-width:0;flex:1}
-        .hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
-        .logo-wrap{position:relative;display:inline-block}
-        .logo-main{font-family:'Orbitron',sans-serif;font-size:clamp(1.05rem,5vw,1.75rem);font-weight:900;letter-spacing:clamp(1px,2vw,5px);display:inline-block;animation:logoGlitch 7s ease-in-out infinite}
-        .logo-sub{position:absolute;bottom:-4px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--r),var(--o),var(--y),var(--g),var(--c));border-radius:999px;filter:blur(.5px)}
-        @keyframes logoGlitch{0%,82%,100%{filter:none;transform:none;opacity:1}84%{filter:blur(.8px);transform:skewX(-7deg) translateX(-3px);opacity:.5}86%{filter:none;transform:skewX(3deg);opacity:.9}88%{filter:blur(.5px);transform:translateX(3px);opacity:.48}90%{filter:none;transform:none;opacity:1}}
-        .sub-title{font-family:'Orbitron',sans-serif;font-size:clamp(6px,2.2vw,8px);letter-spacing:clamp(1px,1.5vw,3px)}
-        .live-badge{background:linear-gradient(135deg,rgba(57,255,20,.22),rgba(0,247,255,.16));border:1px solid rgba(57,255,20,.58);color:var(--g);font-family:'Orbitron',sans-serif;font-size:7px;letter-spacing:1.5px;padding:3px 10px;border-radius:999px;animation:livePulse 2s ease-in-out infinite;white-space:nowrap;text-shadow:0 0 12px var(--g)}
-        @keyframes livePulse{0%,100%{box-shadow:0 0 12px rgba(57,255,20,.45)}50%{box-shadow:0 0 30px rgba(57,255,20,.95),0 0 60px rgba(57,255,20,.4)}}
-        .badge-v{background:linear-gradient(135deg,rgba(180,77,255,.26),rgba(255,60,172,.22));border:1px solid rgba(180,77,255,.65);color:var(--v);font-family:'Orbitron',sans-serif;font-size:7px;letter-spacing:1px;padding:3px 9px;border-radius:999px;white-space:nowrap;animation:badgePulse 2.5s ease-in-out infinite}
-        @keyframes badgePulse{0%,100%{box-shadow:0 0 12px rgba(180,77,255,.45)}50%{box-shadow:0 0 28px rgba(180,77,255,.9),0 0 55px rgba(255,60,172,.45)}}
-        .pulse-dot{width:9px;height:9px;border-radius:50%;background:var(--g);box-shadow:0 0 18px var(--g),0 0 36px var(--g);animation:pdot 1.4s ease-in-out infinite}
-        @keyframes pdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.18;transform:scale(2)}}
-        .ticker{width:100%;overflow:hidden;padding:7px 0;position:relative}
-        .ticker::before,.ticker::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2}
-        .ticker::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
-        .ticker::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
-        .ticker-track{background:linear-gradient(90deg,rgba(255,60,172,.09),rgba(0,247,255,.09),rgba(57,255,20,.09),rgba(255,60,172,.09));border-top:1px solid rgba(255,255,255,.09);border-bottom:1px solid rgba(255,255,255,.09)}
-        .ticker-inner{display:flex;gap:60px;animation:tickerMove 28s linear infinite;white-space:nowrap}
-        @keyframes tickerMove{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-        .ticker-item{font-family:'Orbitron',sans-serif;font-size:8px;letter-spacing:2px;flex-shrink:0}
-        .ti-r{color:rgba(255,60,172,.88)}.ti-c{color:rgba(0,247,255,.88)}.ti-g{color:rgba(57,255,20,.88)}.ti-y{color:rgba(255,230,0,.88)}.ti-v{color:rgba(180,77,255,.88)}
-        .stat-card{position:relative;overflow:hidden;border-radius:1.6rem;padding:1.25rem;cursor:default;transition:transform .3s ease,box-shadow .3s ease}
-        .stat-card:active{transform:scale(.94)}
-        .stat-card:hover{transform:translateY(-3px)}
-        .sc-fire{background:linear-gradient(135deg,rgba(255,60,172,.18),rgba(255,140,0,.1));border:1px solid rgba(255,60,172,.4);box-shadow:0 0 45px rgba(255,60,172,.16),inset 0 0 45px rgba(255,60,172,.07)}
-        .sc-ocean{background:linear-gradient(135deg,rgba(0,247,255,.18),rgba(57,255,20,.1));border:1px solid rgba(0,247,255,.4);box-shadow:0 0 45px rgba(0,247,255,.16),inset 0 0 45px rgba(0,247,255,.07)}
-        .stat-glow{position:absolute;inset:0;background:conic-gradient(from 0deg,transparent,rgba(255,255,255,.055),transparent 30%);animation:statSpin 6s linear infinite;border-radius:1.6rem}
-        @keyframes statSpin{100%{transform:rotate(360deg)}}
-        .stat-icon-wrap{position:absolute;right:13px;top:13px;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:.38}
-        .stat-n{font-family:'Orbitron',sans-serif;font-size:clamp(1.85rem,7vw,2.8rem);font-weight:900;position:relative;z-index:2;animation:numPulse 3s ease-in-out infinite;line-height:1}
-        @keyframes numPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.75)}}
-        .stat-l{font-family:'Orbitron',sans-serif;font-size:.5rem;letter-spacing:2.5px;opacity:.8;position:relative;z-index:2;text-transform:uppercase}
-        .stat-bar{margin-top:.65rem;height:3px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden;position:relative;z-index:2}
-        .stat-bar-fill{height:100%;border-radius:999px;animation:progFlow 2.5s linear infinite;background-size:400% 100%;transition:width .8s cubic-bezier(.34,1.56,.64,1)}
-        .corner{position:absolute;width:16px;height:16px;pointer-events:none}
-        .corner.tl{top:6px;left:6px;border-top:2px solid;border-left:2px solid}
-        .corner.br{bottom:6px;right:6px;border-bottom:2px solid;border-right:2px solid}
-        .power-indicator{display:flex;gap:4px;margin-top:.52rem;position:relative;z-index:2}
-        .power-pip{width:7px;height:7px;border-radius:2px;background:rgba(255,255,255,.1);transition:all .4s ease}
-        .power-pip.on{background:var(--g);box-shadow:0 0 9px var(--g)}
-        .mini-stat{display:flex;align-items:center;justify-content:space-between;padding:.6rem .75rem;border-radius:13px;border:1px solid rgba(255,255,255,.09);position:relative;overflow:hidden;transition:transform .22s ease,box-shadow .22s ease}
-        .mini-stat:active{transform:scale(.96)}
-        .mini-stat:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
-        .mini-stat::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent)}
-        .mini-stat-val{font-family:'Orbitron',sans-serif;font-size:.8rem;font-weight:700}
-        .mini-stat-lbl{font-family:'Orbitron',sans-serif;font-size:.42rem;letter-spacing:1.5px;opacity:.5;margin-top:2px}
-        .lbl{font-family:'Orbitron',sans-serif;font-size:.56rem;letter-spacing:1.8px;text-transform:uppercase;color:rgba(200,200,255,.52);display:flex;align-items:center;gap:5px;margin-bottom:7px}
-        .inp-wrap{position:relative}
-        .inp-focus-ring{position:absolute;inset:-1px;border-radius:13px;pointer-events:none;opacity:0;transition:opacity .35s;background:transparent;border:1px solid var(--c);box-shadow:0 0 0 3px rgba(0,247,255,.1),0 0 35px rgba(0,247,255,.24)}
-        .inp:focus+.inp-focus-ring,.inp:focus~.inp-focus-ring{opacity:1}
-        .inp{width:100%;padding:13px 15px 13px 44px;background:rgba(2,2,15,.93);border:1px solid rgba(255,255,255,.11);border-radius:13px;color:#e0e0ff;font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:500;transition:border-color .35s ease,box-shadow .35s ease;outline:none;-webkit-appearance:none}
-        .inp::placeholder{color:rgba(200,180,255,.17)}
-        .inp:focus{border-color:rgba(0,247,255,.48);box-shadow:0 0 24px rgba(0,247,255,.1)}
-        .inp-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none;z-index:1}
-        textarea.inp{padding-left:15px;resize:none;min-height:96px}
-        .inp-status{margin-top:7px;font-family:'Orbitron',sans-serif;font-size:6.5px;letter-spacing:1.5px;opacity:0;transition:opacity .3s;display:flex;align-items:center;gap:5px}
-        .char-count{float:right;font-family:'Orbitron',sans-serif;font-size:6px;letter-spacing:1px;color:rgba(200,200,255,.3);margin-top:5px}
-        .btn-outer{position:relative;padding:2px;border-radius:16px;background:linear-gradient(135deg,var(--r),var(--o),var(--y),var(--g),var(--c),var(--b),var(--v),var(--r));background-size:500% 500%;animation:btnBorder 3.5s linear infinite;box-shadow:0 0 60px rgba(255,60,172,.5),0 0 120px rgba(0,247,255,.22)}
-        @keyframes btnBorder{0%{background-position:0% 50%}100%{background-position:500% 50%}}
-        .btn{width:100%;padding:17px;border:none;border-radius:14px;font-family:'Orbitron',sans-serif;font-size:.78rem;font-weight:800;letter-spacing:3.5px;text-transform:uppercase;cursor:pointer;color:#fff;background:linear-gradient(135deg,rgba(2,2,18,.96),rgba(12,5,35,.96));position:relative;overflow:hidden;transition:all .3s ease;display:flex;align-items:center;justify-content:center;gap:8px;min-height:56px;touch-action:manipulation}
-        .btn:active{transform:scale(.975)}
-        .btn-shine{position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.1) 50%,transparent 65%);transform:translateX(-100%);transition:transform .55s ease;border-radius:14px}
-        .btn:hover .btn-shine,.btn:active .btn-shine{transform:translateX(100%)}
-        .btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,60,172,.2),rgba(0,247,255,.2));opacity:0;transition:opacity .3s;border-radius:14px}
-        .btn:active::after{opacity:1}
-        .btn-txt{position:relative;z-index:2;display:flex;align-items:center;gap:9px}
-        .btn-clear{width:100%;padding:13px;border:1px solid rgba(255,255,255,.14);background:linear-gradient(135deg,rgba(255,60,172,.09),rgba(180,77,255,.07));color:rgba(200,200,255,.68);border-radius:13px;font-family:'Orbitron',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:2.5px;cursor:pointer;transition:all .3s ease;display:flex;align-items:center;justify-content:center;gap:7px;min-height:48px;touch-action:manipulation}
-        .btn-clear:active{transform:scale(.97);box-shadow:0 0 24px rgba(255,60,172,.32)}
-        .ripple-fx{position:absolute;border-radius:50%;transform:scale(0);animation:ripAnim .7s linear;background:rgba(255,255,255,.22);pointer-events:none}
-        @keyframes ripAnim{to{transform:scale(5);opacity:0}}
-        .neon-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,60,172,.65),rgba(0,247,255,.65),rgba(57,255,20,.45),transparent);margin:.9rem 0;box-shadow:0 0 14px rgba(180,77,255,.45)}
-        .prog-bar{width:100%;height:6px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden}
-        .prog-val{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--r),var(--o),var(--y),var(--g),var(--c));background-size:400% 100%;animation:progFlow 2.5s linear infinite;box-shadow:0 0 18px var(--c),0 0 36px var(--v);transition:width .7s cubic-bezier(.34,1.56,.64,1)}
-        @keyframes progFlow{0%{background-position:0% 50%}100%{background-position:400% 50%}}
-        .ses-card{transition:all .32s ease;position:relative}
-        .ses-card:hover{transform:translateY(-3px)}
-        .orb{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(255,60,172,.26),rgba(180,77,255,.26));border:1px solid rgba(180,77,255,.65);box-shadow:0 0 24px rgba(180,77,255,.6);animation:orbAnim 2.2s ease-in-out infinite;flex-shrink:0}
-        @keyframes orbAnim{0%,100%{box-shadow:0 0 24px rgba(180,77,255,.6)}50%{box-shadow:0 0 44px rgba(180,77,255,1),0 0 75px rgba(0,247,255,.55)}}
-        .chart-bar-wrap{display:flex;align-items:flex-end;gap:3px;height:40px;margin-top:.65rem}
-        .chart-bar{flex:1;border-radius:3px 3px 0 0;min-width:5px;animation:barGrow .6s cubic-bezier(.34,1.56,.64,1) forwards;transform-origin:bottom}
-        @keyframes barGrow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
-        .ses-meta-row{display:flex;gap:.5rem;margin-top:.6rem;flex-wrap:wrap}
-        .ses-meta-chip{font-family:'Orbitron',sans-serif;font-size:5.5px;letter-spacing:1.2px;padding:3px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(200,200,255,.45)}
-        .neon-nav{background:linear-gradient(180deg,rgba(2,2,10,.99),rgba(2,2,10,1));backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border-top:1px solid rgba(255,255,255,.07);position:fixed;bottom:0;left:0;right:0;z-index:30;padding-bottom:env(safe-area-inset-bottom)}
-        .neon-nav::before{content:'';position:absolute;top:-1px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--r),var(--o),var(--y),var(--g),var(--c),var(--b),var(--v),var(--r));background-size:400% 100%;animation:rainbowShift 3s linear infinite}
-        .neon-nav::after{content:'';position:absolute;top:-11px;left:0;right:0;height:18px;background:linear-gradient(90deg,var(--r),var(--o),var(--y),var(--g),var(--c),var(--b),var(--v),var(--r));background-size:400% 100%;animation:rainbowShift 3s linear infinite;filter:blur(10px);opacity:.34}
-        .nv{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 12px;transition:all .3s ease;color:rgba(200,180,255,.28);text-decoration:none;position:relative;flex:1;min-height:60px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;gap:3px}
-        .nv-icon-wrap{position:relative;width:32px;height:32px;display:flex;align-items:center;justify-content:center}
-        .nv-icon-bg{position:absolute;inset:0;border-radius:9px;background:transparent;transition:all .3s ease}
-        .nv.act .nv-icon-bg{background:rgba(0,247,255,.14);box-shadow:0 0 22px rgba(0,247,255,.4)}
-        .nv.act{color:var(--c);filter:drop-shadow(0 0 16px rgba(0,247,255,1))}
-        .nv span{font-family:'Orbitron',sans-serif;font-size:.46rem;letter-spacing:1.8px}
-        .nv.act::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:44px;height:3px;background:linear-gradient(90deg,var(--r),var(--c));border-radius:999px 999px 0 0;box-shadow:0 -7px 18px var(--c)}
-        .nav-indicator{position:absolute;top:7px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--c);box-shadow:0 0 14px var(--c);opacity:0;transition:opacity .3s}
-        .nv.act .nav-indicator{opacity:1}
-        .sec{display:none;animation:secIn .45s cubic-bezier(.34,1.56,.64,1)}
-        .sec.act{display:block}
-        @keyframes secIn{from{opacity:0;transform:translateY(22px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-        .holo-sheen{position:relative;overflow:hidden}
-        .holo-sheen::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.055) 50%,transparent 65%);animation:sheenSlide 5s ease-in-out infinite;transform:translateX(-100%);pointer-events:none}
-        @keyframes sheenSlide{0%{transform:translateX(-100%)}45%{transform:translateX(100%)}100%{transform:translateX(100%)}}
-        .section-hdr{display:flex;align-items:center;gap:8px;margin-bottom:.9rem}
-        .section-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(255,60,172,.5),rgba(0,247,255,.5),transparent)}
-        .input-group{background:rgba(2,2,15,.68);border:1px solid rgba(255,255,255,.1);border-radius:15px;padding:1rem;transition:border-color .3s ease,box-shadow .3s ease}
-        .input-group:focus-within{border-color:rgba(0,247,255,.35);box-shadow:0 0 28px rgba(0,247,255,.1)}
-        .form-section-tag{font-family:'Orbitron',sans-serif;font-size:7px;letter-spacing:3.5px;padding:4px 12px;border-radius:999px;display:inline-flex;align-items:center;gap:5px;margin-bottom:.8rem}
-        .fst-fire{background:rgba(255,60,172,.1);border:1px solid rgba(255,60,172,.3);color:var(--r)}
-        .fst-ocean{background:rgba(0,247,255,.1);border:1px solid rgba(0,247,255,.3);color:var(--c)}
-        .fst-power{background:rgba(255,230,0,.1);border:1px solid rgba(255,230,0,.3);color:var(--y)}
-        .filter-bar{display:flex;gap:.45rem;margin-bottom:.9rem;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
-        .filter-bar::-webkit-scrollbar{display:none}
-        .filter-btn{flex-shrink:0;padding:7px 15px;border-radius:10px;border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.045);font-family:'Orbitron',sans-serif;font-size:6.5px;letter-spacing:1.5px;color:rgba(200,200,255,.42);cursor:pointer;transition:all .3s ease;touch-action:manipulation;white-space:nowrap}
-        .filter-btn.active{border-color:rgba(0,247,255,.48);background:rgba(0,247,255,.11);color:var(--c);box-shadow:0 0 18px rgba(0,247,255,.22)}
-        .sessions-header-bar{background:linear-gradient(135deg,rgba(0,247,255,.09),rgba(57,255,20,.055));border:1px solid rgba(0,247,255,.22);border-radius:1.6rem;padding:.88rem 1.05rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:.95rem}
-        .clear-btn{font-family:'Orbitron',sans-serif;font-size:6px;letter-spacing:1.5px;padding:4px 12px;border-radius:999px;border:1px solid rgba(255,60,172,.38);background:rgba(255,60,172,.09);color:var(--r);cursor:pointer;transition:all .3s ease;touch-action:manipulation}
-        .clear-btn:active{box-shadow:0 0 20px rgba(255,60,172,.45);transform:scale(.95)}
-        .step-c{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.6rem;font-weight:700;flex-shrink:0;background:linear-gradient(135deg,var(--r),var(--v));color:#fff;box-shadow:0 0 24px rgba(255,60,172,.65)}
-        .warn-box{background:linear-gradient(135deg,rgba(255,230,0,.11),rgba(255,106,0,.08));border:1px solid rgba(255,230,0,.38);border-radius:1.6rem;padding:1.1rem;box-shadow:0 0 34px rgba(255,230,0,.12),inset 0 0 34px rgba(255,230,0,.055)}
-        .glow-ring{position:absolute;border-radius:50%;border:2px solid;animation:ringPulse 3s ease-in-out infinite;pointer-events:none}
-        @keyframes ringPulse{0%,100%{transform:scale(1);opacity:.68}50%{transform:scale(1.32);opacity:0}}
-        .dev-avatar{width:84px;height:84px;border-radius:50%;object-fit:cover;border:2px solid var(--v);box-shadow:0 0 38px rgba(180,77,255,.72),0 0 76px rgba(0,247,255,.3);display:block}
-        .soc-btn{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.17);background:rgba(255,255,255,.08);transition:all .3s ease;cursor:pointer;text-decoration:none;touch-action:manipulation}
-        .soc-btn:active{transform:scale(1.2);box-shadow:0 0 28px rgba(0,247,255,.5)}
-        .feature-chip{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);color:rgba(200,200,255,.62);margin:3px;transition:all .3s ease}
-        .feature-chip:hover{border-color:rgba(0,247,255,.38);background:rgba(0,247,255,.08)}
-        .about-hero{background:linear-gradient(135deg,rgba(180,77,255,.13),rgba(0,247,255,.08),rgba(255,60,172,.1));border:1px solid rgba(180,77,255,.24);border-radius:1.6rem;padding:1.5rem;text-align:center;position:relative;overflow:hidden}
-        .about-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--v),var(--c),transparent)}
-        .version-badge{font-family:'Orbitron',sans-serif;font-size:7px;letter-spacing:2px;padding:3px 11px;border-radius:999px;background:linear-gradient(135deg,rgba(255,60,172,.18),rgba(0,247,255,.13));border:1px solid rgba(255,60,172,.38);color:var(--r);display:inline-block;margin-top:7px}
-        .ft-bar{background:linear-gradient(90deg,rgba(255,60,172,.08),rgba(0,247,255,.08),rgba(255,60,172,.08));border-top:1px solid rgba(255,255,255,.08);padding:14px 16px;text-align:center}
-        .counter-anim{animation:cntAnim .4s cubic-bezier(.34,1.56,.64,1)}
-        @keyframes cntAnim{0%{transform:scale(1.85);opacity:.28}100%{transform:scale(1);opacity:1}}
-        .stats-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:.9rem}
-        .mini-stats-row{display:grid;grid-template-columns:1fr 1fr;gap:.68rem;margin-bottom:.9rem}
-        .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.88rem}
-        .content-pad{padding:1rem}
-        .space-y>*+*{margin-top:.88rem}
-        .steps-list{display:flex;flex-direction:column;gap:.95rem}
-        .step-row{display:flex;gap:.88rem;align-items:flex-start}
-        .step-text-title{font-weight:600;display:block;font-size:.9rem}
-        .step-text-desc{color:rgba(200,200,255,.44);font-size:.78rem;line-height:1.68}
-        .modal-icon-wrap{margin:0 auto;width:74px;height:74px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
-        .nav-row{display:flex;justify-content:space-around;align-items:center;padding:4px 0}
-        #modal-container{display:none;position:fixed;inset:0;z-index:100;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.92);backdrop-filter:blur(28px)}
-        #modal-content{background:linear-gradient(135deg,rgba(2,2,18,.99),rgba(14,5,35,.98));backdrop-filter:blur(40px);width:100%;max-width:345px;border-radius:1.9rem;padding:2.1rem 1.55rem;text-align:center;border:1px solid rgba(255,255,255,.11);box-shadow:0 0 90px rgba(180,77,255,.32),0 0 180px rgba(0,247,255,.16),0 35px 90px rgba(0,0,0,.85);transform:scale(.85) translateY(26px);opacity:0;transition:all .42s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden}
-        #modal-content::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--r),var(--o),var(--y),var(--g),var(--c),var(--b),var(--v),var(--r));background-size:400% 100%;animation:rainbowShift 2.5s linear infinite}
-        #modal-container.act{display:flex}
-        #modal-container.act #modal-content{transform:scale(1) translateY(0);opacity:1}
-        .mdm-btn{width:100%;padding:14px;border:1px solid rgba(255,255,255,.16);background:linear-gradient(135deg,rgba(255,60,172,.18),rgba(0,247,255,.13));color:#fff;border-radius:13px;font-family:'Orbitron',sans-serif;font-size:.66rem;font-weight:700;letter-spacing:2.5px;cursor:pointer;transition:all .3s ease;min-height:50px;touch-action:manipulation}
-        .mdm-btn:active{box-shadow:0 0 44px rgba(0,247,255,.6);transform:scale(.97)}
-        .spinner{animation:spin 1s linear infinite}
-        @keyframes spin{100%{transform:rotate(360deg)}}
-        .toast-container{position:fixed;top:84px;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
-        .toast{font-family:'Orbitron',sans-serif;font-size:8px;letter-spacing:2px;padding:10px 22px;border-radius:999px;border:1px solid;backdrop-filter:blur(22px);animation:toastIn .4s cubic-bezier(.34,1.56,.64,1) forwards;white-space:nowrap}
-        .toast-success{background:rgba(57,255,20,.14);border-color:rgba(57,255,20,.58);color:var(--g);box-shadow:0 0 28px rgba(57,255,20,.38)}
-        .toast-error{background:rgba(255,60,172,.14);border-color:rgba(255,60,172,.58);color:var(--r);box-shadow:0 0 28px rgba(255,60,172,.38)}
-        .toast-info{background:rgba(0,247,255,.14);border-color:rgba(0,247,255,.58);color:var(--c);box-shadow:0 0 28px rgba(0,247,255,.38)}
-        .toast-warn{background:rgba(255,230,0,.14);border-color:rgba(255,230,0,.58);color:var(--y);box-shadow:0 0 28px rgba(255,230,0,.38)}
-        @keyframes toastIn{from{opacity:0;transform:translateY(-18px) scale(.86)}to{opacity:1;transform:translateY(0) scale(1)}}
-        @keyframes toastOut{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(-14px) scale(.88)}}
-        .sys-status-bar{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:.58rem .95rem;margin-bottom:.9rem}
-        .sys-dot{width:7px;height:7px;border-radius:50%;animation:pdot 1.6s ease-in-out infinite}
-        .uptime-counter{font-family:'Orbitron',sans-serif;font-size:7px;letter-spacing:1.5px;color:rgba(200,200,255,.42)}
-        .stat-trend{font-family:'Orbitron',sans-serif;font-size:.39rem;letter-spacing:1px;position:relative;z-index:2;margin-top:3px}
-        .progress-ring-wrap{display:flex;justify-content:center;margin:.4rem 0 0}
-        .circular-chart{width:52px;height:52px}
-        .circle-bg{fill:none;stroke:rgba(255,255,255,.07);stroke-width:3}
-        .circle-val{fill:none;stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .8s cubic-bezier(.34,1.56,.64,1);transform:rotate(-90deg);transform-origin:50% 50%}
-        .ses-expand-btn{font-family:'Orbitron',sans-serif;font-size:6px;letter-spacing:1.5px;padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:rgba(200,200,255,.5);cursor:pointer;transition:all .3s ease;touch-action:manipulation;margin-top:.55rem;display:inline-block}
-        .ses-expand-btn:active{background:rgba(0,247,255,.1);border-color:rgba(0,247,255,.3);color:var(--c)}
-        .ses-details{display:none;margin-top:.65rem;padding:.65rem;background:rgba(255,255,255,.03);border-radius:10px;border:1px solid rgba(255,255,255,.07)}
-        .ses-details.open{display:block;animation:secIn .3s ease}
-        .ses-detail-row{display:flex;justify-content:space-between;align-items:center;padding:.28rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
-        .ses-detail-row:last-child{border-bottom:none}
-        .ses-detail-lbl{font-family:'Orbitron',sans-serif;font-size:6px;letter-spacing:1px;color:rgba(200,200,255,.38)}
-        .ses-detail-val{font-family:'Orbitron',sans-serif;font-size:7px;letter-spacing:.8px;color:rgba(200,200,255,.7)}
-        @media(max-width:360px){
-            .logo-main{font-size:.95rem;letter-spacing:1px}
-            .stat-n{font-size:1.55rem}
-            .badge-v{font-size:6px;padding:2px 6px}
-            .btn{font-size:.68rem;letter-spacing:2px}
-            .content-pad{padding:.78rem}
-            .stats-row{gap:.68rem}
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --r: #ff3cac; --o: #ff8c00; --y: #ffe600; --g: #39ff14;
+            --c: #00f7ff; --b: #4d79ff; --v: #b44dff; --bg: #02020a;
+        }
+        html { font-size: 14px; }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            overflow: hidden; background: var(--bg);
+            color: #e0e0ff; width: 100%; max-width: 100vw;
+        }
+
+        /* HARDCORE CYBERPUNK BACKGROUND EFFECTS - GPU OPTIMIZED */
+        .mega-bg {
+            position: fixed; inset: 0; z-index: -5;
+            background: 
+                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(255,60,172,0.2) 0%, transparent 60%),
+                radial-gradient(ellipse 70% 50% at 80% 20%, rgba(0,247,255,0.15) 0%, transparent 55%),
+                radial-gradient(ellipse 60% 70% at 10% 80%, rgba(57,255,20,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 50% at 50% 50%, rgba(180,77,255,0.1) 0%, transparent 70%),
+                linear-gradient(180deg, #02020a, #05021a 50%, #020508);
+            /* Static bg to save GPU, rely on CSS animations for motion */
+        }
+
+        /* Grid + Hex Overlays */
+        .grid-bg {
+            position: fixed; inset: 0; z-index: -4; pointer-events: none;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 44px 44px;
+        }
+        .hex-grid {
+            position: fixed; inset: 0; z-index: -3; pointer-events: none; opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='104'%3E%3Cpolygon points='30,2 58,17 58,47 30,62 2,47 2,17' fill='none' stroke='%2300f7ff' stroke-width='1.5'/%3E%3Cpolygon points='30,52 58,67 58,97 30,112 2,97 2,67' fill='none' stroke='%23ff3cac' stroke-width='1.5'/%3E%3C/svg%3E");
+            background-size: 60px 104px;
+        }
+
+        /* Scanlines - Single vertical sweep */
+        .scanline {
+            position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 100; pointer-events: none;
+            background: linear-gradient(90deg, transparent, rgba(255,60,172,0.8) 30%, rgba(0,247,255,0.8) 60%, transparent);
+            filter: blur(1px);
+            animation: scanDown 8s linear infinite;
+        }
+        @keyframes scanDown { 0% { transform: translateY(-3px); } 100% { transform: translateY(100vh); } }
+
+        /* Corner Decorations */
+        .corner-deco { position: fixed; z-index: 10; pointer-events: none; }
+        .corner-deco.tl { top: 0; left: 0; width: 95px; height: 95px; border-top: 2px solid var(--r); border-left: 2px solid var(--r); border-radius: 0 0 75px 0; box-shadow: inset -5px -5px 28px rgba(255,60,172,0.2); }
+        .corner-deco.tr { top: 0; right: 0; width: 95px; height: 95px; border-top: 2px solid var(--c); border-right: 2px solid var(--c); border-radius: 0 0 0 75px; box-shadow: inset 5px -5px 28px rgba(0,247,255,0.2); }
+        
+        /* CSS-only floating orbs (replaces JS) */
+        .orb-bg {
+            position: fixed; border-radius: 50%; filter: blur(60px); opacity: 0.08; z-index: -2;
+            animation: pulseOrb 8s ease-in-out infinite alternate;
+        }
+        .orb-1 { width: 250px; height: 250px; background: var(--c); top: 20%; left: 10%; }
+        .orb-2 { width: 300px; height: 300px; background: var(--r); bottom: 10%; right: 5%; animation-delay: -4s; }
+        @keyframes pulseOrb { 0% { transform: scale(1); opacity: 0.05; } 100% { transform: scale(1.3); opacity: 0.12; } }
+
+        /* UI Structure */
+        .wrap {
+            height: 100dvh; overflow-y: auto; scrollbar-width: none;
+            position: relative; z-index: 5; padding-bottom: 80px;
+        }
+        .wrap::-webkit-scrollbar { display: none; }
+
+        /* Typography & Colors */
+        .gt-rainbow {
+            background: linear-gradient(90deg, var(--r), var(--o), var(--y), var(--g), var(--c), var(--b), var(--v), var(--r));
+            background-size: 300% 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: rainbowShift 4s linear infinite;
+        }
+        .gt-cosmic { background: linear-gradient(135deg, var(--v), var(--r), var(--c)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 10px rgba(180,77,255,0.5)); }
+        .gt-fire { background: linear-gradient(135deg, var(--r), var(--o), var(--y)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 10px rgba(255,140,0,0.5)); }
+        .gt-ocean { background: linear-gradient(135deg, var(--c), var(--g), var(--b)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 10px rgba(0,247,255,0.5)); }
+        
+        .nt-c { color: var(--c); text-shadow: 0 0 10px var(--c); }
+        .nt-r { color: var(--r); text-shadow: 0 0 10px var(--r); }
+        .nt-g { color: var(--g); text-shadow: 0 0 10px var(--g); }
+        .nt-v { color: var(--v); text-shadow: 0 0 10px var(--v); }
+        .nt-y { color: var(--y); text-shadow: 0 0 10px var(--y); }
+
+        @keyframes rainbowShift { 0% { background-position: 0% 50%; } 100% { background-position: 300% 50%; } }
+
+        /* Header */
+        .hdr {
+            background: linear-gradient(180deg, rgba(2,2,10,0.95), rgba(2,2,10,0.8));
+            backdrop-filter: blur(16px); position: sticky; top: 0; z-index: 30;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .hdr-rainbow { position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--r), var(--o), var(--y), var(--g), var(--c), var(--b), var(--v), var(--r)); background-size: 300% 100%; animation: rainbowShift 4s linear infinite; }
+        .hdr-glow { position: absolute; bottom: -10px; left: 0; right: 0; height: 20px; background: linear-gradient(90deg, var(--r), var(--c)); filter: blur(10px); opacity: 0.3; }
+        .hdr-inner { padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo-main { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 900; letter-spacing: 3px; }
+        .sub-title { font-family: 'Orbitron', sans-serif; font-size: 0.6rem; letter-spacing: 2px; margin-top: 4px; }
+        .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--g); box-shadow: 0 0 15px var(--g); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.5); } }
+
+        /* Ticker - Re-added as CSS animation (no JS overhead) */
+        .ticker { overflow: hidden; white-space: nowrap; padding: 6px 0; background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,60,172,0.3); }
+        .ticker-inner { display: inline-block; animation: scrollText 15s linear infinite; }
+        .ticker-item { font-family: 'Orbitron', sans-serif; font-size: 0.6rem; letter-spacing: 2px; padding: 0 30px; }
+        @keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* Sections */
+        .sec { display: none; padding: 1.2rem; animation: slideUp 0.4s cubic-bezier(0.1, 0.9, 0.2, 1); }
+        .sec.act { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Enhanced Glass & Forms */
+        .glass {
+            background: linear-gradient(135deg, rgba(20,10,30,0.6), rgba(10,5,20,0.8));
+            backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 1.5rem; position: relative; overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .glass::before {
+            content: ''; position: absolute; top:0; left:0; right:0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--r), var(--c), transparent); opacity: 0.6;
+        }
+
+        /* Stat Cards */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+        .sc { padding: 1.2rem; border-radius: 1.2rem; position: relative; overflow: hidden; }
+        .sc-fire { background: linear-gradient(135deg, rgba(255,60,172,0.1), rgba(255,140,0,0.05)); border: 1px solid rgba(255,60,172,0.4); box-shadow: inset 0 0 30px rgba(255,60,172,0.1); }
+        .sc-ocean { background: linear-gradient(135deg, rgba(0,247,255,0.1), rgba(57,255,20,0.05)); border: 1px solid rgba(0,247,255,0.4); box-shadow: inset 0 0 30px rgba(0,247,255,0.1); }
+        .stat-val { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; font-weight: 800; line-height: 1; margin: 0.5rem 0; }
+        .stat-lbl { font-family: 'Orbitron', sans-serif; font-size: 0.5rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; }
+        
+        /* Premium Inputs */
+        .inp-wrap { position: relative; margin-bottom: 1.2rem; }
+        .inp-lbl { font-family: 'Orbitron', sans-serif; font-size: 0.6rem; letter-spacing: 1.5px; display: flex; align-items: center; gap: 6px; margin-bottom: 8px; text-transform: uppercase; }
+        .inp {
+            width: 100%; padding: 14px 14px 14px 44px; background: rgba(5,2,15,0.8);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; color: #fff;
+            font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem;
+            transition: all 0.3s; outline: none;
+        }
+        .inp:focus { border-color: var(--c); box-shadow: 0 0 20px rgba(0,247,255,0.2), inset 0 0 10px rgba(0,247,255,0.1); }
+        .inp-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); opacity: 0.7; }
+        textarea.inp { padding-left: 14px; min-height: 90px; resize: none; }
+        
+        #cookieInput {
+            background-image: url('https://i.imgur.com/OMNB0Y5.gif');
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-blend-mode: overlay;
+            background-color: rgba(5,2,15,0.85); /* Darken it slightly so text is readable */
+        }
+
+        /* Hardcore Rainbow Button */
+        .btn-core {
+            width: 100%; padding: 4px; border-radius: 16px;
+            background: linear-gradient(90deg, var(--r), var(--o), var(--y), var(--g), var(--c), var(--b), var(--v), var(--r));
+            background-size: 300% 100%; animation: rainbowShift 3s linear infinite;
+            margin-top: 1rem; cursor: pointer; transition: transform 0.2s;
+            box-shadow: 0 0 40px rgba(255,60,172,0.4), 0 0 80px rgba(0,247,255,0.2);
+        }
+        .btn-core:active { transform: scale(0.96); }
+        .btn-inner {
+            background: #05010d; padding: 16px; border-radius: 12px;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 800;
+            letter-spacing: 4px; text-transform: uppercase; color: #fff;
+            transition: background 0.3s;
+        }
+        .btn-inner:hover { background: rgba(20,5,30,0.9); }
+
+        /* Bottom Nav */
+        .neon-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+            background: linear-gradient(180deg, rgba(2,2,10,0.95), #000);
+            backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .neon-nav::before { content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--r), var(--c), var(--v)); }
+        .nav-row { display: flex; justify-content: space-around; padding: 10px 0; }
+        .nv {
+            flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+            color: rgba(255,255,255,0.4); text-decoration: none; font-family: 'Orbitron', sans-serif;
+            font-size: 0.55rem; letter-spacing: 2px; transition: all 0.3s;
+        }
+        .nv.act { color: var(--c); text-shadow: 0 0 10px var(--c); }
+        .nv.act i { filter: drop-shadow(0 0 8px var(--c)); transform: translateY(-3px); }
+
+        /* Splash Screen - Upgraded */
+        #splash {
+            position: fixed; inset: 0; z-index: 9999; background: var(--bg);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease;
+        }
+        .splash-loader {
+            width: 120px; height: 120px; position: relative; margin-bottom: 2rem;
+        }
+        .splash-ring {
+            position: absolute; inset: 0; border-radius: 50%; border: 3px solid transparent;
+            border-top-color: var(--r); border-right-color: var(--c);
+            animation: spinRing 1.5s cubic-bezier(0.68, -0.55, 0.26, 1.55) infinite;
+        }
+        .splash-ring:nth-child(2) { inset: 15px; border-top-color: var(--y); border-bottom-color: var(--v); animation-duration: 2s; animation-direction: reverse; }
+        @keyframes spinRing { 100% { transform: rotate(360deg); } }
+        
+        /* Toast Notifications */
+        #toast-container { position: fixed; top: 90px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+        .toast {
+            background: rgba(10,5,20,0.9); border: 1px solid var(--c); box-shadow: 0 0 20px rgba(0,247,255,0.3);
+            padding: 12px 24px; border-radius: 30px; font-family: 'Orbitron', sans-serif; font-size: 0.7rem; letter-spacing: 1px;
+            animation: toastIn 0.3s forwards; display: flex; align-items: center; gap: 10px; color: #fff;
+        }
+        @keyframes toastIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Custom Session Cards matching original style */
+        .ses-card {
+            background: linear-gradient(135deg, rgba(20,10,30,0.8), rgba(5,2,10,0.9));
+            border: 1px solid rgba(255,255,255,0.1); border-left: 3px solid var(--c);
+            border-radius: 12px; padding: 1rem; margin-bottom: 0.8rem;
+        }
+        .ses-card.err { border-left-color: var(--r); }
+        .ses-card.done { border-left-color: var(--g); }
+        .prog-bar { height: 6px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; margin: 10px 0; }
+        .prog-fill { height: 100%; background: linear-gradient(90deg, var(--c), var(--v)); }
+        /* --- ROCKET LAUNCH & MOON LANDING ANIMATIONS --- */
+        #rocket-scene {
+            position: fixed; inset: 0; z-index: 9000; pointer-events: none;
+            display: none; justify-content: center; align-items: flex-end;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+        }
+        #rocket-scene.active { display: flex; }
+
+        .rocket-ship {
+            font-size: 5rem;
+            position: absolute;
+            bottom: 20%;
+            transition: all 1.5s cubic-bezier(0.5, 0, 0.2, 1);
+            filter: drop-shadow(0 20px 30px rgba(255,140,0,0.6));
+        }
+
+        /* Launching Phase */
+        .rocket-launching {
+            animation: shake 0.5s linear infinite;
+        }
+        .rocket-launched {
+            bottom: 120%; /* flies off screen */
+            transform: scale(0.5);
+        }
+
+        /* Moon Landing Phase */
+        .moon-surface {
+            position: absolute; bottom: -50%; width: 200vw; height: 100vw;
+            background: radial-gradient(circle at 50% 10%, #fff, #aaa 30%, #444 60%, #111);
+            border-radius: 50%; opacity: 0;
+            transition: all 1s ease;
+            box-shadow: 0 0 100px rgba(255,255,255,0.2) inset;
+        }
+        .moon-surface.visible { bottom: -70%; opacity: 1; }
+
+        .rocket-landing {
+            bottom: 150%; /* Start high above */
+            transform: scale(0.3) rotate(180deg);
+            opacity: 0;
+            transition: none; /* override transition to snap top */
+        }
+        .rocket-landed {
+            bottom: 25%; /* Lands on the arch of the moon */
+            transform: scale(1) rotate(0deg);
+            opacity: 1;
+            transition: all 2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
         }
     </style>
 </head>
 <body>
-<div class="mega-bg"></div>
-<div class="aurora">
-    <div class="aurora-band ab1"></div>
-    <div class="aurora-band ab2"></div>
-    <div class="aurora-band ab3"></div>
-    <div class="aurora-band ab4"></div>
-</div>
-<div class="floating-orbs" id="forbs"></div>
-<div class="grid-bg"></div>
-<div class="hex-grid"></div>
-<div class="vignette"></div>
-<div class="scanline"></div>
-<div class="scanline2"></div>
-<div class="particles" id="pt"></div>
-<div class="corner-deco tl"></div>
-<div class="corner-deco tr"></div>
-<div class="corner-deco bl"></div>
-<div class="corner-deco br"></div>
-<div class="data-side" id="ds1" style="right:0"></div>
-<div class="data-side" id="ds2" style="left:0"></div>
-<div class="toast-container" id="toastContainer"></div>
 
-<div class="wrap">
-    <header class="hdr">
-        <div class="hdr-inner">
-            <div class="hdr-left">
-                <div class="logo-wrap">
-                    <div class="logo-main gt-rainbow">SHAREBOOST</div>
-                    <div class="logo-sub"></div>
-                </div>
-                <div class="sub-title nt-r" style="margin-top:5px">⚡ FBSHARE ENGINE V6 ULTRA ⚡</div>
-            </div>
-            <div class="hdr-right">
-                <div style="display:flex;flex-direction:column;align-items:center;gap:3px">
-                    <div class="pulse-dot"></div>
-                    <span style="font-family:'Orbitron';font-size:6px;letter-spacing:1.5px;color:var(--g)">LIVE</span>
-                </div>
-                <div class="badge-v">V6.0</div>
-            </div>
-        </div>
-        <div class="hdr-rainbow"></div>
-        <div class="hdr-glow"></div>
-    </header>
-
-    <div class="ticker ticker-track">
-        <div class="ticker-inner">
-            <span class="ticker-item ti-r">⚡ SHAREBOOST V6 ACTIVE</span>
-            <span class="ticker-item ti-c">🌊 REAL-TIME ENGINE ONLINE</span>
-            <span class="ticker-item ti-g">🌿 MAX PERFORMANCE ENGAGED</span>
-            <span class="ticker-item ti-y">🔥 BOOST SYSTEM ARMED</span>
-            <span class="ticker-item ti-v">💎 COSMIC TELEMETRY LIVE</span>
-            <span class="ticker-item ti-r">🚀 IGNITION STANDBY</span>
-            <span class="ticker-item ti-c">🛡️ SECURE SESSION ACTIVE</span>
-            <span class="ticker-item ti-g">📡 SIGNAL LOCKED & LOADED</span>
-            <span class="ticker-item ti-y">⚙️ ENGINE CALIBRATED</span>
-            <span class="ticker-item ti-r">⚡ SHAREBOOST V6 ACTIVE</span>
-            <span class="ticker-item ti-c">🌊 REAL-TIME ENGINE ONLINE</span>
-            <span class="ticker-item ti-g">🌿 MAX PERFORMANCE ENGAGED</span>
-            <span class="ticker-item ti-y">🔥 BOOST SYSTEM ARMED</span>
-            <span class="ticker-item ti-v">💎 COSMIC TELEMETRY LIVE</span>
-            <span class="ticker-item ti-r">🚀 IGNITION STANDBY</span>
-            <span class="ticker-item ti-c">🛡️ SECURE SESSION ACTIVE</span>
-            <span class="ticker-item ti-g">📡 SIGNAL LOCKED & LOADED</span>
-            <span class="ticker-item ti-y">⚙️ ENGINE CALIBRATED</span>
-        </div>
+    <!-- Rocket Animation Scene -->
+    <div id="rocket-scene">
+        <div class="moon-surface" id="moon"></div>
+        <div class="rocket-ship" id="rocket">🚀</div>
     </div>
 
-    <section id="home-sec" class="sec act">
-        <div class="content-pad space-y">
+    <!-- Cyberpunk Canvas Elements -->
+    <div class="mega-bg"></div>
+    <div class="orb-bg orb-1"></div>
+    <div class="orb-bg orb-2"></div>
+    <div class="grid-bg"></div>
+    <div class="hex-grid"></div>
+    <div class="scanline"></div>
+    <div class="corner-deco tl"></div>
+    <div class="corner-deco tr"></div>
 
-            <div class="sys-status-bar">
-                <div style="display:flex;align-items:center;gap:7px">
-                    <div class="sys-dot" style="background:var(--g);box-shadow:0 0 9px var(--g)"></div>
-                    <span style="font-family:'Orbitron';font-size:7px;letter-spacing:1.5px;color:rgba(57,255,20,.85)">SYS ONLINE</span>
+    <!-- Splash Loader -->
+    <div id="splash">
+        <div class="splash-loader">
+            <div class="splash-ring"></div>
+            <div class="splash-ring"></div>
+            <i data-lucide="zap" size="32" class="nt-y" style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%);"></i>
+        </div>
+        <div style="font-family:'Orbitron'; font-size:1.5rem; letter-spacing:4px;" class="gt-rainbow">INITIALIZING</div>
+        <div style="font-size:0.7rem; color:#888; margin-top:10px; font-family:'Space Grotesk';">ESTABLISHING SECURE CONNECTION...</div>
+    </div>
+
+    <!-- Layout Wrapper -->
+    <div class="wrap">
+        
+        <header class="hdr">
+            <div class="hdr-inner">
+                <div>
+                    <div class="logo-main gt-rainbow">SHAREBOOST</div>
+                    <div class="sub-title nt-r">⚡ ENGINE V6 ULTRA ⚡</div>
                 </div>
-                <span class="uptime-counter" id="uptimeDisplay">UP: 00:00:00</span>
-                <div style="display:flex;align-items:center;gap:5px">
-                    <div class="sys-dot" style="background:var(--c);box-shadow:0 0 9px var(--c);animation-delay:.5s"></div>
-                    <span style="font-family:'Orbitron';font-size:7px;letter-spacing:1.5px;color:rgba(0,247,255,.85)">API READY</span>
+                <div style="text-align: right;">
+                    <div style="display: flex; align-items: center; gap: 6px; justify-content: flex-end; margin-bottom: 4px;">
+                        <div class="pulse-dot"></div>
+                        <span style="font-family:'Orbitron'; font-size:0.6rem; letter-spacing:1px;" class="nt-g">LIVE</span>
+                    </div>
+                    <div style="padding: 2px 8px; border: 1px solid var(--v); border-radius: 12px; font-family:'Orbitron'; font-size:0.55rem; color:var(--v); background:rgba(180,77,255,0.1);">V6.0</div>
+                </div>
+            </div>
+            <div class="hdr-glow"></div>
+            <div class="hdr-rainbow"></div>
+        </header>
+
+        <div class="ticker">
+            <div class="ticker-inner">
+                <span class="ticker-item nt-r">⚡ SHAREBOOST V6 ACTIVE</span>
+                <span class="ticker-item nt-c">🌊 REAL-TIME ENGINE ONLINE</span>
+                <span class="ticker-item nt-g">🌿 MAX PERFORMANCE ENGAGED</span>
+                <span class="ticker-item nt-y">🔥 BOOST SYSTEM ARMED</span>
+                <span class="ticker-item nt-v">💎 COSMIC TELEMETRY LIVE</span>
+                <!-- Duplicate for seamless loop -->
+                <span class="ticker-item nt-r">⚡ SHAREBOOST V6 ACTIVE</span>
+                <span class="ticker-item nt-c">🌊 REAL-TIME ENGINE ONLINE</span>
+                <span class="ticker-item nt-g">🌿 MAX PERFORMANCE ENGAGED</span>
+                <span class="ticker-item nt-y">🔥 BOOST SYSTEM ARMED</span>
+                <span class="ticker-item nt-v">💎 COSMIC TELEMETRY LIVE</span>
+            </div>
+        </div>
+
+        <!-- Home Section -->
+        <section id="home-sec" class="sec act">
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.1); padding: 8px 14px; border-radius: 12px; background: rgba(0,0,0,0.4); margin-bottom: 1rem;">
+                <span style="font-family:'Orbitron'; font-size:0.65rem; color: var(--g); letter-spacing:1px;"><i data-lucide="cpu" size="12" style="display:inline; margin-right:4px;"></i>SYS ONLINE</span>
+                <span id="stat-uptime" style="font-family:'Orbitron'; font-size:0.65rem; color: #888;">UP: 00:00:00</span>
+            </div>
+
+            <div class="stats-grid">
+                <div class="sc sc-fire">
+                    <i data-lucide="activity" size="28" style="color:var(--r); position:absolute; right:15px; top:15px; opacity:0.3;"></i>
+                    <div class="stat-lbl nt-r">SESSIONS</div>
+                    <div class="stat-val nt-r" id="stat-active">0</div>
+                    <div style="font-size:0.6rem; color:#aaa;">STATUS: Monitoring</div>
+                </div>
+                <div class="sc sc-ocean">
+                    <i data-lucide="share-2" size="28" style="color:var(--c); position:absolute; right:15px; top:15px; opacity:0.3;"></i>
+                    <div class="stat-lbl nt-c">TOTAL EXECUTED</div>
+                    <div class="stat-val nt-c" id="stat-total">0</div>
+                    <div style="font-size:0.6rem; color:#aaa;">NETWORK: Active</div>
                 </div>
             </div>
 
-            <div class="stats-row">
-                <div class="stat-card sc-fire holo-sheen">
-                    <div class="stat-glow"></div>
-                    <div class="stat-icon-wrap"><i data-lucide="activity" style="width:32px;height:32px;color:var(--r)"></i></div>
-                    <div class="stat-l nt-r" style="margin-bottom:.35rem">SESSIONS</div>
-                    <div class="stat-n nt-r" id="activeSessions">0</div>
-                    <div class="stat-trend nt-r" id="sessionTrend" style="opacity:.65">— IDLE</div>
-                    <div class="stat-bar" style="margin-top:.6rem"><div class="stat-bar-fill" id="sesBar" style="width:0%;background:linear-gradient(90deg,var(--r),var(--o));box-shadow:0 0 12px var(--r)"></div></div>
-                    <div class="power-indicator" id="powerPips1"></div>
-                    <div class="corner tl" style="border-color:var(--r)"></div>
-                    <div class="corner br" style="border-color:var(--r)"></div>
+            <form id="shareForm" class="glass" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div style="font-family:'Orbitron'; font-size:0.75rem; letter-spacing:3px;" class="gt-cosmic">━━ MISSION CONFIG V6 ━━</div>
                 </div>
-                <div class="stat-card sc-ocean holo-sheen">
-                    <div class="stat-glow"></div>
-                    <div class="stat-icon-wrap"><i data-lucide="share-2" style="width:32px;height:32px;color:var(--c)"></i></div>
-                    <div class="stat-l nt-c" style="margin-bottom:.35rem">TOTAL</div>
-                    <div class="stat-n nt-c" id="totalShares">0</div>
-                    <div class="stat-trend nt-c" id="shareTrend" style="opacity:.65">0 TOTAL</div>
-                    <div class="stat-bar" style="margin-top:.6rem"><div class="stat-bar-fill" id="shareBar" style="width:0%;background:linear-gradient(90deg,var(--c),var(--g));box-shadow:0 0 12px var(--c)"></div></div>
-                    <div class="power-indicator" id="powerPips2"></div>
-                    <div class="corner tl" style="border-color:var(--c)"></div>
-                    <div class="corner br" style="border-color:var(--c)"></div>
+                
+                <div class="inp-wrap">
+                    <div class="inp-lbl"><i data-lucide="key" size="12" style="color:var(--o);"></i> <span style="color:var(--o)">FACEBOOK COOKIES</span></div>
+                    <textarea id="cookieInput" class="inp" placeholder="Paste session cookies..."></textarea>
                 </div>
-            </div>
+                
+                <div class="inp-wrap">
+                    <div class="inp-lbl"><i data-lucide="link" size="12" style="color:var(--c);"></i> <span style="color:var(--c)">POST URL</span></div>
+                    <i data-lucide="globe" size="18" class="inp-icon" style="color:var(--c)"></i>
+                    <input type="url" id="urlInput" class="inp" placeholder="https://www.facebook.com/...">
+                </div>
 
-            <div class="mini-stats-row">
-                <div class="mini-stat glass" style="background:linear-gradient(135deg,rgba(57,255,20,.08),rgba(0,247,255,.045))">
-                    <div>
-                        <div class="mini-stat-lbl">SUCCESS RATE</div>
-                        <div class="mini-stat-val nt-g" id="successRate">—</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="inp-wrap" style="margin-bottom:0;">
+                        <div class="inp-lbl"><i data-lucide="hash" size="12" style="color:var(--y);"></i> <span style="color:var(--y)">AMOUNT</span></div>
+                        <input type="number" id="amountInput" class="inp" placeholder="100" min="1" style="padding-left:14px;">
                     </div>
-                    <i data-lucide="trending-up" style="width:18px;height:18px;color:var(--g);opacity:.68"></i>
-                </div>
-                <div class="mini-stat glass" style="background:linear-gradient(135deg,rgba(0,247,255,.08),rgba(77,121,255,.045))">
-                    <div>
-                        <div class="mini-stat-lbl">COMPLETED</div>
-                        <div class="mini-stat-val nt-c" id="completedSes">0</div>
+                    <div class="inp-wrap" style="margin-bottom:0;">
+                        <div class="inp-lbl"><i data-lucide="timer" size="12" style="color:var(--g);"></i> <span style="color:var(--g)">DELAY (s)</span></div>
+                        <input type="number" id="intervalInput" class="inp" placeholder="5" min="1" style="padding-left:14px;">
                     </div>
-                    <i data-lucide="check-circle-2" style="width:18px;height:18px;color:var(--c);opacity:.68"></i>
                 </div>
-                <div class="mini-stat glass" style="background:linear-gradient(135deg,rgba(255,60,172,.08),rgba(180,77,255,.045))">
-                    <div>
-                        <div class="mini-stat-lbl">ERRORS</div>
-                        <div class="mini-stat-val nt-r" id="totalErrors">0</div>
-                    </div>
-                    <i data-lucide="alert-circle" style="width:18px;height:18px;color:var(--r);opacity:.68"></i>
-                </div>
-                <div class="mini-stat glass" style="background:linear-gradient(135deg,rgba(255,230,0,.08),rgba(255,140,0,.045))">
-                    <div>
-                        <div class="mini-stat-lbl">PENDING</div>
-                        <div class="mini-stat-val nt-y" id="pendingSes">0</div>
-                    </div>
-                    <i data-lucide="clock" style="width:18px;height:18px;color:var(--y);opacity:.68"></i>
-                </div>
-            </div>
 
-            <form id="shareForm" class="glass holo-sheen" style="padding:1.4rem">
-                <div style="text-align:center;margin-bottom:.9rem">
-                    <div style="font-family:'Orbitron';font-size:9px;letter-spacing:3.5px;" class="gt-cosmic">━━ MISSION CONFIG V6 ━━</div>
-                </div>
-                <div class="neon-divider"></div>
-                <div class="space-y">
-                    <div>
-                        <div class="form-section-tag fst-fire">
-                            <i data-lucide="shield-check" style="width:9px;height:9px"></i>
-                            AUTH CREDENTIALS
+                <div class="btn-core" id="submitBtnWrapper">
+                    <button type="submit" id="submitBtn" style="background:transparent; border:none; width:100%; display:block; padding:0;">
+                        <div class="btn-inner">
+                            <i data-lucide="rocket" size="20"></i> IGNITE BOOST
                         </div>
-                        <div class="input-group">
-                            <div class="lbl"><i data-lucide="key" style="width:12px;height:12px;color:var(--o)"></i><span style="color:var(--o)">FACEBOOK COOKIES</span></div>
-                            <div class="inp-wrap">
-                                <textarea name="cookie" id="cookieInput" class="inp" rows="3" style="padding-left:15px" placeholder="Paste your Facebook session cookies here..."></textarea>
-                            </div>
-                            <div class="inp-status" id="cookieStatus"></div>
-                            <div class="char-count" id="cookieCount">0 chars</div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="form-section-tag fst-ocean">
-                            <i data-lucide="crosshair" style="width:9px;height:9px"></i>
-                            TARGET CONFIGURATION
-                        </div>
-                        <div class="input-group">
-                            <div class="lbl"><i data-lucide="link-2" style="width:12px;height:12px;color:var(--c)"></i><span style="color:var(--c)">POST URL</span></div>
-                            <div class="inp-wrap" style="position:relative">
-                                <i data-lucide="globe" class="inp-icon" style="color:rgba(0,247,255,.48);width:16px;height:16px"></i>
-                                <input type="url" name="url" id="urlInput" class="inp" placeholder="https://www.facebook.com/...">
-                                <div class="inp-focus-ring"></div>
-                            </div>
-                            <div class="inp-status" id="urlStatus"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="form-section-tag fst-power">
-                            <i data-lucide="settings-2" style="width:9px;height:9px"></i>
-                            POWER SETTINGS
-                        </div>
-                        <div class="form-grid">
-                            <div class="input-group">
-                                <div class="lbl"><i data-lucide="zap" style="width:12px;height:12px;color:var(--y)"></i><span style="color:var(--y)">SHARE COUNT</span></div>
-                                <div class="inp-wrap" style="position:relative">
-                                    <i data-lucide="hash" class="inp-icon" style="color:rgba(255,230,0,.48);width:15px;height:15px"></i>
-                                    <input type="number" name="amount" id="amountInput" class="inp" placeholder="100" inputmode="numeric" min="1" max="1000000">
-                                    <div class="inp-focus-ring"></div>
-                                </div>
-                            </div>
-                            <div class="input-group">
-                                <div class="lbl"><i data-lucide="timer" style="width:12px;height:12px;color:var(--g)"></i><span style="color:var(--g)">DELAY (sec)</span></div>
-                                <div class="inp-wrap" style="position:relative">
-                                    <i data-lucide="clock" class="inp-icon" style="color:rgba(57,255,20,.48);width:15px;height:15px"></i>
-                                    <input type="number" name="interval" id="intervalInput" class="inp" placeholder="5" inputmode="numeric" min="1">
-                                    <div class="inp-focus-ring"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="amountHint" style="margin-top:.65rem;font-family:'Orbitron';font-size:6.5px;letter-spacing:1.5px;opacity:0;transition:opacity .3s;padding:0 .2rem"></div>
-                        <div id="etaPreview" style="margin-top:.4rem;font-family:'Orbitron';font-size:6.5px;letter-spacing:1.5px;opacity:0;transition:opacity .3s;padding:0 .2rem;color:rgba(0,247,255,.6)"></div>
-                    </div>
-                    <div class="neon-divider"></div>
-                    <div class="btn-outer">
-                        <button type="submit" class="btn" id="submitBtn">
-                            <div class="btn-shine"></div>
-                            <span class="btn-txt">
-                                <i data-lucide="rocket" style="width:19px;height:19px"></i>
-                                <span class="gt-rainbow" style="-webkit-text-fill-color:transparent">IGNITE BOOST</span>
-                            </span>
-                        </button>
-                    </div>
-                    <button type="button" class="btn-clear" onclick="resetForm()">
-                        <i data-lucide="refresh-cw" style="width:14px;height:14px"></i>
-                        CLEAR CONFIG
                     </button>
                 </div>
             </form>
 
-            <div class="section-hdr">
-                <div style="width:3px;height:22px;background:linear-gradient(180deg,var(--r),var(--v));border-radius:999px;flex-shrink:0"></div>
-                <span style="font-family:'Orbitron';font-size:8px;letter-spacing:2.5px;" class="gt-fire">RECENT SESSIONS</span>
-                <div class="section-line"></div>
-                <span style="font-family:'Orbitron';font-size:6.5px;letter-spacing:1px;color:rgba(200,200,255,.32)" id="recentCount">0</span>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:1rem;">
+                <div style="width:4px; height:20px; background:linear-gradient(180deg, var(--r), var(--v)); border-radius:4px;"></div>
+                <span style="font-family:'Orbitron'; font-size:0.8rem; letter-spacing:2px;" class="gt-fire">RECENT SESSIONS</span>
             </div>
-            <div id="sessions" class="space-y"></div>
-            <div id="homeEmpty" style="display:none;text-align:center;padding:2.8rem 0">
-                <div style="font-size:3rem;margin-bottom:.85rem;animation:pdot 2s ease-in-out infinite">🚀</div>
-                <div style="font-family:'Orbitron';font-size:8px;letter-spacing:2px;" class="gt-cosmic">NO SESSIONS YET</div>
-                <div style="font-size:.78rem;color:rgba(200,200,255,.32);margin-top:.55rem">Configure and ignite your first boost above</div>
-            </div>
-        </div>
-    </section>
+            
+            <div id="homeSessions"></div>
 
-    <section id="sessions-sec" class="sec">
-        <div class="content-pad">
-            <div class="sessions-header-bar">
-                <div style="display:flex;align-items:center;gap:8px">
-                    <i data-lucide="layers" style="width:17px;height:17px;" class="nt-c"></i>
-                    <h2 style="font-family:'Orbitron';font-size:11px;letter-spacing:2px;" class="gt-ocean">ALL SESSIONS</h2>
-                </div>
-                <div style="display:flex;align-items:center;gap:7px">
-                    <span class="live-badge" id="totalSesCount">0 LIVE</span>
-                    <button onclick="clearCompleted()" class="clear-btn">CLEAR DONE</button>
-                </div>
-            </div>
-            <div class="filter-bar">
-                <button class="filter-btn active" onclick="filterSessions('all',this)">⬡ ALL</button>
-                <button class="filter-btn" onclick="filterSessions('running',this)">▶ RUNNING</button>
-                <button class="filter-btn" onclick="filterSessions('complete',this)">✓ DONE</button>
-                <button class="filter-btn" onclick="filterSessions('error',this)">✖ ERRORS</button>
-            </div>
-            <div id="allSessions" class="space-y"></div>
-            <div id="emptyState" style="display:none;text-align:center;padding:3.8rem 0">
-                <div style="font-size:3.8rem;margin-bottom:.95rem">🌌</div>
-                <div style="font-family:'Orbitron';font-size:9px;letter-spacing:2px;" class="gt-cosmic">NO SESSIONS FOUND</div>
-                <div style="font-size:.78rem;color:rgba(200,200,255,.36);margin-top:.65rem">Fire up a boost from the Home tab</div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="about-sec" class="sec">
-        <div class="content-pad space-y">
-            <div class="about-hero holo-sheen">
-                <div style="font-family:'Orbitron';font-size:22px;font-weight:900;letter-spacing:3px;margin-bottom:.4rem" class="gt-rainbow">SHAREBOOST</div>
-                <div style="font-family:'Orbitron';font-size:7px;letter-spacing:3px;color:rgba(200,200,255,.46)">FACEBOOK AMPLIFICATION ENGINE</div>
-                <div class="version-badge">VERSION 6.0 ULTRA</div>
-                <div style="margin-top:1rem;display:flex;flex-wrap:wrap;justify-content:center">
-                    <span class="feature-chip"><span style="color:var(--g)">●</span> REAL-TIME</span>
-                    <span class="feature-chip"><span style="color:var(--c)">●</span> HOLOGRAPHIC UI</span>
-                    <span class="feature-chip"><span style="color:var(--r)">●</span> NEON ENGINE</span>
-                    <span class="feature-chip"><span style="color:var(--v)">●</span> COSMIC CORE</span>
-                    <span class="feature-chip"><span style="color:var(--y)">●</span> LIVE VALIDATION</span>
-                    <span class="feature-chip"><span style="color:var(--o)">●</span> SESSION FILTERS</span>
-                    <span class="feature-chip"><span style="color:var(--g)">●</span> ETA PREVIEW</span>
-                    <span class="feature-chip"><span style="color:var(--c)">●</span> EXPANDABLE CARDS</span>
-                </div>
+        <!-- Sessions Tracker -->
+        <section id="sessions-sec" class="sec">
+            <div style="background:linear-gradient(135deg, rgba(0,247,255,0.1), rgba(57,255,20,0.1)); border:1px solid rgba(0,247,255,0.3); border-radius:1rem; padding:1rem; display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+                <h2 style="font-family:'Orbitron'; font-size:1rem; letter-spacing:2px;" class="gt-ocean"><i data-lucide="layers" size="18" style="display:inline; margin-right:6px;"></i>ALL SESSIONS</h2>
+                <div id="badgeCount" style="background:var(--c); color:#000; font-family:'Orbitron'; font-size:0.65rem; padding:4px 10px; border-radius:12px; font-weight:bold;">0 LIVE</div>
             </div>
+            <div id="allSessionsList"></div>
+        </section>
 
-            <div class="glass holo-sheen" style="padding:1.3rem">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:.92rem">
-                    <i data-lucide="cpu" style="width:17px;height:17px;" class="nt-c"></i>
-                    <span style="font-family:'Orbitron';font-size:10px;letter-spacing:2px;" class="gt-ocean">SYSTEM INFO</span>
-                </div>
-                <p style="color:rgba(200,200,255,.64);font-size:.84rem;line-height:1.9"><span class="nt-c">SHARE BOOST V6</span> is an ultra-powerful automation engine built to amplify your Facebook post reach through precision-controlled, session-based sharing with real-time holographic telemetry, expandable session cards, ETA preview, and advanced error handling.</p>
-                <div class="neon-divider"></div>
-                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem">
-                    <div style="padding:.65rem .4rem;background:rgba(0,247,255,.045);border:1px solid rgba(0,247,255,.13);border-radius:11px;text-align:center">
-                        <div style="font-family:'Orbitron';font-size:12px;font-weight:700;" class="nt-c">V6.0</div>
-                        <div style="font-family:'Orbitron';font-size:5.5px;letter-spacing:1.2px;opacity:.42;margin-top:3px">VERSION</div>
-                    </div>
-                    <div style="padding:.65rem .4rem;background:rgba(255,60,172,.045);border:1px solid rgba(255,60,172,.13);border-radius:11px;text-align:center">
-                        <div style="font-family:'Orbitron';font-size:12px;font-weight:700;" class="nt-r">∞</div>
-                        <div style="font-family:'Orbitron';font-size:5.5px;letter-spacing:1.2px;opacity:.42;margin-top:3px">SESSIONS</div>
-                    </div>
-                    <div style="padding:.65rem .4rem;background:rgba(57,255,20,.045);border:1px solid rgba(57,255,20,.13);border-radius:11px;text-align:center">
-                        <div style="font-family:'Orbitron';font-size:12px;font-weight:700;" class="nt-g">24/7</div>
-                        <div style="font-family:'Orbitron';font-size:5.5px;letter-spacing:1.2px;opacity:.42;margin-top:3px">UPTIME</div>
-                    </div>
-                </div>
-            </div>
+        <!-- Info Section -->
+        <section id="about-sec" class="sec">
+            <div class="glass" style="padding: 2rem 1.5rem; text-align: center; border-color:var(--v); box-shadow:inset 0 0 40px rgba(180,77,255,0.1);">
+                <div style="font-family:'Orbitron'; font-size:1.8rem; font-weight:900; letter-spacing:4px; margin-bottom:10px;" class="gt-rainbow">SHAREBOOST</div>
+                <div style="font-family:'Orbitron'; font-size:0.65rem; letter-spacing:3px; color:#aaa; margin-bottom:1.5rem;">FACEBOOK AMPLIFICATION ENGINE</div>
+                <div style="display:inline-block; padding:4px 14px; border:1px solid var(--r); border-radius:20px; font-family:'Orbitron'; font-size:0.6rem; color:var(--r); background:rgba(255,60,172,0.1);">VERSION 6.0 ULTRA</div>
+                
+                <p style="margin-top:2rem; font-size:0.85rem; line-height:1.7; color:#bbb;">
+                    Built for extreme performance, ShareBoost V6 utilizes cutting-edge session automation protocols with zero-lag holographic interface telemetry.
+                </p>
 
-            <div class="glass holo-sheen" style="padding:1.3rem">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:1rem">
-                    <i data-lucide="terminal" style="width:17px;height:17px;" class="nt-r"></i>
-                    <span style="font-family:'Orbitron';font-size:10px;letter-spacing:2px;" class="gt-fire">OPERATION GUIDE</span>
-                </div>
-                <div class="steps-list">
-                    <div class="step-row">
-                        <div class="step-c">01</div>
-                        <div><span class="step-text-title nt-c">Extract Cookies</span><span class="step-text-desc">Use a browser extension to export your Facebook session cookies containing c_user or sb fields.</span></div>
-                    </div>
-                    <div class="step-row">
-                        <div class="step-c">02</div>
-                        <div><span class="step-text-title nt-o">Target URL</span><span class="step-text-desc">Paste the full Facebook post link you want to amplify (facebook.com or fb.watch).</span></div>
-                    </div>
-                    <div class="step-row">
-                        <div class="step-c">03</div>
-                        <div><span class="step-text-title nt-g">Configure Power</span><span class="step-text-desc">Set share count (50–200 recommended) and interval delay. ETA preview will calculate total time.</span></div>
-                    </div>
-                    <div class="step-row">
-                        <div class="step-c">04</div>
-                        <div><span class="step-text-title nt-r">IGNITE</span><span class="step-text-desc">Hit IGNITE BOOST and expand session cards to view detailed stats in real-time.</span></div>
-                    </div>
+                <div style="background:rgba(255,230,0,0.1); border:1px solid var(--y); border-radius:12px; padding:1rem; margin-top:2rem; text-align:left;">
+                    <div style="font-family:'Orbitron'; font-size:0.7rem; color:var(--y); letter-spacing:1px; margin-bottom:8px;"><i data-lucide="alert-triangle" size="14" style="display:inline; margin-right:4px;"></i>CRITICAL WARNING</div>
+                    <div style="font-size:0.75rem; color:#ffeaa7;">Avoid aggressive intervals below 30s to prevent automated detection locks on target accounts.</div>
                 </div>
             </div>
+        </section>
 
-            <div class="warn-box">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:.58rem">
-                    <i data-lucide="alert-triangle" style="width:17px;height:17px;" class="nt-y"></i>
-                    <span style="font-family:'Orbitron';font-size:7px;letter-spacing:2px;" class="nt-y">CRITICAL PROTOCOL</span>
-                </div>
-                <p style="color:rgba(255,230,0,.7);font-size:.78rem;line-height:1.75">Use intervals of 30s+ and moderate share amounts. Excessive sharing triggers Facebook detection algorithms and may result in account restrictions or permanent suspension.</p>
-            </div>
+    </div>
 
-            <div class="glass" style="padding:1.4rem">
-                <div style="text-align:center;margin-bottom:1.1rem">
-                    <div style="font-family:'Orbitron';font-size:8px;letter-spacing:3.5px;" class="gt-cosmic">━━ DEVELOPER ━━</div>
-                </div>
-                <div style="display:flex;justify-content:center;margin-bottom:1.1rem">
-                    <div style="position:relative;display:inline-block">
-                        <img src="https://i.imgur.com/GRNsJbf.gif" class="dev-avatar" alt="dev">
-                        <div class="glow-ring" style="inset:-8px;border-color:var(--v)"></div>
-                        <div class="glow-ring" style="inset:-17px;border-color:var(--r);animation-delay:.8s"></div>
-                        <div class="glow-ring" style="inset:-26px;border-color:var(--c);animation-delay:1.6s;opacity:.26"></div>
-                    </div>
-                </div>
-                <div style="text-align:center;margin-bottom:1.05rem">
-                    <div style="font-family:'Orbitron';font-size:15px;letter-spacing:2px;" class="gt-rainbow">SHAREBOOSTER DEV</div>
-                    <div style="font-size:.74rem;color:rgba(200,200,255,.36);margin-top:6px">VincentSensei ⚡ — Creator of V6 Ultra</div>
-                </div>
-                <div style="display:flex;justify-content:center;gap:1.1rem">
-                    <a href="https://www.facebook.com/vincent.09123455" target="_blank" class="soc-btn"><i data-lucide="facebook" style="width:21px;height:21px;" class="nt-c"></i></a>
-                    <a href="https://github.com/" target="_blank" class="soc-btn"><i data-lucide="github" style="width:21px;height:21px;" class="nt-v"></i></a>
-                    <a href="https://my-portfolio-v-ten.vercel.app/" class="soc-btn"><i data-lucide="globe" style="width:21px;height:21px;" class="nt-r"></i></a>
-                </div>
-            </div>
-            <div class="ft-bar">
-                <span style="font-family:'Orbitron';font-size:7px;letter-spacing:2px;" class="gt-rainbow">SHARE BOOST © 2026 V6.0 ULTRA — ALL SYSTEMS NOMINAL</span>
-            </div>
-        </div>
-    </section>
-
+    <!-- Navigation -->
     <nav class="neon-nav">
         <div class="nav-row">
-            <a href="#" data-s="home" class="nv act">
-                <div class="nav-indicator"></div>
-                <div class="nv-icon-wrap"><div class="nv-icon-bg"></div><i data-lucide="home" style="width:20px;height:20px;position:relative;z-index:1"></i></div>
+            <a href="#" class="nv act" data-target="home-sec">
+                <i data-lucide="home" size="22"></i>
                 <span>HOME</span>
             </a>
-            <a href="#" data-s="sessions" class="nv">
-                <div class="nav-indicator"></div>
-                <div class="nv-icon-wrap"><div class="nv-icon-bg"></div><i data-lucide="layers" style="width:20px;height:20px;position:relative;z-index:1"></i></div>
+            <a href="#" class="nv" data-target="sessions-sec">
+                <i data-lucide="activity" size="22"></i>
                 <span>SESSIONS</span>
             </a>
-            <a href="#" data-s="about" class="nv">
-                <div class="nav-indicator"></div>
-                <div class="nv-icon-wrap"><div class="nv-icon-bg"></div><i data-lucide="shield" style="width:20px;height:20px;position:relative;z-index:1"></i></div>
-                <span>ABOUT</span>
+            <a href="#" class="nv" data-target="about-sec">
+                <i data-lucide="shield" size="22"></i>
+                <span>SYSTEM</span>
             </a>
         </div>
     </nav>
-</div>
 
-<div id="modal-container">
-    <div id="modal-content">
-        <div class="modal-icon-wrap" id="modal-icon"></div>
-        <h3 id="modal-title" style="font-family:'Orbitron';font-size:13px;letter-spacing:2px;" class="gt-rainbow"></h3>
-        <div id="modal-msg" style="margin:1rem 0 1.4rem;font-size:.82rem;color:rgba(200,200,255,.6);line-height:1.75"></div>
-        <button onclick="closeModal()" class="mdm-btn">◆ DISMISS ◆</button>
-    </div>
-</div>
+    <div id="toast-container"></div>
 
-<script>
-(function(){
-    const colors=['#ff3cac','#00f7ff','#b44dff','#39ff14','#ffe600','#ff8c00','#4d79ff'];
-    const pt=document.getElementById('pt');
-    for(let i=0;i<60;i++){
-        const el=document.createElement('div');
-        el.className='pt';
-        const c=colors[Math.floor(Math.random()*colors.length)];
-        const s=Math.random()*3.5+.8;
-        el.style.cssText=`left:${Math.random()*100}%;width:${s}px;height:${s}px;background:${c};box-shadow:0 0 ${s*8}px ${c};animation-duration:${Math.random()*13+7}s;animation-delay:${Math.random()*15}s`;
-        pt.appendChild(el);
-    }
-    const fo=document.getElementById('forbs');
-    [['rgba(255,60,172,.14)',10,15,14],['rgba(0,247,255,.12)',70,25,18],['rgba(180,77,255,.12)',5,65,22],['rgba(57,255,20,.1)',75,70,26],['rgba(255,140,0,.08)',45,40,30]].forEach(([bg,l,t,d])=>{
-        const el=document.createElement('div');
-        el.className='fo';
-        const s=120+Math.random()*100;
-        el.style.cssText=`width:${s}px;height:${s}px;background:${bg};left:${l}%;top:${t}%;animation-duration:${d}s;animation-delay:${-(Math.random()*10)}s`;
-        fo.appendChild(el);
-    });
-    const chars='01⚡▓░▒◆★☆アイウエオカキクケコサシスセソ';
-    ['ds1','ds2'].forEach((id,idx)=>{
-        const el=document.getElementById(id);
-        const col=idx===0?'#00f7ff':'#ff3cac';
-        for(let i=0;i<22;i++){
-            const d=document.createElement('div');
-            d.className='dc';
-            d.textContent=chars[Math.floor(Math.random()*chars.length)];
-            d.style.cssText=`left:${Math.random()*14}px;color:${col};animation-duration:${Math.random()*5+3}s;animation-delay:${Math.random()*10}s`;
-            el.appendChild(d);
-        }
-    });
-    ['powerPips1','powerPips2'].forEach(id=>{
-        const p=document.getElementById(id);
-        for(let i=0;i<8;i++){
-            const pip=document.createElement('div');
-            pip.className='power-pip'+(i<5?' on':'');
-            p.appendChild(pip);
-        }
-    });
-})();
+    <script>
+        lucide.createIcons();
 
-let allSessionsData=[];
-let currentFilter='all';
-let startTime=Date.now();
-let prevTotal=0;
-let expandedSessions=new Set();
-
-function pad(n){return String(n).padStart(2,'0')}
-function updateUptime(){
-    const s=Math.floor((Date.now()-startTime)/1000);
-    const el=document.getElementById('uptimeDisplay');
-    if(el)el.textContent=`UP: ${pad(Math.floor(s/3600))}:${pad(Math.floor((s%3600)/60))}:${pad(s%60)}`;
-}
-setInterval(updateUptime,1000);
-
-function showToast(msg,type='info'){
-    const c=document.getElementById('toastContainer');
-    const t=document.createElement('div');
-    t.className=`toast toast-${type}`;
-    t.textContent=msg;
-    c.appendChild(t);
-    setTimeout(()=>{t.style.animation='toastOut .4s ease forwards';setTimeout(()=>t.remove(),400)},3200);
-}
-
-function resetForm(){
-    document.getElementById('shareForm').reset();
-    ['cookieStatus','urlStatus'].forEach(id=>{
-        const el=document.getElementById(id);
-        if(el){el.style.opacity='0';el.innerHTML=''}
-    });
-    const ah=document.getElementById('amountHint');
-    if(ah){ah.style.opacity='0';ah.textContent=''}
-    const ep=document.getElementById('etaPreview');
-    if(ep){ep.style.opacity='0';ep.textContent=''}
-    const cc=document.getElementById('cookieCount');
-    if(cc)cc.textContent='0 chars';
-    showToast('🔄 CONFIG CLEARED','info');
-}
-
-function filterSessions(filter,btn){
-    currentFilter=filter;
-    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    renderAllSessions();
-}
-
-function clearCompleted(){
-    const before=allSessionsData.length;
-    allSessionsData=allSessionsData.filter(s=>s.count<s.target&&!s.error);
-    const cleared=before-allSessionsData.length;
-    renderAllSessions();
-    cleared>0?showToast(`🗑️ ${cleared} SESSION(S) CLEARED`,'info'):showToast('⚠ NOTHING TO CLEAR','warn');
-}
-
-function toggleExpand(sid){
-    if(expandedSessions.has(sid))expandedSessions.delete(sid);
-    else expandedSessions.add(sid);
-    renderAllSessions();
-    const homeSes=document.getElementById('sessions');
-    if(homeSes&&homeSes.innerHTML)renderHomeSessions();
-}
-
-document.querySelectorAll('.nv').forEach(item=>{
-    item.addEventListener('click',e=>{
-        e.preventDefault();
-        const s=item.dataset.s;
-        document.querySelectorAll('.nv').forEach(n=>n.classList.remove('act'));
-        item.classList.add('act');
-        document.querySelectorAll('.sec').forEach(sec=>{
-            sec.classList.remove('act');
-            if(sec.id===`${s}-sec`)sec.classList.add('act');
+        // SPLASH SCREEN
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash');
+                splash.style.opacity = '0';
+                setTimeout(() => splash.remove(), 500);
+            }, 800);
         });
-        document.querySelector('.wrap').scrollTo({top:0,behavior:'smooth'});
-    });
-});
 
-document.getElementById('cookieInput').addEventListener('input',function(){
-    const st=document.getElementById('cookieStatus');
-    const cc=document.getElementById('cookieCount');
-    if(cc)cc.textContent=`${this.value.length} chars`;
-    if(this.value.trim().length>0){
-        const valid=this.value.includes('c_user')||this.value.includes('sb');
-        st.style.opacity='1';
-        st.innerHTML=valid?'<span style="color:var(--g)">✓ VALID COOKIE DETECTED</span>':'<span style="color:var(--r)">✗ MISSING c_user OR sb FIELD</span>';
-    }else{st.style.opacity='0';st.innerHTML=''}
-});
+        // UPTIME LOGIC
+        const startTime = Date.now();
+        setInterval(() => {
+            const diff = Math.floor((Date.now() - startTime) / 1000);
+            const h = String(Math.floor(diff / 3600)).padStart(2, '0');
+            const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+            const s = String(diff % 60).padStart(2, '0');
+            document.getElementById('stat-uptime').textContent = `UP: ${h}:${m}:${s}`;
+        }, 1000);
 
-document.getElementById('urlInput').addEventListener('input',function(){
-    const st=document.getElementById('urlStatus');
-    if(this.value.trim().length>0){
-        const valid=this.value.includes('facebook.com')||this.value.includes('fb.watch');
-        st.style.opacity='1';
-        st.innerHTML=valid?'<span style="color:var(--g)">✓ VALID FACEBOOK URL</span>':'<span style="color:var(--r)">✗ MUST BE FACEBOOK.COM OR FB.WATCH</span>';
-    }else{st.style.opacity='0';st.innerHTML=''}
-});
+        // NAVIGATION LOGIC
+        document.querySelectorAll('.nv').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.nv').forEach(n => n.classList.remove('act'));
+                document.querySelectorAll('.sec').forEach(s => s.classList.remove('act'));
+                btn.classList.add('act');
+                document.getElementById(btn.dataset.target).classList.add('act');
+                document.querySelector('.wrap').scrollTo(0, 0);
+            });
+        });
 
-function updateEtaPreview(){
-    const amt=parseInt(document.getElementById('amountInput').value)||0;
-    const intv=parseInt(document.getElementById('intervalInput').value)||0;
-    const ep=document.getElementById('etaPreview');
-    if(amt>0&&intv>0){
-        const total=amt*intv;
-        const mins=Math.floor(total/60);
-        const secs=total%60;
-        ep.style.opacity='1';
-        ep.textContent=`⏱ EST. TOTAL TIME: ${mins>0?`${mins}m `:''}${secs}s`;
-    }else if(ep){ep.style.opacity='0'}
-}
-
-document.getElementById('amountInput').addEventListener('input',function(){
-    const ah=document.getElementById('amountHint');
-    const v=parseInt(this.value);
-    if(v>0){
-        ah.style.opacity='1';
-        if(v<=50)ah.innerHTML='<span style="color:var(--g)">✓ LOW — SAFE RANGE</span>';
-        else if(v<=200)ah.innerHTML='<span style="color:var(--y)">⚡ MEDIUM — RECOMMENDED</span>';
-        else ah.innerHTML='<span style="color:var(--r)">⚠ HIGH — USE WITH CAUTION</span>';
-    }else{ah.style.opacity='0'}
-    updateEtaPreview();
-});
-document.getElementById('intervalInput').addEventListener('input',updateEtaPreview);
-
-function showModal(type,title,msg){
-    const cfg={
-        success:{color:'var(--g)',icon:'check-circle',glow:'rgba(57,255,20,.52)'},
-        error:{color:'var(--r)',icon:'x-circle',glow:'rgba(255,60,172,.52)'},
-        invalid:{color:'var(--y)',icon:'alert-triangle',glow:'rgba(255,230,0,.52)'},
-        info:{color:'var(--c)',icon:'info',glow:'rgba(0,247,255,.52)'}
-    };
-    const cf=cfg[type]||cfg.info;
-    document.getElementById('modal-icon').innerHTML=`<i data-lucide="${cf.icon}" style="width:3.5rem;height:3.5rem;color:${cf.color};filter:drop-shadow(0 0 24px ${cf.color})"></i>`;
-    document.getElementById('modal-content').style.boxShadow=`0 0 90px ${cf.glow},0 0 180px rgba(180,77,255,.22),0 35px 90px rgba(0,0,0,.88)`;
-    document.getElementById('modal-title').textContent=title;
-    document.getElementById('modal-msg').innerHTML=msg;
-    lucide.createIcons();
-    document.getElementById('modal-container').classList.add('act');
-}
-function closeModal(){document.getElementById('modal-container').classList.remove('act')}
-
-const submitBtn=document.getElementById('submitBtn');
-submitBtn.addEventListener('click',function(e){addRipple(this,e)});
-submitBtn.addEventListener('touchstart',function(e){addRipple(this,e)},{passive:true});
-function addRipple(btn,e){
-    const r=document.createElement('span');
-    r.className='ripple-fx';
-    const rect=btn.getBoundingClientRect();
-    const size=Math.max(rect.width,rect.height)*2;
-    const touch=e.touches?e.touches[0]:e;
-    r.style.cssText=`width:${size}px;height:${size}px;left:${touch.clientX-rect.left-size/2}px;top:${touch.clientY-rect.top-size/2}px`;
-    btn.appendChild(r);
-    setTimeout(()=>r.remove(),800);
-}
-
-document.getElementById('shareForm').addEventListener('submit',async e=>{
-    e.preventDefault();
-    const btn=document.getElementById('submitBtn');
-    const origHTML=btn.innerHTML;
-    const fd=new FormData(e.target);
-    const data=Object.fromEntries(fd);
-    if(!data.cookie||(!data.cookie.includes('c_user')&&!data.cookie.includes('sb'))){
-        showModal('invalid','⚠ INVALID COOKIE','Cookie format incorrect. Ensure it contains <span class="nt-c">c_user</span> or <span class="nt-c">sb</span> fields.');return;
-    }
-    if(!data.url||(!data.url.includes('facebook.com')&&!data.url.includes('fb.watch'))){
-        showModal('invalid','⚠ INVALID TARGET','Please enter a valid Facebook post URL (facebook.com or fb.watch).');return;
-    }
-    if(!data.amount||parseInt(data.amount)<1){
-        showModal('invalid','⚠ INVALID AMOUNT','Share count must be at least 1.');return;
-    }
-    if(!data.interval||parseInt(data.interval)<1){
-        showModal('invalid','⚠ INVALID DELAY','Delay must be at least 1 second.');return;
-    }
-    try{
-        btn.innerHTML=`<span class="btn-txt"><svg class="spinner" style="width:19px;height:19px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg><span style="font-family:'Orbitron';font-size:.76rem;letter-spacing:3px">LAUNCHING...</span></span>`;
-        btn.disabled=true;
-        const res=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
-        const result=await res.json();
-        if(!res.ok)throw new Error(result.error||'Engine failure');
-        showModal('success','⚡ BOOST IGNITED','Session launched successfully. Monitor real-time progress in the <span class="nt-c">SESSIONS</span> tab. Expand each card for full stats.');
-        showToast('🚀 BOOST IGNITED','success');
-        e.target.reset();
-        ['cookieStatus','urlStatus'].forEach(id=>{const el=document.getElementById(id);if(el){el.style.opacity='0';el.innerHTML=''}});
-        const ah=document.getElementById('amountHint');if(ah)ah.style.opacity='0';
-        const ep=document.getElementById('etaPreview');if(ep)ep.style.opacity='0';
-        const cc=document.getElementById('cookieCount');if(cc)cc.textContent='0 chars';
-    }catch(err){
-        showModal('error','✖ SYSTEM ERROR',err.message||'Unknown error. Check config and retry.');
-        showToast('✖ LAUNCH FAILED','error');
-    }finally{
-        btn.innerHTML=origHTML;btn.disabled=false;lucide.createIcons();
-    }
-});
-
-function mkSession(s,showExpand=true){
-    const pct=Math.min(100,(s.count/s.target)*100);
-    const done=s.count>=s.target;
-    const err=s.error;
-    let sc,st,stbg;
-    if(done){sc='var(--g)';st='COMPLETE';stbg='rgba(57,255,20,.13)'}
-    else if(err){sc='var(--r)';st='ERROR';stbg='rgba(255,60,172,.13)'}
-    else{sc='var(--c)';st='RUNNING';stbg='rgba(0,247,255,.13)'}
-    const eta=!done&&!err?Math.ceil((s.target-s.count)*(s.interval||5)):0;
-    const etaStr=eta>60?`${Math.floor(eta/60)}m ${eta%60}s`:eta>0?`${eta}s`:'';
-    const circumference=2*Math.PI*20;
-    const dash=circumference*(pct/100);
-    const bars=Array.from({length:14},(_,i)=>{
-        const h=Math.random()*72+28;
-        const on=i<Math.ceil(pct/7.15);
-        return `<div class="chart-bar" style="height:${h}%;background:${on?`linear-gradient(180deg,${sc},transparent)`:'rgba(255,255,255,.05)'}"></div>`;
-    }).join('');
-    const sid=s.session;
-    const isExpanded=expandedSessions.has(sid);
-    const timeStr=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-    return `<div class="ses-card glass holo-sheen" style="padding:1.1rem">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.88rem">
-            <div style="display:flex;align-items:center;gap:.78rem">
-                <div class="orb"><i data-lucide="share-2" style="width:17px;height:17px;color:var(--v)"></i></div>
-                <div>
-                    <div style="font-family:'Orbitron';font-size:9.5px;letter-spacing:1.5px;color:var(--c)">SESSION #${sid}</div>
-                    <div style="color:rgba(200,200,255,.28);font-size:6px;font-family:'Orbitron';letter-spacing:.8px;margin-top:2px">${timeStr}</div>
-                </div>
-            </div>
-            <div style="display:flex;align-items:center;gap:.65rem">
-                <div style="position:relative;width:44px;height:44px">
-                    <svg class="circular-chart" viewBox="0 0 44 44">
-                        <circle class="circle-bg" cx="22" cy="22" r="18"/>
-                        <circle class="circle-val" cx="22" cy="22" r="18" stroke="${sc}" stroke-dasharray="${dash} ${circumference}" stroke-dashoffset="0"/>
-                    </svg>
-                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Orbitron';font-size:7px;font-weight:700;color:${sc}">${Math.round(pct)}%</div>
-                </div>
-                <div style="text-align:right">
-                    <div style="font-family:'Orbitron';font-size:15px;color:${sc};text-shadow:0 0 20px ${sc};font-weight:700;line-height:1">${s.count}<span style="opacity:.28;font-size:11px">/${s.target}</span></div>
-                    <div style="display:inline-block;font-family:'Orbitron';font-size:6px;letter-spacing:2px;color:${sc};padding:3px 9px;border-radius:999px;background:${stbg};border:1px solid ${sc};margin-top:4px">${st}</div>
-                </div>
-            </div>
-        </div>
-        <div class="prog-bar"><div class="prog-val" style="width:${pct}%;${err?'background:linear-gradient(90deg,var(--r),var(--o));box-shadow:0 0 18px var(--r)':''}"></div></div>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.52rem">
-            <div style="font-family:'Orbitron';font-size:6px;letter-spacing:2px;color:rgba(200,200,255,.26)">${pct.toFixed(1)}% COMPLETE</div>
-            ${!done&&!err&&etaStr?`<div style="font-family:'Orbitron';font-size:6px;letter-spacing:1px;color:rgba(0,247,255,.45)">ETA ~${etaStr}</div>`:''}
-        </div>
-        <div class="chart-bar-wrap">${bars}</div>
-        <div class="ses-meta-row">
-            <span class="ses-meta-chip">TARGET: ${s.target}</span>
-            <span class="ses-meta-chip">DELAY: ${s.interval||'?'}s</span>
-            ${done?'<span class="ses-meta-chip" style="border-color:rgba(57,255,20,.25);color:rgba(57,255,20,.6)">✓ DONE</span>':''}
-            ${err?'<span class="ses-meta-chip" style="border-color:rgba(255,60,172,.25);color:rgba(255,60,172,.6)">✖ FAILED</span>':''}
-        </div>
-        ${showExpand?`<div onclick="toggleExpand(${sid})" class="ses-expand-btn">${isExpanded?'▲ COLLAPSE':'▼ DETAILS'}</div>`:''}
-        ${isExpanded?`<div class="ses-details open">
-            <div class="ses-detail-row"><span class="ses-detail-lbl">SESSION ID</span><span class="ses-detail-val">#${sid}</span></div>
-            <div class="ses-detail-row"><span class="ses-detail-lbl">PROGRESS</span><span class="ses-detail-val">${s.count} / ${s.target}</span></div>
-            <div class="ses-detail-row"><span class="ses-detail-lbl">COMPLETION</span><span class="ses-detail-val" style="color:${sc}">${pct.toFixed(2)}%</span></div>
-            <div class="ses-detail-row"><span class="ses-detail-lbl">INTERVAL</span><span class="ses-detail-val">${s.interval||'?'}s</span></div>
-            <div class="ses-detail-row"><span class="ses-detail-lbl">STATUS</span><span class="ses-detail-val" style="color:${sc}">${st}</span></div>
-            ${!done&&!err&&etaStr?`<div class="ses-detail-row"><span class="ses-detail-lbl">ETA</span><span class="ses-detail-val">~${etaStr}</span></div>`:''}
-            ${err?`<div class="ses-detail-row"><span class="ses-detail-lbl">ERROR</span><span class="ses-detail-val" style="color:var(--r);font-size:6px">${s.error}</span></div>`:''}
-        </div>`:''}
-        ${err?`<div style="display:flex;align-items:center;gap:7px;margin-top:.68rem;padding:.55rem .85rem;border-radius:11px;background:rgba(255,60,172,.09);border:1px solid rgba(255,60,172,.24);color:var(--r);font-size:.72rem"><i data-lucide="alert-circle" style="width:13px;height:13px;flex-shrink:0"></i><span>${s.error}</span></div>`:''}
-    </div>`;
-}
-
-function renderAllSessions(){
-    let filtered=allSessionsData;
-    if(currentFilter==='running')filtered=allSessionsData.filter(s=>s.count<s.target&&!s.error);
-    else if(currentFilter==='complete')filtered=allSessionsData.filter(s=>s.count>=s.target);
-    else if(currentFilter==='error')filtered=allSessionsData.filter(s=>s.error);
-    document.getElementById('allSessions').innerHTML=filtered.map(s=>mkSession(s,true)).join('');
-    const es=document.getElementById('emptyState');
-    if(es)es.style.display=filtered.length===0?'block':'none';
-    lucide.createIcons();
-}
-
-function renderHomeSessions(sessions){
-    const data=sessions||allSessionsData;
-    document.getElementById('sessions').innerHTML=data.slice(0,3).map(s=>mkSession(s,false)).join('');
-    lucide.createIcons();
-}
-
-function animateCount(id,val){
-    const el=document.getElementById(id);
-    if(el&&el.textContent!==String(val)){
-        el.textContent=val;
-        el.classList.add('counter-anim');
-        setTimeout(()=>el.classList.remove('counter-anim'),400);
-    }
-}
-
-function updatePowerPips(id,count,max=8){
-    const p=document.getElementById(id);
-    if(!p)return;
-    [...p.children].forEach((pip,i)=>{
-        if(i<count)pip.classList.add('on');
-        else pip.classList.remove('on');
-    });
-}
-
-async function updateSessions(){
-    try{
-        const res=await fetch('/total');
-        const sessions=await res.json();
-        allSessionsData=sessions;
-        const active=sessions.filter(s=>s.count<s.target&&!s.error).length;
-        const total=sessions.reduce((a,s)=>a+s.count,0);
-        const errors=sessions.filter(s=>s.error).length;
-        const completed=sessions.filter(s=>s.count>=s.target).length;
-        const pending=active;
-        const successRate=sessions.length>0?Math.round((completed/sessions.length)*100)+'%':'—';
-        animateCount('activeSessions',active);
-        animateCount('totalShares',total);
-        animateCount('totalErrors',errors);
-        animateCount('completedSes',completed);
-        animateCount('pendingSes',pending);
-        const srEl=document.getElementById('successRate');
-        if(srEl&&srEl.textContent!==successRate){srEl.textContent=successRate;srEl.classList.add('counter-anim');setTimeout(()=>srEl.classList.remove('counter-anim'),400)}
-        const sesBarEl=document.getElementById('sesBar');
-        if(sesBarEl)sesBarEl.style.width=`${Math.min(100,active*14)}%`;
-        const shareBarEl=document.getElementById('shareBar');
-        if(shareBarEl)shareBarEl.style.width=`${Math.min(100,total>0?Math.min(100,(total/500)*100):0)}%`;
-        updatePowerPips('powerPips1',Math.min(8,active*2));
-        updatePowerPips('powerPips2',Math.min(8,completed));
-        const st=document.getElementById('sessionTrend');
-        if(st)st.textContent=active>0?`▲ ${active} ACTIVE`:'— IDLE';
-        const sht=document.getElementById('shareTrend');
-        if(sht)sht.textContent=total>prevTotal?`▲ +${total-prevTotal} NEW`:`${total} TOTAL`;
-        prevTotal=total;
-        document.getElementById('totalSesCount').textContent=`${sessions.length} LIVE`;
-        const rc=document.getElementById('recentCount');
-        if(rc)rc.textContent=Math.min(3,sessions.length);
-        const homeSes=document.getElementById('sessions');
-        const homeEmpty=document.getElementById('homeEmpty');
-        if(sessions.length===0){
-            if(homeSes)homeSes.innerHTML='';
-            if(homeEmpty)homeEmpty.style.display='block';
-        }else{
-            if(homeEmpty)homeEmpty.style.display='none';
-            renderHomeSessions(sessions);
+        // TOAST SYSTEM
+        function showToast(msg, icon = 'zap', color = 'var(--c)') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.style.borderColor = color;
+            toast.style.boxShadow = `0 0 20px ${color}40`;
+            toast.innerHTML = `<i data-lucide="${icon}" size="16" style="color:${color}"></i> ${msg}`;
+            container.appendChild(toast);
+            lucide.createIcons({ root: toast });
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-20px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
         }
-        renderAllSessions();
-    }catch(e){console.error(e)}
-}
 
-window.addEventListener('DOMContentLoaded',()=>{
-    lucide.createIcons();
-    if(!localStorage.getItem('sb_v6_seen')){
-        setTimeout(()=>{
-            showModal('info','V6 SHAREBOOSTER',`
-                <div style="text-align:left">
-                    <div style="display:flex;justify-content:center;margin-bottom:1rem">
-                        <img src="https://i.imgur.com/GRNsJbf.gif" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid var(--v);box-shadow:0 0 30px rgba(180,77,255,.68)">
-                    </div>
-                    <p style="font-family:'Orbitron';font-size:8px;letter-spacing:2px;color:var(--c);text-align:center;margin-bottom:1rem">WHAT'S NEW IN V6.0</p>
-                    <ul style="display:flex;flex-direction:column;gap:.55rem;font-size:.78rem;color:rgba(200,200,255,.62)">
-                        <li><span style="color:var(--g)">⚡</span> Circular progress ring on session cards</li>
-                        <li><span style="color:var(--r)">⚡</span> Expandable session detail panel</li>
-                        <li><span style="color:var(--c)">⚡</span> Live ETA preview before launch</li>
-                        <li><span style="color:var(--y)">⚡</span> Cookie character counter</li>
-                        <li><span style="color:var(--v)">⚡</span> Dynamic power pips from real data</li>
-                        <li><span style="color:var(--o)">⚡</span> Session meta chips (target, delay)</li>
-                        <li><span style="color:var(--g)">⚡</span> 5 floating ambient orbs</li>
-                        <li><span style="color:var(--c)">⚡</span> WARN toast type added</li>
-                    </ul>
+        // SESSION ENGINE
+        let allSessions = [];
+        
+        async function fetchSessions() {
+            try {
+                const res = await fetch('/total');
+                if (res.ok) {
+                    allSessions = await res.json();
+                    renderSessions();
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function buildCard(s) {
+            const isDone = s.count >= s.target;
+            const hasErr = s.error;
+            let statusText = 'ACTIVE', icon = 'activity', cls = '', col = 'var(--c)';
+            
+            if (hasErr) { statusText = 'ERROR'; icon = 'alert-octagon'; cls = 'err'; col = 'var(--r)'; }
+            else if (isDone) { statusText = 'COMPLETE'; icon = 'check-circle'; cls = 'done'; col = 'var(--g)'; }
+
+            const pct = Math.min(100, (s.count / s.target) * 100) || 0;
+
+            const div = document.createElement('div');
+            div.className = `ses-card ${cls}`;
+            div.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <span style="font-family:'Orbitron'; font-size:0.6rem; color:#aaa;">ID: ${s.id || 'PENDING'}</span>
+                    <span style="font-family:'Orbitron'; font-size:0.55rem; color:${col}; background:${col}15; padding:3px 8px; border-radius:10px; border:1px solid ${col}40;"><i data-lucide="${icon}" size="10" style="display:inline; margin-right:4px;"></i>${statusText}</span>
                 </div>
-            `);
-            localStorage.setItem('sb_v6_seen','1');
-        },1000);
-    }
-    setInterval(updateSessions,2000);
-    updateSessions();
-});
-</script>
+                <div style="font-size:0.75rem; color:#fff; word-break:break-all; margin-bottom:10px;">${s.url}</div>
+                <div class="prog-bar"><div class="prog-fill" style="width:${pct}%; ${hasErr ? 'background:var(--r)' : (isDone ? 'background:var(--g)' : '')}"></div></div>
+                <div style="display:flex; justify-content:space-between; font-family:'Orbitron'; font-size:0.6rem; color:#888;">
+                    <span>SHARED: <strong style="color:#fff;">${s.count}</strong> / ${s.target}</span>
+                    <span>DELAY: ${s.interval}s</span>
+                </div>
+                ${hasErr ? `<div style="margin-top:10px; font-size:0.75rem; color:var(--r); background:rgba(255,60,172,0.1); padding:8px; border-radius:6px; border:1px solid var(--r);">${s.error}</div>` : ''}
+            `;
+            return div;
+        }
+
+        function renderSessions() {
+            const hl = document.getElementById('homeSessions');
+            const al = document.getElementById('allSessionsList');
+            hl.innerHTML = ''; al.innerHTML = '';
+            
+            let running = 0, total = 0;
+            const rev = [...allSessions].reverse();
+
+            if(rev.length === 0) {
+                const ms = '<div style="text-align:center; padding:2rem; font-family:\'Orbitron\'; font-size:0.7rem; color:#888;">NO ACTIVE PROTOCOLS DEPLOYED</div>';
+                hl.innerHTML = ms; al.innerHTML = ms;
+            }
+
+            rev.forEach((s, i) => {
+                total += s.count;
+                if (!s.error && s.count < s.target) running++;
+                
+                const c = buildCard(s);
+                al.appendChild(c);
+                if (i < 3) hl.appendChild(buildCard(s));
+            });
+
+            document.getElementById('stat-active').textContent = running;
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('badgeCount').textContent = `${running} LIVE`;
+            lucide.createIcons({ root: document.getElementById('home-sec') });
+            lucide.createIcons({ root: document.getElementById('sessions-sec') });
+        }
+
+        // FORM SUBMIT & ROCKET ANIMATION
+        document.getElementById('shareForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const inner = btn.querySelector('.btn-inner');
+            const ogHtml = inner.innerHTML;
+
+            const cookie = document.getElementById('cookieInput').value.trim();
+            const url = document.getElementById('urlInput').value.trim();
+            const amount = document.getElementById('amountInput').value.trim();
+            const interval = document.getElementById('intervalInput').value.trim();
+
+            if (!cookie || !url || !amount || !interval) {
+                showToast('MISSING MISSION PARAMETERS', 'alert-triangle', 'var(--r)');
+                return;
+            }
+
+            inner.innerHTML = `<i data-lucide="loader" size="20" style="animation: spinRing 1s linear infinite;"></i> IGNITING...`;
+            btn.disabled = true;
+
+            // Start Rocket Sequence
+            const scene = document.getElementById('rocket-scene');
+            const rocket = document.getElementById('rocket');
+            const moon = document.getElementById('moon');
+
+            // Reset rocket state
+            rocket.className = 'rocket-ship rocket-launching';
+            moon.className = 'moon-surface';
+            scene.classList.add('active');
+
+            // Wait for dramatic shake, then launch
+            await new Promise(r => setTimeout(r, 1500));
+            rocket.classList.add('rocket-launched');
+            rocket.classList.remove('rocket-launching');
+
+            // Wait for rocket to fly off screen
+            await new Promise(r => setTimeout(r, 1500));
+
+            try {
+                const res = await fetch('/api/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ cookie, url, amount, interval })
+                });
+                const data = await res.json();
+                
+                if (res.ok) {
+                    // Success -> Land on moon
+                    rocket.className = 'rocket-ship rocket-landing'; // snap to top
+                    moon.classList.add('visible'); // reveal moon
+                    
+                    // Small delay to allow CSS to snap to top before transitioning down
+                    // Request animation frame ensures DOM updates
+                    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+                    await new Promise(r => setTimeout(r, 50)); 
+                    
+                    rocket.classList.add('rocket-landed'); // start landing transition
+                    rocket.classList.remove('rocket-landing');
+
+                    await new Promise(r => setTimeout(r, 2500)); // wait for landing
+                    showToast('BOOST SUCCESSFUL', 'rocket', 'var(--g)');
+                    
+                    document.getElementById('urlInput').value = '';
+                    fetchSessions();
+                    
+                    // hold at moon for a bit then hide
+                    await new Promise(r => setTimeout(r, 1000));
+                    scene.classList.remove('active');
+
+                } else {
+                    // Fail -> just hide scene and show error
+                    scene.classList.remove('active');
+                    showToast(data.error || 'IGNITION FAILED', 'alert-octagon', 'var(--r)');
+                }
+            } catch (err) {
+                scene.classList.remove('active');
+                showToast('SERVER OFFLINE', 'wifi-off', 'var(--r)');
+            } finally {
+                inner.innerHTML = ogHtml;
+                btn.disabled = false;
+                lucide.createIcons({ root: inner });
+            }
+        });
+
+        setInterval(fetchSessions, 3000);
+        fetchSessions();
+    </script>
 </body>
 </html>
