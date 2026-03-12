@@ -21,7 +21,6 @@ body{
   -webkit-tap-highlight-color:transparent;
 }
 
-/* ── BACKGROUND SYSTEM ── */
 .bg-base{
   position:fixed;inset:0;z-index:0;
   background:
@@ -57,16 +56,13 @@ body{
 .orb-b{width:340px;height:340px;background:var(--r);opacity:0.05;bottom:5%;right:0%;animation:orbFloat 15s ease-in-out infinite alternate-reverse}
 @keyframes orbFloat{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.4) translate(20px,-20px)}}
 
-/* ── CORNERS ── */
 .corner{position:fixed;z-index:20;pointer-events:none}
 .corner-tl{top:0;left:0;width:80px;height:80px;border-top:1.5px solid var(--r);border-left:1.5px solid var(--r);border-radius:0 0 60px 0;box-shadow:inset -4px -4px 20px rgba(255,45,120,0.15)}
 .corner-tr{top:0;right:0;width:80px;height:80px;border-top:1.5px solid var(--c);border-right:1.5px solid var(--c);border-radius:0 0 0 60px;box-shadow:inset 4px -4px 20px rgba(0,229,255,0.15)}
 
-/* ── LAYOUT ── */
 .wrap{height:100dvh;overflow-y:auto;scrollbar-width:none;position:relative;z-index:10;padding-bottom:76px}
 .wrap::-webkit-scrollbar{display:none}
 
-/* ── GRADIENTS TEXT ── */
 .gr-rainbow{
   background:linear-gradient(90deg,var(--r),var(--o),var(--y),var(--g),var(--c),var(--b),var(--v),var(--r));
   background-size:300% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
@@ -83,7 +79,6 @@ body{
 .nv{color:var(--v);text-shadow:0 0 12px rgba(180,77,255,0.6)}
 .ny{color:var(--y);text-shadow:0 0 12px rgba(255,230,0,0.6)}
 
-/* ── HEADER ── */
 .hdr{
   position:sticky;top:0;z-index:50;
   background:linear-gradient(180deg,rgba(3,2,14,0.97),rgba(3,2,14,0.85));
@@ -99,18 +94,15 @@ body{
 @keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.3;transform:scale(1.6)}}
 .ver-tag{padding:3px 10px;border:1px solid var(--v);border-radius:20px;font-family:'Orbitron',sans-serif;font-size:0.5rem;color:var(--v);background:rgba(180,77,255,0.08);letter-spacing:1px}
 
-/* ── TICKER ── */
 .ticker{overflow:hidden;white-space:nowrap;padding:5px 0;background:rgba(0,0,0,0.5);border-bottom:1px solid rgba(255,45,120,0.2)}
 .ticker-track{display:inline-block;animation:tickScroll 18s linear infinite}
 .tick{font-family:'Orbitron',sans-serif;font-size:0.55rem;letter-spacing:2px;padding:0 28px}
 @keyframes tickScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-/* ── SECTION ── */
 .sec{display:none;padding:1.1rem;animation:slideUp 0.35s cubic-bezier(0.16,1,0.3,1) both}
 .sec.act{display:block}
 @keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── GLASS CARD ── */
 .glass{
   background:linear-gradient(135deg,rgba(18,8,35,0.65),rgba(8,4,18,0.85));
   backdrop-filter:blur(24px);
@@ -124,7 +116,6 @@ body{
   background:linear-gradient(90deg,transparent,rgba(255,45,120,0.5),rgba(0,229,255,0.5),transparent);
 }
 
-/* ── STATS GRID ── */
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;margin-bottom:1.1rem}
 .sc{padding:1.1rem;border-radius:16px;position:relative;overflow:hidden;transition:transform 0.2s}
 .sc:active{transform:scale(0.97)}
@@ -134,7 +125,6 @@ body{
 .stat-lbl{font-family:'Orbitron',sans-serif;font-size:0.5rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
 .stat-sub{font-size:0.6rem;color:var(--muted);letter-spacing:1px}
 
-/* ── SYSTEM STATUS BAR ── */
 .sys-bar{
   display:flex;justify-content:space-between;align-items:center;
   border:1px solid rgba(0,255,136,0.15);padding:7px 14px;
@@ -143,7 +133,6 @@ body{
 .sys-label{font-family:'Orbitron',sans-serif;font-size:0.6rem;color:var(--g);letter-spacing:1px;display:flex;align-items:center;gap:6px}
 .sys-uptime{font-family:'Orbitron',sans-serif;font-size:0.6rem;color:var(--muted)}
 
-/* ── FORM ── */
 .form-header{text-align:center;margin-bottom:1.4rem;padding-top:0.2rem}
 .form-title{font-family:'Orbitron',sans-serif;font-size:0.7rem;letter-spacing:3px}
 .inp-wrap{position:relative;margin-bottom:1.1rem}
@@ -164,7 +153,6 @@ textarea.inp{padding-left:14px;min-height:88px;resize:none;line-height:1.5;font-
 .inp-row .inp-wrap{margin-bottom:0}
 .inp-no-icon{padding-left:14px !important}
 
-/* ── COOKIE TEXTAREA SPECIAL ── */
 #cookieInput{
   background-image:url('https://i.imgur.com/OMNB0Y5.gif');
   background-size:cover;background-position:center;
@@ -172,7 +160,6 @@ textarea.inp{padding-left:14px;min-height:88px;resize:none;line-height:1.5;font-
   background-color:rgba(4,2,12,0.88);
 }
 
-/* ── SUBMIT BUTTON ── */
 .btn-rail{
   width:100%;padding:3px;border-radius:15px;
   background:linear-gradient(90deg,var(--r),var(--o),var(--y),var(--g),var(--c),var(--b),var(--v),var(--r));
@@ -193,10 +180,8 @@ textarea.inp{padding-left:14px;min-height:88px;resize:none;line-height:1.5;font-
 .btn-rail:hover .btn-core{background:rgba(15,5,30,0.9)}
 .btn-icon{width:20px;height:20px}
 
-/* ── SVG ICONS ── */
 svg.ico{display:inline-block;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* ── SESSION CARDS ── */
 .ses-list{margin-top:0.5rem}
 .ses-card{
   background:linear-gradient(135deg,rgba(18,8,35,0.75),rgba(5,2,12,0.9));
@@ -220,7 +205,6 @@ svg.ico{display:inline-block;vertical-align:middle;fill:none;stroke:currentColor
 .ses-err-msg{margin-top:8px;font-size:0.72rem;color:var(--r);background:rgba(255,45,120,0.08);padding:8px 10px;border-radius:8px;border:1px solid rgba(255,45,120,0.2)}
 .empty-msg{text-align:center;padding:2.5rem 1rem;font-family:'Orbitron',sans-serif;font-size:0.65rem;color:var(--muted);letter-spacing:2px}
 
-/* ── SECTION HEADER ── */
 .sec-head{display:flex;align-items:center;gap:8px;margin-bottom:1rem}
 .sec-head-bar{width:3px;height:20px;background:linear-gradient(180deg,var(--r),var(--v));border-radius:3px}
 .sec-head-title{font-family:'Orbitron',sans-serif;font-size:0.78rem;letter-spacing:2px}
@@ -232,7 +216,6 @@ svg.ico{display:inline-block;vertical-align:middle;fill:none;stroke:currentColor
 }
 .live-count{background:var(--c);color:#000;font-family:'Orbitron',sans-serif;font-size:0.6rem;padding:3px 10px;border-radius:10px;font-weight:700}
 
-/* ── ABOUT CARD ── */
 .about-card{
   background:linear-gradient(135deg,rgba(18,8,35,0.65),rgba(8,4,18,0.85));
   border:1px solid rgba(180,77,255,0.25);border-radius:18px;
@@ -247,7 +230,6 @@ svg.ico{display:inline-block;vertical-align:middle;fill:none;stroke:currentColor
 .warn-title{font-family:'Orbitron',sans-serif;font-size:0.65rem;color:var(--y);letter-spacing:1px;display:flex;align-items:center;gap:6px;margin-bottom:6px}
 .warn-text{font-size:0.75rem;color:#ffeaa7;line-height:1.6}
 
-/* ── NAV ── */
 .nav{
   position:fixed;bottom:0;left:0;right:0;z-index:50;
   background:linear-gradient(180deg,rgba(3,2,14,0.97),#000);
@@ -266,7 +248,6 @@ svg.ico{display:inline-block;vertical-align:middle;fill:none;stroke:currentColor
 .nv-btn.act .nv-ico{filter:drop-shadow(0 0 8px rgba(0,229,255,0.7));transform:translateY(-2px)}
 .nv-ico{width:22px;height:22px;transition:transform 0.25s,filter 0.25s}
 
-/* ── SPLASH ── */
 #splash{
   position:fixed;inset:0;z-index:9000;background:var(--bg);
   display:flex;flex-direction:column;justify-content:center;align-items:center;
@@ -284,7 +265,6 @@ svg.ico{display:inline-block;vertical-align:middle;fill:none;stroke:currentColor
 .splash-title{font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:900;letter-spacing:5px}
 .splash-sub{font-size:0.7rem;color:var(--muted);margin-top:8px;font-family:'Rajdhani',sans-serif;letter-spacing:2px}
 
-/* ── TOAST ── */
 #toasts{position:fixed;top:88px;left:50%;transform:translateX(-50%);z-index:300;display:flex;flex-direction:column;gap:7px;pointer-events:none;width:92%;max-width:360px}
 .toast{
   background:rgba(8,4,20,0.92);backdrop-filter:blur(16px);
@@ -296,7 +276,6 @@ svg.ico{display:inline-block;vertical-align:middle;fill:none;stroke:currentColor
 }
 @keyframes toastIn{from{opacity:0;transform:translateY(-18px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
 
-/* ── ROCKET SCENE ── */
 #rocket-scene{
   position:fixed;inset:0;z-index:8000;pointer-events:none;
   display:none;
@@ -508,7 +487,6 @@ svg.ico{display:inline-block;vertical-align:middle;fill:none;stroke:currentColor
 </nav>
 
 <script>
-// ── SPLASH ──
 window.addEventListener('load',()=>{
   setTimeout(()=>{
     const s=document.getElementById('splash');
@@ -517,7 +495,6 @@ window.addEventListener('load',()=>{
   },900);
 });
 
-// ── UPTIME ──
 const t0=Date.now();
 setInterval(()=>{
   const d=Math.floor((Date.now()-t0)/1000);
@@ -527,7 +504,6 @@ setInterval(()=>{
   document.getElementById('uptime').textContent=`UP: ${h}:${m}:${s}`;
 },1000);
 
-// ── NAV ──
 document.querySelectorAll('.nv-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('.nv-btn').forEach(b=>b.classList.remove('act'));
@@ -538,7 +514,6 @@ document.querySelectorAll('.nv-btn').forEach(btn=>{
   });
 });
 
-// ── TOAST ──
 function toast(msg,type='info'){
   const colors={info:'var(--c)',success:'var(--g)',error:'var(--r)',warn:'var(--y)'};
   const icons={
@@ -559,7 +534,6 @@ function toast(msg,type='info'){
   },3000);
 }
 
-// ── SESSION DATA ──
 let sessions=[];
 
 async function fetchSessions(){
@@ -620,7 +594,6 @@ function renderSessions(){
   document.getElementById('liveCount').textContent=`${running} LIVE`;
 }
 
-// ── CANVAS ROCKET ENGINE ──
 const scene = document.getElementById('rocket-scene');
 const canvas = document.getElementById('rocketCanvas');
 const ctx = canvas.getContext('2d');
@@ -664,17 +637,15 @@ function drawStars(speed){
   });
 }
 
-// Draw SVG-style rocket with canvas
 function drawRocket(x, y, scale, angle, thrustLevel){
   ctx.save();
   ctx.translate(x, y);
   ctx.rotate(angle);
   ctx.scale(scale, scale);
 
-  // === EXHAUST FLAME ===
   if(thrustLevel > 0){
     const flameLen = 60 + thrustLevel * 40 + Math.random()*20;
-    // Outer flame
+
     let flamGrad = ctx.createLinearGradient(0, 30, 0, 30+flameLen);
     flamGrad.addColorStop(0, 'rgba(255,255,255,0.9)');
     flamGrad.addColorStop(0.15,'rgba(255,240,80,0.85)');
@@ -688,7 +659,6 @@ function drawRocket(x, y, scale, angle, thrustLevel){
     ctx.fillStyle = flamGrad;
     ctx.fill();
 
-    // Inner hot core
     let coreGrad = ctx.createLinearGradient(0,30,0,30+flameLen*0.6);
     coreGrad.addColorStop(0,'rgba(255,255,220,1)');
     coreGrad.addColorStop(0.5,'rgba(255,200,60,0.8)');
@@ -700,7 +670,6 @@ function drawRocket(x, y, scale, angle, thrustLevel){
     ctx.fillStyle = coreGrad;
     ctx.fill();
 
-    // Glow halo
     const halo = ctx.createRadialGradient(0,30+20,5,0,30+20,50);
     halo.addColorStop(0,'rgba(255,160,30,0.3)');
     halo.addColorStop(1,'rgba(255,80,10,0)');
@@ -709,7 +678,6 @@ function drawRocket(x, y, scale, angle, thrustLevel){
     ctx.fillStyle=halo;
     ctx.fill();
 
-    // Exhaust smoke particles
     if(Math.random()<0.6){
       exhaustTrail.push({
         x: x + (Math.random()*16-8)*scale,
@@ -722,8 +690,6 @@ function drawRocket(x, y, scale, angle, thrustLevel){
     }
   }
 
-  // === BODY ===
-  // Nozzle
   ctx.beginPath();
   ctx.moveTo(-12, 26); ctx.lineTo(12, 26);
   ctx.lineTo(9, 34); ctx.lineTo(-9, 34);
@@ -731,7 +697,6 @@ function drawRocket(x, y, scale, angle, thrustLevel){
   ctx.fillStyle='#888';ctx.fill();
   ctx.strokeStyle='#555';ctx.lineWidth=1;ctx.stroke();
 
-  // Main body
   let bodyGrad = ctx.createLinearGradient(-18,0,18,0);
   bodyGrad.addColorStop(0,  '#2a2a3a');
   bodyGrad.addColorStop(0.25,'#c8c8d8');
@@ -746,7 +711,6 @@ function drawRocket(x, y, scale, angle, thrustLevel){
   ctx.fillStyle=bodyGrad; ctx.fill();
   ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=0.5;ctx.stroke();
 
-  // Nose cone highlight
   let noseGrad = ctx.createRadialGradient(-4,-30,1,-4,-30,18);
   noseGrad.addColorStop(0,'rgba(255,255,255,0.5)');
   noseGrad.addColorStop(1,'rgba(255,255,255,0)');
@@ -757,12 +721,11 @@ function drawRocket(x, y, scale, angle, thrustLevel){
   ctx.closePath();
   ctx.fillStyle=noseGrad;ctx.fill();
 
-  // Cockpit window
   ctx.beginPath();
   ctx.ellipse(0,-6,7,9,0,0,Math.PI*2);
   ctx.fillStyle='#0a0a1a';ctx.fill();
   ctx.strokeStyle='rgba(100,200,255,0.6)';ctx.lineWidth=1.5;ctx.stroke();
-  // Window glow
+
   let winGlow=ctx.createRadialGradient(-2,-8,1,-2,-8,7);
   winGlow.addColorStop(0,'rgba(80,200,255,0.4)');
   winGlow.addColorStop(1,'rgba(0,100,200,0)');
@@ -770,7 +733,6 @@ function drawRocket(x, y, scale, angle, thrustLevel){
   ctx.ellipse(0,-6,7,9,0,0,Math.PI*2);
   ctx.fillStyle=winGlow;ctx.fill();
 
-  // Side fins left
   ctx.beginPath();
   ctx.moveTo(-14,10); ctx.lineTo(-26,30); ctx.lineTo(-14,26); ctx.closePath();
   let finGrad=ctx.createLinearGradient(-26,20,-14,20);
@@ -778,7 +740,6 @@ function drawRocket(x, y, scale, angle, thrustLevel){
   ctx.fillStyle=finGrad;ctx.fill();
   ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.lineWidth=0.5;ctx.stroke();
 
-  // Side fins right
   ctx.beginPath();
   ctx.moveTo(14,10); ctx.lineTo(26,30); ctx.lineTo(14,26); ctx.closePath();
   let finGrad2=ctx.createLinearGradient(14,20,26,20);
@@ -786,12 +747,10 @@ function drawRocket(x, y, scale, angle, thrustLevel){
   ctx.fillStyle=finGrad2;ctx.fill();
   ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.lineWidth=0.5;ctx.stroke();
 
-  // Body stripe
   ctx.beginPath();
   ctx.moveTo(-14,4); ctx.lineTo(14,4);
   ctx.strokeStyle='rgba(255,60,120,0.8)';ctx.lineWidth=2;ctx.stroke();
 
-  // USA flag patch
   ctx.fillStyle='rgba(255,255,255,0.9)';
   ctx.fillRect(-6, -2, 12, 7);
   ctx.fillStyle='rgba(200,30,30,0.9)';
@@ -802,10 +761,9 @@ function drawRocket(x, y, scale, angle, thrustLevel){
   ctx.restore();
 }
 
-// Draw realistic moon
 function drawMoon(cx, cy, radius, progress){
   ctx.save();
-  // Glow around moon
+
   const moonGlow = ctx.createRadialGradient(cx,cy,radius*0.8,cx,cy,radius*2.5);
   moonGlow.addColorStop(0,'rgba(200,210,255,0.18)');
   moonGlow.addColorStop(0.4,'rgba(180,190,240,0.08)');
@@ -814,7 +772,6 @@ function drawMoon(cx, cy, radius, progress){
   ctx.arc(cx,cy,radius*2.5,0,Math.PI*2);
   ctx.fillStyle=moonGlow;ctx.fill();
 
-  // Main sphere gradient
   const moonBase = ctx.createRadialGradient(cx-radius*0.3, cy-radius*0.3, radius*0.1, cx, cy, radius);
   moonBase.addColorStop(0,  '#ffffff');
   moonBase.addColorStop(0.2,'#e8e8ee');
@@ -826,7 +783,6 @@ function drawMoon(cx, cy, radius, progress){
   ctx.arc(cx,cy,radius,0,Math.PI*2);
   ctx.fillStyle=moonBase;ctx.fill();
 
-  // Atmosphere halo (limb brightening)
   const limbGrad = ctx.createRadialGradient(cx,cy,radius*0.88,cx,cy,radius);
   limbGrad.addColorStop(0,'rgba(255,255,255,0)');
   limbGrad.addColorStop(0.7,'rgba(200,210,255,0.07)');
@@ -834,7 +790,6 @@ function drawMoon(cx, cy, radius, progress){
   ctx.beginPath();ctx.arc(cx,cy,radius,0,Math.PI*2);
   ctx.fillStyle=limbGrad;ctx.fill();
 
-  // Shadow terminator (right side darker)
   const terminator = ctx.createRadialGradient(cx+radius*0.4,cy,0,cx,cy,radius);
   terminator.addColorStop(0,'rgba(0,0,0,0)');
   terminator.addColorStop(0.6,'rgba(0,0,0,0.05)');
@@ -842,7 +797,6 @@ function drawMoon(cx, cy, radius, progress){
   ctx.beginPath();ctx.arc(cx,cy,radius,0,Math.PI*2);
   ctx.fillStyle=terminator;ctx.fill();
 
-  // Craters — seeded positions relative to center
   const craters = [
     {dx:-0.25,dy:-0.1, r:0.14, d:0.7},
     {dx:0.18, dy:0.22, r:0.18, d:0.75},
@@ -859,10 +813,10 @@ function drawMoon(cx, cy, radius, progress){
     const crx = cx + cr.dx * radius;
     const cry = cy + cr.dy * radius;
     const crr = cr.r * radius;
-    // Clip to moon circle
+
     ctx.save();
     ctx.beginPath();ctx.arc(cx,cy,radius-1,0,Math.PI*2);ctx.clip();
-    // Shadow cast inside crater
+
     const cGrad = ctx.createRadialGradient(crx-crr*0.2,cry-crr*0.2,crr*0.05,crx,cry,crr);
     cGrad.addColorStop(0,`rgba(80,80,90,${cr.d*0.8})`);
     cGrad.addColorStop(0.5,`rgba(60,60,70,${cr.d*0.5})`);
@@ -870,7 +824,7 @@ function drawMoon(cx, cy, radius, progress){
     cGrad.addColorStop(1,'rgba(200,200,210,0)');
     ctx.beginPath();ctx.arc(crx,cry,crr,0,Math.PI*2);
     ctx.fillStyle=cGrad;ctx.fill();
-    // Rim highlight
+
     ctx.beginPath();
     ctx.arc(crx-crr*0.05,cry-crr*0.05,crr,Math.PI*1.2,Math.PI*1.9);
     ctx.strokeStyle=`rgba(240,240,255,${cr.d*0.5})`;
@@ -878,11 +832,10 @@ function drawMoon(cx, cy, radius, progress){
     ctx.restore();
   });
 
-  // Surface texture: subtle highlands
   ctx.save();
   ctx.beginPath();ctx.arc(cx,cy,radius,0,Math.PI*2);ctx.clip();
   ctx.globalAlpha=0.07;
-  // Random noise-like patches
+
   const texPts=[
     {dx:-0.05,dy:0.15,rx:0.3,ry:0.15,a:-0.3},
     {dx:0.1,dy:-0.15,rx:0.2,ry:0.1,a:0.5},
@@ -911,7 +864,6 @@ function drawExhaustParticles(){
   });
 }
 
-// Animation state machine
 let launchY, travelProgress, approachProgress, landY, flagAlpha;
 let shakeX = 0, shakeY = 0;
 
@@ -972,11 +924,9 @@ function animate(){
   const W = canvas.width, H = canvas.height;
   stateTimer++;
 
-  // Space background
   ctx.fillStyle='#000005';
   ctx.fillRect(0,0,W,H);
 
-  // Distant nebula
   const neb = ctx.createRadialGradient(W*0.5,H*0.3,0,W*0.5,H*0.3,H*0.5);
   neb.addColorStop(0,'rgba(20,5,40,0.4)');
   neb.addColorStop(0.5,'rgba(10,2,25,0.2)');
@@ -994,7 +944,7 @@ function animate(){
     const rocketScale = 2.2 - prog*1.0;
     drawExhaustParticles();
     drawRocket(rocketX, launchY+shakeY, rocketScale, 0, thrust);
-    // Label
+
     if(stateTimer<80){
       ctx.save();
       ctx.globalAlpha=Math.max(0,1-stateTimer/70);
@@ -1008,7 +958,7 @@ function animate(){
 
   } else if(rocketState==='travel'){
     drawStars(12); // fast star warp
-    // Warp lines
+
     for(let i=0;i<60;i++){
       const sx=W*0.2+Math.random()*W*0.6;
       const sy=Math.random()*H;
@@ -1033,12 +983,12 @@ function animate(){
 
   } else if(rocketState==='approach'){
     approachProgress = Math.min(stateTimer/150,1);
-    // Slow down stars
+
     drawStars(Math.max(0.5, 8*(1-approachProgress)));
     moonRadius = W*0.6 * approachProgress;
     moonCY = H + W*0.6 - moonRadius*1.85;
     drawMoon(W/2, moonCY, moonRadius, approachProgress);
-    // Rocket descending towards moon
+
     const ry = H*(0.6 - approachProgress*0.25);
     drawExhaustParticles();
     drawRocket(W/2, ry, 0.8+approachProgress*0.6, 0, 0.4+approachProgress*0.4);
@@ -1053,20 +1003,20 @@ function animate(){
   } else if(rocketState==='land'){
     drawStars(0.3);
     const prog = Math.min(stateTimer/120,1);
-    // Moon fully risen
+
     moonRadius = W*0.6;
     moonCY = H + moonRadius - moonRadius*1.85;
     drawMoon(W/2, moonCY, moonRadius, 1);
-    // Surface horizon line
+
     const surfaceY = moonCY - moonRadius + moonRadius*0.02;
-    // Rocket landing from above
+
     const startY = H*0.05;
     const landTargetY = surfaceY - 44;
     landY = startY + (landTargetY - startY) * easeOutBounce(prog);
     const thrustLvl = prog < 0.8 ? 0.6*(1-prog) : 0;
     drawExhaustParticles();
     drawRocket(W/2, landY, 1.3, 0, thrustLvl);
-    // Landing legs
+
     if(prog > 0.85){
       ctx.save();
       ctx.translate(W/2, landY);
@@ -1087,7 +1037,7 @@ function animate(){
     drawMoon(W/2, moonCY, moonRadius, 1);
     const surfaceY = moonCY - moonRadius + moonRadius*0.02;
     const landTargetY = surfaceY - 44;
-    // Landing legs
+
     ctx.save();
     ctx.translate(W/2, landTargetY);
     ctx.scale(1.3,1.3);
@@ -1099,14 +1049,13 @@ function animate(){
     ctx.restore();
     drawRocket(W/2, landTargetY, 1.3, 0, 0);
 
-    // Planted flag
     flagAlpha = Math.min(1, (stateTimer-20)/40);
     if(flagAlpha>0){
       ctx.save();ctx.globalAlpha=flagAlpha;
       ctx.translate(W/2+60, landTargetY+10);
       ctx.strokeStyle='#aaa';ctx.lineWidth=2.5;ctx.lineCap='round';
       ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,-55);ctx.stroke();
-      // Flag waving
+
       const wave = Math.sin(stateTimer*0.1)*6;
       ctx.beginPath();
       ctx.moveTo(0,-55);
@@ -1122,14 +1071,12 @@ function animate(){
       ctx.restore();
     }
 
-    // Fireworks / confetti
     if(stateTimer%20===0) spawnCelebration(
       W/2 + (Math.random()-0.5)*W*0.6,
       H*0.1 + Math.random()*H*0.5
     );
     drawParticles();
 
-    // Success text
     const pulse = 0.7+0.3*Math.sin(stateTimer*0.08);
     ctx.save();
     ctx.globalAlpha=Math.min(1,stateTimer/40)*pulse;
@@ -1169,7 +1116,6 @@ function stopRocketScene(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
 }
 
-// ── FORM SUBMIT + ROCKET ──
 document.getElementById('shareForm').addEventListener('submit',async(e)=>{
   e.preventDefault();
   const btn=document.getElementById('submitBtn');
@@ -1190,7 +1136,6 @@ document.getElementById('shareForm').addEventListener('submit',async(e)=>{
 
   startRocketScene();
 
-  // Wait for launch phase to complete
   await new Promise(r=>{
     const check=setInterval(()=>{
       if(rocketState==='done-launch'){ clearInterval(check); r(); }
@@ -1207,7 +1152,6 @@ document.getElementById('shareForm').addEventListener('submit',async(e)=>{
     });
     const data=await res.json();
 
-    // Wait for travel to end
     await new Promise(r=>{
       const check=setInterval(()=>{
         if(rocketState==='approach'){ clearInterval(check); r(); }
@@ -1215,7 +1159,7 @@ document.getElementById('shareForm').addEventListener('submit',async(e)=>{
     });
 
     if(res.ok){
-      // approach -> land -> celebrate run naturally
+
       await new Promise(r=>setTimeout(r,6500));
       document.getElementById('urlInput').value='';
       fetchSessions();
