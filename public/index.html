@@ -1,575 +1,583 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>SHAREBOOST V6 ULTRA</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ShareBoost V6 - Facebook Post Amplification Engine">
+  <title>SHAREBOOST V6</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --r: #ff2d78; --o: #ff6b1a; --y: #ffe600; --g: #00ff88;
-      --c: #00e5ff; --b: #4d8fff; --v: #b44dff; --bg: #03020e;
-      --card: #0d0820; --border: rgba(255,255,255,0.07);
-      --text: #c8c8e8; --muted: #6a6a9a;
+      --bg: #050510;
+      --surface: rgba(15, 10, 30, 0.9);
+      --border: rgba(255, 255, 255, 0.08);
+      --primary: #d946ef;
+      --secondary: #06b6d4;
+      --success: #10b981;
+      --error: #ef4444;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
     }
-    html { font-size: 14px; -webkit-text-size-adjust: 100%; }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Rajdhani', sans-serif; font-weight: 400;
-      background: var(--bg); color: var(--text);
-      overflow: hidden; width: 100%; max-width: 100vw;
-      -webkit-tap-highlight-color: transparent;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    .bg-base {
-      position: fixed; inset: 0; z-index: 0;
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
       background:
-        radial-gradient(ellipse 90% 70% at 15% 5%, rgba(255,45,120,0.12) 0%, transparent 55%),
-        radial-gradient(ellipse 70% 60% at 85% 15%, rgba(0,229,255,0.10) 0%, transparent 50%),
-        radial-gradient(ellipse 60% 80% at 5% 90%, rgba(0,255,136,0.07) 0%, transparent 50%),
-        radial-gradient(ellipse 55% 55% at 90% 85%, rgba(180,77,255,0.09) 0%, transparent 50%),
-        linear-gradient(160deg, #06031a 0%, #03020e 50%, #060314 100%);
+        radial-gradient(circle at 20% 20%, rgba(217, 70, 239, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.12) 0%, transparent 40%);
     }
-    .bg-grid {
-      position: fixed; inset: 0; z-index: 1; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);
-      background-size: 50px 50px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding-bottom: 80px;
     }
-    .scanline {
-      position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 200; pointer-events: none;
-      background: linear-gradient(90deg, transparent 0%, rgba(0,229,255,0.6) 40%, rgba(255,45,120,0.6) 70%, transparent 100%);
-      filter: blur(1px);
-      animation: scanDown 10s linear infinite;
+
+    header {
+      padding: 1rem;
+      background: rgba(5, 5, 20, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
     }
-    @keyframes scanDown { 0% { transform: translateY(-2px); } 100% { transform: translateY(100vh); } }
 
-    .orb { position: fixed; border-radius: 50%; filter: blur(70px); pointer-events: none; z-index: 1; }
-    .orb-a { width: 280px; height: 280px; background: var(--c); opacity: 0.05; top: 10%; left: 5%; animation: orbFloat 12s ease-in-out infinite alternate; }
-    .orb-b { width: 340px; height: 340px; background: var(--r); opacity: 0.05; bottom: 5%; right: 0%; animation: orbFloat 15s ease-in-out infinite alternate-reverse; }
-    @keyframes orbFloat { 0% { transform: scale(1) translate(0,0); } 100% { transform: scale(1.4) translate(20px,-20px); } }
-
-    .corner { position: fixed; z-index: 20; pointer-events: none; }
-    .corner-tl { top: 0; left: 0; width: 80px; height: 80px; border-top: 1.5px solid var(--r); border-left: 1.5px solid var(--r); border-radius: 0 0 60px 0; box-shadow: inset -4px -4px 20px rgba(255,45,120,0.15); }
-    .corner-tr { top: 0; right: 0; width: 80px; height: 80px; border-top: 1.5px solid var(--c); border-right: 1.5px solid var(--c); border-radius: 0 0 0 60px; box-shadow: inset 4px -4px 20px rgba(0,229,255,0.15); }
-
-    .wrap { height: 100dvh; overflow-y: auto; scrollbar-width: none; position: relative; z-index: 10; padding-bottom: 76px; }
-    .wrap::-webkit-scrollbar { display: none; }
-
-    .gr-rainbow {
-      background: linear-gradient(90deg, var(--r), var(--o), var(--y), var(--g), var(--c), var(--b), var(--v), var(--r));
-      background-size: 300% 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      animation: rainbow 5s linear infinite;
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 1.2rem;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .gr-fire { background: linear-gradient(135deg, var(--r), var(--o), var(--y)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 8px rgba(255,107,26,0.5)); }
-    .gr-ocean { background: linear-gradient(135deg, var(--c), var(--g), var(--b)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 8px rgba(0,229,255,0.5)); }
-    .gr-cosmic { background: linear-gradient(135deg, var(--v), var(--r), var(--c)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 8px rgba(180,77,255,0.5)); }
-    @keyframes rainbow { 0% { background-position: 0% 50%; } 100% { background-position: 300% 50%; } }
 
-    .nc { color: var(--c); text-shadow: 0 0 12px rgba(0,229,255,0.6); }
-    .nr { color: var(--r); text-shadow: 0 0 12px rgba(255,45,120,0.6); }
-    .ng { color: var(--g); text-shadow: 0 0 12px rgba(0,255,136,0.6); }
-    .nv { color: var(--v); text-shadow: 0 0 12px rgba(180,77,255,0.6); }
-    .ny { color: var(--y); text-shadow: 0 0 12px rgba(255,230,0,0.6); }
-
-    .hdr {
-      position: sticky; top: 0; z-index: 50;
-      background: linear-gradient(180deg, rgba(3,2,14,0.97), rgba(3,2,14,0.85));
-      backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+      color: var(--success);
+      padding: 4px 10px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 20px;
     }
-    .hdr-line { height: 2px; background: linear-gradient(90deg, var(--r), var(--o), var(--y), var(--g), var(--c), var(--b), var(--v), var(--r)); background-size: 300% 100%; animation: rainbow 5s linear infinite; }
-    .hdr-glow { height: 16px; background: linear-gradient(90deg, rgba(255,45,120,0.4), rgba(0,229,255,0.4)); filter: blur(12px); opacity: 0.4; }
-    .hdr-body { padding: 0.9rem 1.2rem; display: flex; justify-content: space-between; align-items: center; }
-    .logo-title { font-family: 'Orbitron', sans-serif; font-size: 1.35rem; font-weight: 900; letter-spacing: 4px; }
-    .logo-sub { font-family: 'Orbitron', sans-serif; font-size: 0.55rem; letter-spacing: 3px; margin-top: 3px; color: var(--r); opacity: 0.9; }
-    .live-badge { display: flex; align-items: center; gap: 6px; }
-    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--g); box-shadow: 0 0 12px var(--g); animation: blink 1.8s infinite; }
-    @keyframes blink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(1.6); } }
-    .ver-tag { padding: 3px 10px; border: 1px solid var(--v); border-radius: 20px; font-family: 'Orbitron', sans-serif; font-size: 0.5rem; color: var(--v); background: rgba(180,77,255,0.08); letter-spacing: 1px; }
 
-    .ticker { overflow: hidden; white-space: nowrap; padding: 5px 0; background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,45,120,0.2); }
-    .ticker-track { display: inline-block; animation: tickScroll 18s linear infinite; }
-    .tick { font-family: 'Orbitron', sans-serif; font-size: 0.55rem; letter-spacing: 2px; padding: 0 28px; }
-    @keyframes tickScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
 
-    .sec { display: none; padding: 1.1rem; animation: slideUp 0.35s cubic-bezier(0.16,1,0.3,1) both; }
-    .sec.act { display: block; }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse {
 
-    .glass {
-      background: linear-gradient(135deg, rgba(18,8,35,0.65), rgba(8,4,18,0.85));
-      backdrop-filter: blur(24px);
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    main {
+      padding: 1rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .stat-card {
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 18px;
-      position: relative; overflow: hidden;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
-    }
-    .glass::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,45,120,0.5), rgba(0,229,255,0.5), transparent);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
     }
 
-    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-bottom: 1.1rem; }
-    .sc { padding: 1.1rem; border-radius: 16px; position: relative; overflow: hidden; transition: transform 0.2s; }
-    .sc:active { transform: scale(0.97); }
-    .sc-fire { background: linear-gradient(135deg, rgba(255,45,120,0.08), rgba(255,107,26,0.04)); border: 1px solid rgba(255,45,120,0.3); box-shadow: inset 0 0 25px rgba(255,45,120,0.06); }
-    .sc-ocean { background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(0,255,136,0.04)); border: 1px solid rgba(0,229,255,0.3); box-shadow: inset 0 0 25px rgba(0,229,255,0.06); }
-    .stat-val { font-family: 'Orbitron', sans-serif; font-size: 2.1rem; font-weight: 800; line-height: 1; margin: 6px 0 4px; }
-    .stat-lbl { font-family: 'Orbitron', sans-serif; font-size: 0.5rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
-    .stat-sub { font-size: 0.6rem; color: var(--muted); letter-spacing: 1px; }
-
-    .sys-bar {
-      display: flex; justify-content: space-between; align-items: center;
-      border: 1px solid rgba(0,255,136,0.15); padding: 7px 14px;
-      border-radius: 10px; background: rgba(0,0,0,0.35); margin-bottom: 1rem;
-    }
-    .sys-label { font-family: 'Orbitron', sans-serif; font-size: 0.6rem; color: var(--g); letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
-    .sys-uptime { font-family: 'Orbitron', sans-serif; font-size: 0.6rem; color: var(--muted); }
-
-    .form-header { text-align: center; margin-bottom: 1.4rem; padding-top: 0.2rem; }
-    .form-title { font-family: 'Orbitron', sans-serif; font-size: 0.7rem; letter-spacing: 3px; }
-    .inp-wrap { position: relative; margin-bottom: 1.1rem; }
-    .inp-label { font-family: 'Orbitron', sans-serif; font-size: 0.56rem; letter-spacing: 1.5px; text-transform: uppercase; display: flex; align-items: center; gap: 6px; margin-bottom: 7px; }
-    .inp {
-      width: 100%; padding: 13px 14px 13px 42px;
-      background: rgba(4,2,12,0.85);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 11px; color: #fff;
-      font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; font-weight: 500;
-      transition: border-color 0.25s, box-shadow 0.25s; outline: none;
-      -webkit-appearance: none; appearance: none;
-    }
-    .inp:focus { border-color: var(--c); box-shadow: 0 0 0 3px rgba(0,229,255,0.1), inset 0 0 12px rgba(0,229,255,0.06); }
-    .inp-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; opacity: 0.6; pointer-events: none; }
-    textarea.inp { padding-left: 14px; min-height: 88px; resize: none; line-height: 1.5; font-size: 0.85rem; }
-    .inp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
-    .inp-row .inp-wrap { margin-bottom: 0; }
-    .inp-no-icon { padding-left: 14px !important; }
-
-    #cookieInput {
-      background-image: url('https://i.imgur.com/OMNB0Y5.gif');
-      background-size: cover; background-position: center;
-      background-blend-mode: overlay;
-      background-color: rgba(4,2,12,0.88);
+    .stat-card.primary {
+      border-color: rgba(217, 70, 239, 0.3);
     }
 
-    .btn-rail {
-      width: 100%; padding: 3px; border-radius: 15px;
-      background: linear-gradient(90deg, var(--r), var(--o), var(--y), var(--g), var(--c), var(--b), var(--v), var(--r));
-      background-size: 300% 100%; animation: rainbow 3s linear infinite;
-      margin-top: 1.1rem; cursor: pointer;
-      box-shadow: 0 0 35px rgba(255,45,120,0.35), 0 0 70px rgba(0,229,255,0.15);
-      transition: transform 0.15s, box-shadow 0.15s;
+    .stat-card.secondary {
+      border-color: rgba(6, 182, 212, 0.3);
+    }
+
+    .stat-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      margin: 0.25rem 0;
+    }
+
+    .stat-value.primary {
+      color: var(--primary);
+    }
+
+    .stat-value.secondary {
+      color: var(--secondary);
+    }
+
+    .stat-label {
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+
+    .input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .input:focus {
+      outline: none;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+    }
+
+    .input::placeholder {
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    textarea.input {
+      min-height: 70px;
+      resize: none;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 1rem;
       border: none;
+      border-radius: 12px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: transform 0.15s, filter 0.2s;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: white;
     }
-    .btn-rail:active { transform: scale(0.96); box-shadow: 0 0 20px rgba(255,45,120,0.2); }
-    .btn-core {
-      background: #06010f; padding: 15px; border-radius: 12px;
-      display: flex; justify-content: center; align-items: center; gap: 10px;
-      font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 800;
-      letter-spacing: 4px; text-transform: uppercase; color: #fff;
-      transition: background 0.25s; pointer-events: none;
-    }
-    .btn-rail:hover .btn-core { background: rgba(15,5,30,0.9); }
-    .btn-icon { width: 20px; height: 20px; }
 
-    svg.ico { display: inline-block; vertical-align: middle; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .btn:hover {
+      filter: brightness(1.1);
+    }
 
-    .ses-list { margin-top: 0.5rem; }
-    .ses-card {
-      background: linear-gradient(135deg, rgba(18,8,35,0.75), rgba(5,2,12,0.9));
-      border: 1px solid var(--border); border-left: 2.5px solid var(--c);
-      border-radius: 13px; padding: 1rem; margin-bottom: 0.8rem;
-      animation: slideUp 0.3s cubic-bezier(0.16,1,0.3,1) both;
+    .btn:active {
+      transform: scale(0.97);
     }
-    .ses-card.ses-err { border-left-color: var(--r); }
-    .ses-card.ses-done { border-left-color: var(--g); }
-    .ses-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-    .ses-id { font-family: 'Orbitron', sans-serif; font-size: 0.55rem; color: var(--muted); }
-    .ses-badge { font-family: 'Orbitron', sans-serif; font-size: 0.5rem; padding: 3px 9px; border-radius: 10px; border: 1px solid transparent; letter-spacing: 1px; display: flex; align-items: center; gap: 4px; }
-    .ses-badge.active { color: var(--c); background: rgba(0,229,255,0.08); border-color: rgba(0,229,255,0.25); }
-    .ses-badge.err { color: var(--r); background: rgba(255,45,120,0.08); border-color: rgba(255,45,120,0.25); }
-    .ses-badge.done { color: var(--g); background: rgba(0,255,136,0.08); border-color: rgba(0,255,136,0.25); }
-    .ses-url { font-size: 0.75rem; color: #ddd; word-break: break-all; margin-bottom: 9px; line-height: 1.4; }
-    .prog-bar { height: 5px; background: rgba(255,255,255,0.07); border-radius: 4px; overflow: hidden; margin-bottom: 9px; }
-    .prog-fill { height: 100%; background: linear-gradient(90deg, var(--c), var(--v)); border-radius: 4px; transition: width 0.5s ease; }
-    .ses-meta { display: flex; justify-content: space-between; font-family: 'Orbitron', sans-serif; font-size: 0.55rem; color: var(--muted); }
-    .ses-meta strong { color: #fff; }
-    .ses-err-msg { margin-top: 8px; font-size: 0.72rem; color: var(--r); background: rgba(255,45,120,0.08); padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(255,45,120,0.2); }
-    .empty-msg { text-align: center; padding: 2.5rem 1rem; font-family: 'Orbitron', sans-serif; font-size: 0.65rem; color: var(--muted); letter-spacing: 2px; }
 
-    .sec-head { display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; }
-    .sec-head-bar { width: 3px; height: 20px; background: linear-gradient(180deg, var(--r), var(--v)); border-radius: 3px; }
-    .sec-head-title { font-family: 'Orbitron', sans-serif; font-size: 0.78rem; letter-spacing: 2px; }
-    .all-sec-head {
-      background: linear-gradient(135deg, rgba(0,229,255,0.07), rgba(0,255,136,0.07));
-      border: 1px solid rgba(0,229,255,0.2);
-      border-radius: 13px; padding: 0.9rem 1.1rem;
-      display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      margin-bottom: 0.75rem;
+      color: var(--muted);
     }
-    .live-count { background: var(--c); color: #000; font-family: 'Orbitron', sans-serif; font-size: 0.6rem; padding: 3px 10px; border-radius: 10px; font-weight: 700; }
 
-    .about-card {
-      background: linear-gradient(135deg, rgba(18,8,35,0.65), rgba(8,4,18,0.85));
-      border: 1px solid rgba(180,77,255,0.25); border-radius: 18px;
-      padding: 1.8rem 1.5rem; text-align: center;
-      box-shadow: inset 0 0 40px rgba(180,77,255,0.07);
+    .session-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
-    .about-title { font-family: 'Orbitron', sans-serif; font-size: 1.7rem; font-weight: 900; letter-spacing: 5px; margin-bottom: 8px; }
-    .about-sub { font-family: 'Orbitron', sans-serif; font-size: 0.6rem; letter-spacing: 3px; color: var(--muted); margin-bottom: 1.4rem; }
-    .about-tag { display: inline-block; padding: 4px 14px; border: 1px solid var(--r); border-radius: 20px; font-family: 'Orbitron', sans-serif; font-size: 0.55rem; color: var(--r); background: rgba(255,45,120,0.08); }
-    .about-desc { margin-top: 1.5rem; font-size: 0.85rem; line-height: 1.75; color: #b0b0cc; }
-    .warn-box { background: rgba(255,230,0,0.06); border: 1px solid rgba(255,230,0,0.3); border-radius: 12px; padding: 1rem; margin-top: 1.5rem; text-align: left; }
-    .warn-title { font-family: 'Orbitron', sans-serif; font-size: 0.65rem; color: var(--y); letter-spacing: 1px; display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
-    .warn-text { font-size: 0.75rem; color: #ffeaa7; line-height: 1.6; }
 
-    .nav {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
-      background: linear-gradient(180deg, rgba(3,2,14,0.97), #000);
-      backdrop-filter: blur(22px); border-top: 1px solid var(--border);
+    .session {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem;
     }
-    .nav::before { content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 1.5px; background: linear-gradient(90deg, var(--r), var(--c), var(--v)); }
-    .nav-row { display: flex; justify-content: space-around; padding: 9px 0; }
-    .nv-btn {
-      flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
-      color: rgba(255,255,255,0.3); text-decoration: none;
-      font-family: 'Orbitron', sans-serif; font-size: 0.52rem; letter-spacing: 2px;
-      transition: color 0.25s; padding: 4px 0; cursor: pointer;
-      background: none; border: none; outline: none;
-    }
-    .nv-btn.act { color: var(--c); text-shadow: 0 0 12px rgba(0,229,255,0.7); }
-    .nv-btn.act .nv-ico { filter: drop-shadow(0 0 8px rgba(0,229,255,0.7)); transform: translateY(-2px); }
-    .nv-ico { width: 22px; height: 22px; transition: transform 0.25s, filter 0.25s; }
 
-    #splash {
-      position: fixed; inset: 0; z-index: 9000; background: var(--bg);
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      transition: opacity 0.5s ease;
+    .session-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
     }
-    .splash-ring-wrap { width: 110px; height: 110px; position: relative; margin-bottom: 1.8rem; }
-    .splash-ring {
-      position: absolute; inset: 0; border-radius: 50%;
-      border: 2.5px solid transparent;
-      border-top-color: var(--r); border-right-color: var(--c);
-      animation: spin 1.6s cubic-bezier(0.68,-0.55,0.26,1.55) infinite;
-    }
-    .splash-ring:nth-child(2) { inset: 14px; border-top-color: var(--y); border-bottom-color: var(--v); animation-duration: 2.1s; animation-direction: reverse; }
-    @keyframes spin { 100% { transform: rotate(360deg); } }
-    .splash-title { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 900; letter-spacing: 5px; }
-    .splash-sub { font-size: 0.7rem; color: var(--muted); margin-top: 8px; font-family: 'Rajdhani', sans-serif; letter-spacing: 2px; }
 
-    #toasts { position: fixed; top: 88px; left: 50%; transform: translateX(-50%); z-index: 300; display: flex; flex-direction: column; gap: 7px; pointer-events: none; width: 92%; max-width: 360px; }
-    .toast {
-      background: rgba(8,4,20,0.92); backdrop-filter: blur(16px);
-      border: 1px solid var(--c); box-shadow: 0 0 20px rgba(0,229,255,0.2);
-      padding: 11px 20px; border-radius: 30px;
-      font-family: 'Orbitron', sans-serif; font-size: 0.65rem; letter-spacing: 1px;
-      display: flex; align-items: center; gap: 10px; color: #fff;
-      animation: toastIn 0.3s cubic-bezier(0.16,1,0.3,1) both;
+    .session-id {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      color: var(--secondary);
     }
-    @keyframes toastIn { from { opacity: 0; transform: translateY(-18px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    .session-status {
+      font-size: 0.6rem;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--secondary);
+    }
+
+    .session-status.error {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--error);
+    }
+
+    .session-status.done {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--success);
+    }
+
+    .session-url {
+      font-size: 0.75rem;
+      color: var(--muted);
+      word-break: break-all;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--secondary), var(--primary));
+      transition: width 0.3s ease;
+    }
+
+    .session-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+
+    .empty {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(5, 5, 20, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      padding: 0.75rem;
+      z-index: 50;
+    }
+
+    .nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.6rem;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      transition: all 0.2s;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .nav-btn.active {
+      color: var(--secondary);
+    }
+
+    .nav-btn.active::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 20%;
+      right: 20%;
+      height: 2px;
+      background: var(--secondary);
+    }
+
+    #toast {
+      position: fixed;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--surface);
+      border: 1px solid var(--secondary);
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      z-index: 100;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    #toast.show {
+      opacity: 1;
+    }
   </style>
 </head>
+
 <body>
 
-  <!-- Background Layers -->
-  <div class="bg-base"></div>
-  <div class="orb orb-a"></div>
-  <div class="orb orb-b"></div>
-  <div class="bg-grid"></div>
-  <div class="scanline"></div>
-  <div class="corner corner-tl"></div>
-  <div class="corner corner-tr"></div>
+  <div class="bg"></div>
 
-  <!-- Splash -->
-  <div id="splash">
-    <div class="splash-ring-wrap">
-      <div class="splash-ring"></div>
-      <div class="splash-ring"></div>
-    </div>
-    <div class="splash-title gr-rainbow">INITIALIZING</div>
-    <div class="splash-sub">ESTABLISHING SECURE CONNECTION...</div>
-  </div>
-
-  <!-- Toast Container -->
-  <div id="toasts"></div>
-
-  <!-- Main Wrapper -->
-  <div class="wrap">
-
-    <!-- Header -->
-    <header class="hdr">
-      <div class="hdr-line"></div>
-      <div class="hdr-body">
-        <div>
-          <div class="logo-title gr-rainbow">SHAREBOOST</div>
-          <div class="logo-sub">⚡ ENGINE V6 ULTRA ⚡</div>
-        </div>
-        <div style="text-align:right">
-          <div class="live-badge" style="justify-content:flex-end;margin-bottom:5px">
-            <div class="dot"></div>
-            <span style="font-family:'Orbitron',sans-serif;font-size:0.58rem;letter-spacing:1px" class="ng">LIVE</span>
-          </div>
-          <div class="ver-tag">V6.0</div>
-        </div>
+  <div class="app">
+    <header>
+      <div class="logo">SHAREBOOST</div>
+      <div class="badge">
+        <span class="dot"></span>
+        LIVE
       </div>
-      <div class="hdr-glow"></div>
     </header>
 
-    <!-- Ticker -->
-    <div class="ticker">
-      <div class="ticker-track">
-        <span class="tick nr">⚡ SHAREBOOST V6 ACTIVE</span>
-        <span class="tick nc">🌊 REAL-TIME ENGINE ONLINE</span>
-        <span class="tick ng">🌿 MAX PERFORMANCE ENGAGED</span>
-        <span class="tick ny">🔥 BOOST SYSTEM ARMED</span>
-        <span class="tick nv">💎 COSMIC TELEMETRY LIVE</span>
-        <span class="tick nr">⚡ SHAREBOOST V6 ACTIVE</span>
-        <span class="tick nc">🌊 REAL-TIME ENGINE ONLINE</span>
-        <span class="tick ng">🌿 MAX PERFORMANCE ENGAGED</span>
-        <span class="tick ny">🔥 BOOST SYSTEM ARMED</span>
-        <span class="tick nv">💎 COSMIC TELEMETRY LIVE</span>
-      </div>
-    </div>
-
-    <!-- HOME SECTION -->
-    <section id="sec-home" class="sec act">
-
-      <div class="sys-bar">
-        <span class="sys-label">
-          <svg class="ico ng" style="width:13px;height:13px" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
-          SYS ONLINE
-        </span>
-        <span class="sys-uptime" id="uptime">UP: 00:00:00</span>
-      </div>
-
-      <div class="stats-grid">
-        <div class="sc sc-fire">
-          <div class="stat-lbl nr">SESSIONS</div>
-          <div class="stat-val nr" id="stat-sessions">0</div>
-          <div class="stat-sub">STATUS: MONITORING</div>
+    <main>
+      <div class="stats">
+        <div class="stat-card primary">
+          <div class="stat-label">Active</div>
+          <div class="stat-value primary" id="activeCount">0</div>
         </div>
-        <div class="sc sc-ocean">
-          <div class="stat-lbl nc">TOTAL EXECUTED</div>
-          <div class="stat-val nc" id="stat-total">0</div>
-          <div class="stat-sub">NETWORK: ACTIVE</div>
+        <div class="stat-card secondary">
+          <div class="stat-label">Total</div>
+          <div class="stat-value secondary" id="totalCount">0</div>
         </div>
       </div>
 
-      <form id="shareForm" class="glass" style="padding:1.4rem;margin-bottom:1.4rem" onsubmit="return false">
-        <div class="form-header">
-          <div class="form-title gr-cosmic">━━ MISSION CONFIG V6 ━━</div>
-        </div>
+      <div class="card" id="homeView">
+        <div class="card-title">⚡ MISSION CONFIG</div>
 
-        <div class="inp-wrap">
-          <div class="inp-label">
-            <span class="ny">FACEBOOK COOKIES</span>
+        <form id="form">
+          <div class="form-group">
+            <label class="form-label">Facebook Cookies</label>
+            <textarea class="input" id="cookieInput" placeholder="Paste cookies..."></textarea>
           </div>
-          <textarea id="cookieInput" class="inp" placeholder="Paste session cookies here..."></textarea>
-        </div>
 
-        <div class="inp-wrap">
-          <div class="inp-label">
-            <span class="nc">POST URL</span>
+          <div class="form-group">
+            <label class="form-label">Post URL</label>
+            <input type="url" class="input" id="urlInput" placeholder="https://facebook.com/...">
           </div>
-          <input type="url" id="urlInput" class="inp" placeholder="https://www.facebook.com/...">
-        </div>
 
-        <div class="inp-row">
-          <div class="inp-wrap">
-            <div class="inp-label">
-              <span class="ny">AMOUNT</span>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Amount</label>
+              <input type="number" class="input" id="amountInput" placeholder="100" min="1">
             </div>
-            <input type="number" id="amountInput" class="inp inp-no-icon" placeholder="100" min="1">
-          </div>
-          <div class="inp-wrap">
-            <div class="inp-label">
-              <span class="ng">DELAY (s)</span>
+            <div class="form-group">
+              <label class="form-label">Delay (s)</label>
+              <input type="number" class="input" id="intervalInput" placeholder="5" min="1">
             </div>
-            <input type="number" id="intervalInput" class="inp inp-no-icon" placeholder="5" min="1">
           </div>
-        </div>
 
-        <button class="btn-rail" id="submitBtn" type="submit">
-          <div class="btn-core" id="btnCore">
-            IGNITE BOOST
-          </div>
-        </button>
-      </form>
-
-      <div class="sec-head">
-        <div class="sec-head-bar"></div>
-        <span class="sec-head-title gr-fire">RECENT SESSIONS</span>
+          <button type="submit" class="btn">🚀 IGNITE</button>
+        </form>
       </div>
-      <div id="homeSessions" class="ses-list"></div>
 
-    </section>
+      <div class="section-title">RECENT ACTIVITY</div>
+      <div class="session-list" id="sessions"></div>
+    </main>
 
-    <!-- SESSIONS SECTION -->
-    <section id="sec-sessions" class="sec">
-      <div class="all-sec-head">
-        <span class="sec-head-title gr-ocean" style="display:flex;align-items:center;gap:8px">
-          ALL SESSIONS
-        </span>
-        <div class="live-count" id="liveCount">0 LIVE</div>
-      </div>
-      <div id="allSessions" class="ses-list"></div>
-    </section>
-
-    <!-- ABOUT SECTION -->
-    <section id="sec-about" class="sec">
-      <div class="about-card">
-        <div class="about-title gr-rainbow">SHAREBOOST</div>
-        <div class="about-sub">FACEBOOK AMPLIFICATION ENGINE</div>
-        <div class="about-tag">VERSION 6.0 ULTRA</div>
-        <p class="about-desc">
-          Built for extreme performance, ShareBoost V6 utilizes cutting-edge session automation protocols with real-time telemetry.
-        </p>
-        <div class="warn-box">
-          <div class="warn-title">CRITICAL WARNING</div>
-          <div class="warn-text">Avoid aggressive intervals below 30s to prevent automated detection locks.</div>
-        </div>
-      </div>
-    </section>
-
+    <nav>
+      <button class="nav-btn active" data-view="home">Home</button>
+      <button class="nav-btn" data-view="sessions">Sessions</button>
+    </nav>
   </div>
 
-  <!-- Bottom Nav -->
-  <nav class="nav">
-    <div class="nav-row">
-      <button class="nv-btn act" data-target="sec-home">HOME</button>
-      <button class="nv-btn" data-target="sec-sessions">SESSIONS</button>
-      <button class="nv-btn" data-target="sec-about">SYSTEM</button>
-    </div>
-  </nav>
+  <div id="toast"></div>
 
   <script>
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        const s = document.getElementById('splash');
-        s.style.opacity = '0';
-        setTimeout(() => s.remove(), 500);
-      }, 900);
-    });
+    // State
+    let sessions = [];
 
-    const t0 = Date.now();
-    setInterval(() => {
-      const d = Math.floor((Date.now() - t0) / 1000);
-      const h = String(Math.floor(d / 3600)).padStart(2, '0');
-      const m = String(Math.floor((d % 3600) / 60)).padStart(2, '0');
-      const s = String(d % 60).padStart(2, '0');
-      document.getElementById('uptime').textContent = `UP: ${h}:${m}:${s}`;
-    }, 1000);
+    // DOM Elements
+    const form = document.getElementById('form');
+    const cookieInput = document.getElementById('cookieInput');
+    const urlInput = document.getElementById('urlInput');
+    const amountInput = document.getElementById('amountInput');
+    const intervalInput = document.getElementById('intervalInput');
+    const activeCount = document.getElementById('activeCount');
+    const totalCount = document.getElementById('totalCount');
+    const sessionsEl = document.getElementById('sessions');
+    const toast = document.getElementById('toast');
+
+    // Toast
+    const showToast = (msg) => {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    };
 
     // Navigation
-    document.querySelectorAll('.nv-btn').forEach(btn => {
+    document.querySelectorAll('.nav-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const target = btn.dataset.target;
-        document.querySelectorAll('.nv-btn').forEach(b => b.classList.remove('act'));
-        document.querySelectorAll('.sec').forEach(s => s.classList.remove('act'));
-        btn.classList.add('act');
-        document.getElementById(target).classList.add('act');
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
       });
     });
 
-    // Toast
-    function showToast(msg) {
-      const t = document.createElement('div');
-      t.className = 'toast';
-      t.textContent = msg;
-      document.getElementById('toasts').appendChild(t);
-      setTimeout(() => t.remove(), 3000);
-    }
-
-    // Fetch sessions
-    async function fetchSessions() {
+    // Fetch Sessions
+    const fetchSessions = async () => {
       try {
         const res = await fetch('/total');
-        const data = await res.json();
-        updateUI(data);
+        sessions = await res.json();
+        updateUI();
       } catch (e) {
-        console.error('Fetch error:', e);
+        console.error('Fetch failed:', e);
       }
-    }
+    };
 
-    function updateUI(data) {
-      const active = data.filter(s => !s.error && s.count < s.target).length;
-      const total = data.reduce((a, s) => a + s.count, 0);
-      document.getElementById('stat-sessions').textContent = active;
-      document.getElementById('stat-total').textContent = total;
-      document.getElementById('liveCount').textContent = `${active} LIVE`;
+    // Update UI
+    const updateUI = () => {
+      const active = sessions.filter(s => !s.error && s.count < s.target).length;
+      const total = sessions.reduce((a, s) => a + s.count, 0);
 
-      const renderCard = (s, i) => {
-        const pct = Math.min(100, Math.round((s.count / s.target) * 100));
-        const status = s.error ? 'err' : (s.count >= s.target ? 'done' : 'active');
-        const statusText = s.error ? 'ERROR' : (s.count >= s.target ? 'COMPLETED' : 'RUNNING');
-        return `
-          <div class="ses-card ses-${status}">
-            <div class="ses-top">
-              <span class="ses-id">#${i + 1}</span>
-              <span class="ses-badge ${status}">${statusText}</span>
-            </div>
-            <div class="ses-url">${s.url}</div>
-            <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
-            <div class="ses-meta">
-              <span><strong>${s.count}</strong> / ${s.target}</span>
-              <span>${s.interval}s</span>
-            </div>
-            ${s.error ? `<div class="ses-err-msg">${s.error}</div>` : ''}
-          </div>
-        `;
-      };
+      activeCount.textContent = active;
+      totalCount.textContent = total;
 
-      const home = document.getElementById('homeSessions');
-      const all = document.getElementById('allSessions');
-      
-      if (data.length === 0) {
-        home.innerHTML = '<div class="empty-msg">NO ACTIVE SESSIONS</div>';
-        all.innerHTML = '<div class="empty-msg">NO SESSIONS FOUND</div>';
-      } else {
-        home.innerHTML = data.slice(0, 5).map((s, i) => renderCard(s, i)).join('');
-        all.innerHTML = data.map((s, i) => renderCard(s, i)).join('');
-      }
-    }
-
-    // Form submit
-    document.getElementById('shareForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const cookie = document.getElementById('cookieInput').value;
-      const url = document.getElementById('urlInput').value;
-      const amount = document.getElementById('amountInput').value;
-      const interval = document.getElementById('intervalInput').value;
-
-      if (!cookie || !url || !amount || !interval) {
-        showToast('Please fill all fields');
+      if (sessions.length === 0) {
+        sessionsEl.innerHTML = '<div class="empty">No active sessions</div>';
         return;
       }
 
-      showToast('Starting boost session...');
-      
+      sessionsEl.innerHTML = sessions.slice(0, 5).map((s, i) => {
+        const pct = Math.min(100, Math.round((s.count / s.target) * 100));
+        const status = s.error ? 'error' : (s.count >= s.target ? 'done' : 'running');
+        const statusText = s.error ? 'ERROR' : (s.count >= s.target ? 'DONE' : 'RUNNING');
+
+        return `
+          <div class="session">
+            <div class="session-header">
+              <span class="session-id">#${i + 1}</span>
+              <span class="session-status ${status}">${statusText}</span>
+            </div>
+            <div class="session-url">${s.url}</div>
+            <div class="progress"><div class="progress-fill" style="width:${pct}%"></div></div>
+            <div class="session-meta">
+              <span>${s.count} / ${s.target}</span>
+              <span>${s.interval}s</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    };
+
+    // Form Submit
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        cookie: cookieInput.value,
+        url: urlInput.value,
+        amount: amountInput.value,
+        interval: intervalInput.value
+      };
+
+      if (!data.cookie || !data.url || !data.amount || !data.interval) {
+        showToast('Fill all fields');
+        return;
+      }
+
+      showToast('Starting boost...');
+
       try {
         const res = await fetch('/api/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ cookie, url, amount, interval })
+          body: JSON.stringify(data)
         });
-        const data = await res.json();
-        
+
+        const result = await res.json();
+
         if (res.ok) {
-          showToast('Boost started successfully!');
-          document.getElementById('shareForm').reset();
+          showToast('Boost started!');
+          form.reset();
         } else {
-          showToast(data.error || 'Failed to start');
+          showToast(result.error || 'Failed');
         }
       } catch (e) {
         showToast('Network error');
       }
     });
 
+    // Poll
     setInterval(fetchSessions, 2000);
     fetchSessions();
   </script>
 </body>
+
 </html>
